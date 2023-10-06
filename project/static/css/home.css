@@ -1,0 +1,235 @@
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background: var(--nav-color);
+  }
+  
+  .navbar {
+    display: flex;
+    padding: 0 10px;
+    max-width: 1200px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .navbar input#menu-toggler {
+    display: none;
+  }
+  
+  .navbar #hamburger-btn {
+    cursor: pointer;
+    display: none;
+  }
+  
+  .navbar .all-links {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar .all-links li {
+    position: relative;
+    list-style: none;
+  }
+
+  .navbar .logo{
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar .logo img{
+    position:relative;
+    width:40px;
+    height:40px;
+  }
+
+  
+  .header a, .footer a {
+    margin-left: 40px;
+    text-decoration: none;
+    color: #fff;
+    height: 100%;
+    padding: 20px 0;
+    display: inline-block;
+  }
+  
+  .header a:hover, .footer a:hover {
+    color: #ddd;
+  }
+  
+
+  .container {
+    position: relative;
+    min-height: 100vh;
+    max-width: 1200px;
+    width: 100%;
+    margin: 100px auto;
+    padding: 40px 20px;
+  }
+  .container .search-box {
+    position: relative;
+    height: 50px;
+    max-width: 450px;
+    margin: 0 auto;
+    margin-bottom: 40px;
+  }
+  .search-box input {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    outline: none;
+    border: none;
+    background-color: #323334;
+    padding: 0 15px 0 45px;
+    color: #fff;
+    font-size: 20px;
+    border-radius: 6px;
+  }
+  .search-box i {
+    position: absolute;
+    z-index: 2;
+    color: #999;
+    top: 50%;
+    left: 15px;
+    font-size: 22px;
+    transform: translateY(-50%);
+  }
+  .container .images .image-box {
+    position: relative;
+    height: 350px;
+    width: 280px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .images {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .images .image-box {
+    margin: 12px;
+  }
+  .images .image-box img {
+    height: 100%;
+    width: 100%;
+    border-radius: 6px;
+    transition: transform 0.2s linear;
+  }
+  .image-box:hover img {
+    transform: scale(1.05);
+  }
+  .image-box h6 {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+  
+
+
+  
+  .footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background: var(--nav-color);
+    padding: 20px 0;
+  }
+  
+  .footer div {
+    padding: 0 10px;
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .footer span {
+    color: #fff;
+  }
+  
+  .footer a {
+    padding: 0;
+  }
+  
+  @media screen and (max-width: 860px) {
+    .navbar .all-links {
+      position: fixed;
+      left: -100%;
+      width: 300px;
+      display: block;
+      height: 100vh;
+      top: 75px;
+      background: var(--nav-color);
+      transition: left 0.3s ease;
+    }
+  
+    .navbar #menu-toggler:checked~.all-links {
+      left: 0;
+    }
+  
+    .navbar .all-links li {
+      font-size: 18px;
+    }
+  
+    .navbar #hamburger-btn {
+      display: block;
+    }
+  
+    .homepage .rooms .about .contact > p {
+      text-align: center;
+    }
+  
+    .rooms .cards .card {
+      width: calc(100% / 2 - 15px);
+      margin-bottom: 30px;
+    }
+  
+    .homepage .content h1 {
+      font-size: 40px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+  
+    .homepage .content .text {
+      font-size: 17px;
+    }
+  
+    .content a {
+      font-size: 17px;
+      padding: 9px 20px;
+    }
+  
+    .contact .row {
+      flex-direction: column;
+    }
+  
+    .contact .row .col {
+      width: 100%;
+    }
+  
+    .contact .row .col:last-child {
+      margin-top: 40px;
+    }
+  
+    .footer a {
+      height: 0;
+    }
+  }
+  
+  @media screen and (max-width: 560px) {
+    .rooms .cards .card {
+      width: 100%;
+      margin-bottom: 30px;
+    }
+  }
