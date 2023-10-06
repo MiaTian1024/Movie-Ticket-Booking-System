@@ -1,106 +1,60 @@
 
 .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 5;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    background: var(--nav-color);
-  }
-  
-  .navbar {
-    display: flex;
-    padding: 0 10px;
-    max-width: 1200px;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .navbar input#menu-toggler {
-    display: none;
-  }
-  
-  .navbar #hamburger-btn {
-    cursor: pointer;
-    display: none;
-  }
-  
-  .navbar .all-links {
-    display: flex;
-    align-items: center;
-  }
-  
-  .navbar .all-links li {
+  position: fixed;
+  height: 80px;
+  width: 100%;
+  z-index: 100;
+  padding: 0 20px;
+}
+.nav {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+.nav,
+.nav_item {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav_logo,
+.nav_link,
+.button {
+  color: #fff;
+}
+.nav_logo {
+  font-size: 25px;
+}
+.nav_item {
+  column-gap: 25px;
+}
+.nav_link:hover {
+  color: #d9d9d9;
+}
+.nav .button {
+  padding: 6px 24px;
+  border: 2px solid #fff;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.nav .button:active {
+  transform: scale(0.98);
+}
+
+
+  .home-container {
     position: relative;
-    list-style: none;
-  }
-
-  .navbar .logo{
     display: flex;
-    align-items: center;
-  }
-
-  .navbar .logo img{
-    position:relative;
-    width:40px;
-    height:40px;
-  }
-
-  
-  .header a, .footer a {
-    margin-left: 40px;
-    text-decoration: none;
-    color: #fff;
-    height: 100%;
-    padding: 20px 0;
-    display: inline-block;
-  }
-  
-  .header a:hover, .footer a:hover {
-    color: #ddd;
-  }
-  
-
-  .container {
-    position: relative;
+    justify-content:space-between;
     min-height: 100vh;
     max-width: 1200px;
     width: 100%;
-    margin: 100px auto;
-    padding: 40px 20px;
+    margin: 30px auto;
   }
-  .container .search-box {
-    position: relative;
-    height: 50px;
-    max-width: 450px;
-    margin: 0 auto;
-    margin-bottom: 40px;
-  }
-  .search-box input {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    outline: none;
-    border: none;
-    background-color: #323334;
-    padding: 0 15px 0 45px;
-    color: #fff;
-    font-size: 20px;
-    border-radius: 6px;
-  }
-  .search-box i {
-    position: absolute;
-    z-index: 2;
-    color: #999;
-    top: 50%;
-    left: 15px;
-    font-size: 22px;
-    transform: translateY(-50%);
-  }
-  .container .images .image-box {
+ 
+  .home-container .images .image-box {
     position: relative;
     height: 350px;
     width: 280px;
@@ -110,8 +64,10 @@
   .images {
     width: 100%;
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
+    margin-top:150px;
+    margin-right:20px;
+    margin-left: -12px;
   }
   .images .image-box {
     margin: 12px;
@@ -125,14 +81,72 @@
   .image-box:hover img {
     transform: scale(1.05);
   }
-  .image-box h6 {
+  .image-box .title {
     position: absolute;
-    bottom: 10px;
+    bottom: 60px;
     left: 10px;
     color: #fff;
     font-size: 18px;
     font-weight: 400;
     text-transform: capitalize;
+  }
+
+  .image-box .lang {
+    position: absolute;
+    bottom: 40px;
+    left: 10px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+
+  .image-box .genre {
+    position: absolute;
+    bottom: 20px;
+    left: 10px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+
+  .filters {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-top: 162px;
+  }
+
+  .home-container .search-box {
+    position: relative;
+    display: flex;
+    height: 50px;
+    max-width: 450px;
+    margin-top: 60px auto;
+    margin-bottom: 40px;
+  }
+  .search-box input {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    outline: none;
+    border: none;
+    background-color: black;
+    padding: 0 15px 0 45px;
+    color: #fff;
+    font-size: 20px;
+    border-radius: 6px;
+  }
+  .search-box i {
+    position: absolute;
+    z-index: 2;
+    color: #999;
+    top: 50%;
+    left: 15px;
+    font-size: 22px;
+    transform: translateY(-50%);
   }
   
 
@@ -226,10 +240,4 @@
       height: 0;
     }
   }
-  
-  @media screen and (max-width: 560px) {
-    .rooms .cards .card {
-      width: 100%;
-      margin-bottom: 30px;
-    }
-  }
+ 
