@@ -29,3 +29,21 @@ def register():
 @app.route("/login")
 def login():
     return render_template("login.html", title="Login")
+
+@app.route("/test")
+def test():
+    return render_template("test.html", title="Test")
+
+# Define a route to handle the form submission and display the file content
+@app.route('/read_file', methods=['POST'])
+def read_file():
+    try:
+        # Get the file name and location from the form
+        file_path = request.form['file_path']
+        
+        # Open and read the specified file
+        with open(file_path, 'r') as file:
+            file_content = file.read()
+        return render_template('test.html', content=file_content)
+    except FileNotFoundError:
+        return "File not found."

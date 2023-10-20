@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div>
+    <h1>Enter the File Name and Location:</h1>
+    <form method="POST" action="/read_file">
+        <label for="file_path">File Name:</label>
+        <input type="text" name="file_path" id="file_path" required>
+        <input type="submit" value="Read File">
+    </form>
+
+    {% if content%}
+
+    <h1>File Content:</h1>
+    <ul>
+        {% for line in content.split('\n') %}
+            <li>{{ line }}</li>
+        {% endfor %}
+    </ul>
+
+    {% endif%}
+
+</div>
+
+{% endblock %}
