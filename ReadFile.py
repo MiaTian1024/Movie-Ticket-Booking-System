@@ -19,7 +19,7 @@ class ReadFile():
         movieObj = []
         for record in self.__movieList:
             title, language, genre, releaseDate = record
-            movie = Customer(title, language, genre, releaseDate)
+            movie = Movie(title, language, genre, releaseDate)
             movieObj.append(movie)
         return movieObj
     
