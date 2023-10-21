@@ -22,13 +22,35 @@ def register():
         username = request.form.get('username')
         email = request.form.get('email')
         password = request.form.get('password')
-        controller.register(username, email, password)
-        msg = "Register successed"
+        if controller.register(username, email, password):
+            msg = "Register successed, Please Login to the system"
+        else:
+            msg = "Email is already registered, please try again"
         return render_template("login.html", msg = msg, title="Login")
     return render_template("login.html", title="Login")
 
-@app.route("/login")
+@app.route("/login", methods=['GET', 'POST'])
 def login():
+    if request.method == "POST":
+        email = request.form.get('email')
+        password = request.form.get('password')
+        role = request.form.get('role')
+        if role == "customer":
+            if controller.customer_login(email, password):
+                return render_template("customer_home.html")
+            msg = "Login failed, Please try again"
+            return render_template("login.html", msg = msg, title="Login")
+        if role == "admin":
+            if controller.admin_login(email, password):
+                return render_template("admin_home.html")
+            msg = "Login failed, Please try again"
+            return render_template("login.html", msg = msg, title="Login")
+        if role == "staff":
+            if controller.staff_login(email, password):
+                return render_template("staff_home.html")
+            msg = "Login failed, Please try again"
+            return render_template("login.html", msg = msg, title="Login")
+
     return render_template("login.html", title="Login")
 
 @app.route("/test")

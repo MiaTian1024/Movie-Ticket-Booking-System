@@ -36,6 +36,14 @@
           <form action="{{ url_for('login') }}" method="post">
             <div class="input-boxes">
               <div class="input-box">
+                <label for="role">Choose your role: </label>
+                <select name="role" id="role">
+                  <option value="customer">Customer</option>
+                  <option value="admin">Admin</option>
+                  <option value="staff">Front Desk Staff</option>
+                </select>
+              </div>
+              <div class="input-box">
                 <i class="fas fa-envelope"></i>
                 <input type="text" name="email" placeholder="Enter your email" required>
               </div>
@@ -47,15 +55,7 @@
                 <button type="submit">Login</button>
               </div>
               <div class="text sign-up-text">Don't have an account? <label for="flip">Sigup now</label></div>
-            </div>
-            <div class="line"></div>
-
-                <div class="media-options">
-                    <a href="/GoogleLogin" class="login-field google">
-                        <img src="../static/image/google.png" alt="" class="google-img">
-                        <span>Login with Google</span>
-                    </a>
-            </div>
+            </div>          
         </form>
       </div>
         <div class="signup-form">
@@ -79,14 +79,6 @@
               </div>
               
               <div class="text sign-up-text">Already have an account? <label for="flip">Login now</label></div>
-            </div>
-            <div class="line"></div>
-
-                <div class="media-options">
-                    <a href="/GoogleLogin" class="login-field google">
-                        <img src="../static/image/google.png" alt="" class="google-img">
-                        <span>Login with Google</span>
-                    </a>
             </div>
       </form>
     </div>

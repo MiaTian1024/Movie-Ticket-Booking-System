@@ -100,7 +100,6 @@ class FrontDeskStaff(User):
 
 # class for Guest
 class Guest():
-
     def register(self, username: str, email: str, password: str):
         new_customer = Customer(username, email, password)  
         return new_customer  
