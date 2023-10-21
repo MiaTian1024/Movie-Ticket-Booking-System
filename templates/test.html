@@ -10,17 +10,21 @@
         <input type="submit" value="Read File">
     </form>
 
-    {% if content%}
+    <h1>Enter the Movie:</h1>
+    <form method="POST" action="/write_file">
+        <label for="movie_name">Movie Name:</label>
+        <input type="text" name="movie_name" id="movie_name" required>
+        <input type="submit" value="Write File">
+    </form>
 
+    {% if content%}
     <h1>File Content:</h1>
     <ul>
         {% for line in content.split('\n') %}
             <li>{{ line }}</li>
         {% endfor %}
     </ul>
-
     {% endif%}
-
 </div>
 
 {% endblock %}
