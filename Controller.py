@@ -5,18 +5,21 @@ from datetime import datetime, date
 from Models import Guest, Customer, Admin, FrontDeskStaff, Movie
 from ReadFile import ReadFile
 
+# Read files
 file = ReadFile()
-customer_obj = file.getCustomerList("file/customer.txt")
-movie_obj = file.getMovieList("file/movies.txt")
+customer_obj = file.getCustomerObj("file/customer.txt")
+movie_obj = file.getMovieObj("file/movies.txt")
+admin_obj = file.getAdminObj("file/admin.txt")
+staff_obj = file.getStaffObj("file/staff.txt")
 
 
 # MovieTicketSystemController class handles user interactions and system operations.
 class Controller:
     def __init__(self) -> None:
-        self.__movies: List['Movie'] = []
+        self.__movies: List['Movie'] = movie_obj
         self.__customers: List['Customer'] = customer_obj
-        self.__admins: List['Admin'] = []
-        self.__staffs: List['FrontDeskStaff'] = []
+        self.__admins: List['Admin'] = admin_obj
+        self.__staffs: List['FrontDeskStaff'] = staff_obj
 
     def register(self, username: str, email: str, password: str) -> bool:
         # Check if the email is already in use

@@ -7,7 +7,7 @@ class ReadFile():
         self.__adminList = []
         self.__staffList = []
 
-    def getMovieList(self, file_path):
+    def getMovieObj(self, file_path):
         # Open and read the movie file
         with open(file_path, 'r') as file:
             for line in file:
@@ -23,7 +23,7 @@ class ReadFile():
             movieObj.append(movie)
         return movieObj
     
-    def getCustomerList(self, file_path):
+    def getCustomerObj(self, file_path):
         # Open and read the customer file
         with open(file_path, 'r') as file:
             for line in file:
@@ -38,6 +38,38 @@ class ReadFile():
             customer = Customer(username, email, password)
             customerObj.append(customer)
         return customerObj
+    
+    def getAdminObj(self, file_path):
+        # Open and read the customer file
+        with open(file_path, 'r') as file:
+            for line in file:
+                # Split the line into values using a comma as the delimiter
+                values = line.strip().split(', ')  
+                self.__adminList.append(values)
+        file.close()
+        # create customer Object
+        adminObj = []
+        for record in self.__adminList:
+            username, email, password = record
+            admin = Admin(username, email, password)
+            adminObj.append(admin)
+        return adminObj
+    
+    def getStaffObj(self, file_path):
+        # Open and read the customer file
+        with open(file_path, 'r') as file:
+            for line in file:
+                # Split the line into values using a comma as the delimiter
+                values = line.strip().split(', ')  
+                self.__staffList.append(values)
+        file.close()
+        # create customer Object
+        staffObj = []
+        for record in self.__staffList:
+            username, email, password = record
+            staff = FrontDeskStaff(username, email, password)
+            staffObj.append(staff)
+        return staffObj
 
 
 
