@@ -21,50 +21,59 @@
 
 <div class="home-container">
 
-  <div class="images">
-    {% for movie in movie_list %}
-    <div class="image-box" data-name="{{ movie.title }}">
-      <img src="../static/images/{{ movie.title }}.jpg" alt="" />
-      <h6 class="title">{{ movie.title }}</h6>
-      <h6 class="lang">{{ movie.language }}</h6>
-      <h6 class="genre">{{ movie.genre }}</h6>
-      <h6 class="date">{{ movie.releaseDate }}</h6>
-    </div>
-    {% endfor %}
+  <div class="search-box">
+    <i class="bx bx-search"></i>
+    <input type="text" placeholder="Search a movie" />
   </div>
 
-  <div class="filters">
-    <div class="search-box">
-      <i class="bx bx-search"></i>
-      <input type="text" placeholder="Search a movie" />
+  <div class="content">
+
+    <div class="images">
+      {% for movie in movie_list %}
+      <div class="cards" data-name="{{ movie.title }}">
+        <div class="image-box" >
+          <img src="../static/images/{{ movie.title }}.jpg" alt="" />
+        </div>
+
+        <div class="info-box">
+          <h6 class="title">{{ movie.title }}</h6>
+          <h6 class="lang">{{ movie.language }}</h6>
+          <h6 class="genre">{{ movie.genre }}</h6>
+          <h6 class="date">{{ movie.releaseDate }}</h6>
+        </div>
+      </div>
+
+      {% endfor %}
     </div>
 
-    <div class="filter-box">
-      <h3>Filter Results</h3>
-      <ul class="filter_items">
-        <li class="filter_item">
-          Genre
-        </li>
-        <li class="filter_item">
-          Language
-        </li>
-      </ul>
+    <div class="filters">
+      <div class="filter-box">
+        <h3>Filter Results</h3>
+        <ul class="filter_items">
+          <li class="filter_item">
+            Genre
+          </li>
+          <li class="filter_item">
+            Language
+          </li>
+        </ul>
+      </div>
     </div>
 
   </div>
 
 </div>
 
-    <footer class="footer">
-      <div>
-        <span>Copyright © 2023 All Rights Reserved</span>
-        <span class="link">
-            <a href="#">Home</a>
-            <a href="#contact">Contact</a>
-        </span>
-      </div>
-    </footer>
+<footer class="footer">
+  <div>
+    <span>Copyright © 2023 All Rights Reserved</span>
+    <span class="link">
+        <a href="#">Home</a>
+        <a href="#contact">Contact</a>
+    </span>
+  </div>
+</footer>
 
-    <script src="../static/js/homepage.js"></script>
+<script src="../static/js/homepage.js"></script>
 
 {% endblock %}

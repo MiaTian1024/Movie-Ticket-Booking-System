@@ -37,17 +37,22 @@ class Customer(User):
     def logout(self, email: str, password:str) -> bool:     
         return True
 
-    def resetPassword(self, email: str, password:str) -> bool:      
-        pass
+    def resetPassword(self, newPassword:str) -> bool:      
+        self._password = newPassword
+        return True
 
     def makeBooking(self, booking: 'Booking') -> bool:
-        pass
+        self.__bookingList.append(booking)
+        return True
 
     def cancelBooking(self, booking: 'Booking') -> bool:    
-        pass
+        if booking in self.__bookingList:
+            self.__bookingList.remove(booking)
+            return True
+        return False
 
     def getBookingList(self) -> List['Booking']:
-        pass
+        return self.__bookingList
 
 # Admin class inherit from User class  
 class Admin(User):
@@ -58,17 +63,18 @@ class Admin(User):
     def login(self, email: str, password:str) -> bool:    
         return self._email == email and self._password == password
 
-    def logout(self, email: str, password:str) -> bool:     
+    def logout(self) -> bool:     
         return True
 
-    def resetPassword(self, email: str, password:str) -> bool:      
-        pass
+    def resetPassword(self, newPassword:str) -> bool:      
+        self._password = newPassword
+        return True
 
-    def addMovie(self, movie: 'Movie') -> bool:      
-        pass
+    def addMovie(self, title: str, language: str, genre: str, releaseDate: datetime):      
+        return Movie(title, language, genre, releaseDate)
 
-    def addScreening(self, screening: 'Screening') -> bool:    
-        pass
+    def addScreening(self, screeningDate: date, startTime: datetime, endTime: datetime, hall: 'CinemaHall') -> bool:    
+        return Screening(screeningDate, startTime, endTime, hall)
 
     def cancelMovie(self, movie: 'Movie') -> bool:        
         pass
@@ -85,11 +91,12 @@ class FrontDeskStaff(User):
     def login(self, email: str, password:str) -> bool:    
         return self._email == email and self._password == password
 
-    def logout(self, email: str, password:str) -> bool:     
+    def logout(self) -> bool:     
         return True
 
-    def resetPassword(self, email: str, password:str) -> bool:      
-        pass
+    def resetPassword(self, newPassword: str) -> bool:
+        self._password = newPassword
+        return True
 
     def makeBooking(self, booking: 'Booking') -> bool:    
         pass
@@ -101,8 +108,7 @@ class FrontDeskStaff(User):
 # class for Guest
 class Guest():
     def register(self, username: str, email: str, password: str):
-        new_customer = Customer(username, email, password)  
-        return new_customer  
+        return Customer(username, email, password)   
 
 class Movie:
     def __init__(self, title: str, language: str, genre: str, releaseDate: datetime) -> None:
@@ -206,10 +212,11 @@ class Notification:
         self.__content = content
 
 class Payment(ABC):
-    def __int__(self, amount: float, createdOn: datetime, paymentID: int):
+    def __int__(self,  paymentID: int, amount: float, createdOn: datetime):
+        self.__paymentID = paymentID
         self.__amount = amount
         self.__createdOn = createdOn
-        self.__paymentID = paymentID
+        
 
     # Abstract method for all user class
     @abstractmethod
@@ -221,8 +228,8 @@ class Payment(ABC):
         pass
     
 class CreditCard(Payment):
-    def __init__(self, amount: float, createdOn: datetime, paymentID: int, creditCardNum: str, cardType: str, expiryDate: datetime, nameOnCard: str):
-        super().__init__(amount, createdOn, paymentID)
+    def __init__(self, paymentID: int, amount: float, createdOn: datetime, creditCardNum: str, cardType: str, expiryDate: datetime, nameOnCard: str):
+        super().__init__(paymentID, amount, createdOn)
         self.__creditCardNum = creditCardNum
         self.__cardType = cardType
         self.__expiryDate = expiryDate
@@ -235,8 +242,8 @@ class CreditCard(Payment):
         pass
 
 class DebitCard(Payment):
-    def __init__(self, amount: float, createdOn: datetime, paymentID: int, cardNum: str, bankName: str, nameOnCard: str):
-        super().__init__(amount, createdOn, paymentID)
+    def __init__(self, paymentID: int, amount: float, createdOn: datetime, cardNum: str, bankName: str, nameOnCard: str):
+        super().__init__(paymentID, amount, createdOn)
         self.__cardNum = cardNum
         self.__bankName = bankName
         self.__nameOnCard = nameOnCard

@@ -47,98 +47,24 @@
   .home-container {
     position: relative;
     display: flex;
-    justify-content:space-between;
+    flex-direction: column;
     min-height: 100vh;
     max-width: 1200px;
     width: 100%;
     margin: 30px auto;
   }
- 
-  .home-container .images .image-box {
-    position: relative;
-    height: 350px;
-    width: 280px;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  .images {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    margin-top:150px;
-    margin-right:20px;
-    margin-left: -12px;
-  }
-  .images .image-box {
-    margin: 12px;
-  }
-  .images .image-box img {
-    height: 100%;
-    width: 100%;
-    border-radius: 6px;
-    transition: transform 0.2s linear;
-  }
-  .image-box:hover img {
-    transform: scale(1.05);
-  }
-  .image-box .title {
-    position: absolute;
-    bottom: 60px;
-    left: 10px;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 400;
-    text-transform: capitalize;
-  }
-
-  .image-box .lang {
-    position: absolute;
-    bottom: 40px;
-    left: 10px;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 400;
-    text-transform: capitalize;
-  }
-
-  .image-box .genre {
-    position: absolute;
-    bottom: 20px;
-    left: 10px;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 400;
-    text-transform: capitalize;
-  }
-
-  .image-box .date {
-    position: absolute;
-    bottom: 5px;
-    left: 10px;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 400;
-    text-transform: capitalize;
-  }
-
-  .filters {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    margin-top: 162px;
-  }
 
   .home-container .search-box {
     position: relative;
     display: flex;
+    justify-content: center;
     height: 50px;
-    max-width: 450px;
-    margin-top: 60px auto;
-    margin-bottom: 40px;
+    width: 650px;
+    margin: 140px auto;
+    margin-bottom: -100px;
   }
+
   .search-box input {
-    position: absolute;
     height: 100%;
     width: 100%;
     outline: none;
@@ -148,6 +74,7 @@
     color: #fff;
     font-size: 20px;
     border-radius: 6px;
+    z-index: 1;
   }
   .search-box i {
     position: absolute;
@@ -158,7 +85,115 @@
     font-size: 22px;
     transform: translateY(-50%);
   }
+
+  .home-container .content {
+    position: relative;
+    display: flex;
+    justify-content:space-between;
+    min-height: 100vh;
+    max-width: 1200px;
+    width: 100%;
+  }
   
+ 
+  .home-container .images .image-box {
+    position: relative;
+    height: 250px;
+    width: 180px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .home-container .images .info-box {
+    position: relative;
+    height: 250px;
+    width: 420px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .images {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-top:150px;
+    margin-right:20px;
+    margin-left: -12px;
+  }
+
+  .images .cards {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    background-color: #a6a4a5b9;
+  }
+
+  .images .image-box {
+    margin: 12px;
+  }
+  
+  .images .image-box img {
+    height: 100%;
+    width: 100%;
+    border-radius: 6px;
+    transition: transform 0.2s linear;
+  }
+
+  .image-box:hover img {
+    transform: scale(1.05);
+  }
+
+  .info-box .title {
+    position: absolute;
+    bottom: 180px;
+    left: 10px;
+    color: #fff;
+    font-size: 28px;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+
+  .info-box .lang {
+    position: absolute;
+    bottom: 80px;
+    left: 10px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+
+  .info-box .genre {
+    position: absolute;
+    bottom: 40px;
+    left: 10px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+
+  .info-box .date {
+    position: absolute;
+    bottom: 0px;
+    left: 10px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+
+  .filters {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-top: 162px;
+  }
+
+
 
 
   
