@@ -111,6 +111,16 @@
     text-transform: capitalize;
   }
 
+  .image-box .date {
+    position: absolute;
+    bottom: 5px;
+    left: 10px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+
   .filters {
     width: 100%;
     display: flex;

@@ -20,77 +20,17 @@
 {% block content %}
 
 <div class="home-container">
- 
-  <div>
-    {% for movie in movie_list %}
-    <p>{{ movie.title }}</p>
-    <p>{{ movie.language }}</p>
-    <p>{{ movie.genre }}</p>
-    <p>{{ movie.releaseDate }}</p>
-    {% endfor %}
-  </div>
 
   <div class="images">
-    <div class="image-box" data-name="spiderman">
-      <img src="../static/images/spiderman.jpg" alt="" />
-      <h6 class="title">spiderman</h6>
-      <h6 class="lang">English</h6>
-      <h6 class="genre">Movie</h6>
+    {% for movie in movie_list %}
+    <div class="image-box" data-name="{{ movie.title }}">
+      <img src="../static/images/{{ movie.title }}.jpg" alt="" />
+      <h6 class="title">{{ movie.title }}</h6>
+      <h6 class="lang">{{ movie.language }}</h6>
+      <h6 class="genre">{{ movie.genre }}</h6>
+      <h6 class="date">{{ movie.releaseDate }}</h6>
     </div>
-    <div class="image-box" data-name="joker">
-      <img src="../static/images/joker.jpg" alt="" />
-      <h6 class="title">joker</h6>
-      <h6 class="lang">English</h6>
-      <h6 class="genre">Movie</h6>
-    </div>
-    <div class="image-box" data-name="ironman">
-      <img src="../static/images/ironman.jpg" alt="" />
-      <h6 class="title">ironman</h6>
-      <h6 class="lang">English</h6>
-      <h6 class="genre">Movie</h6>
-    </div>
-    <div class="image-box" data-name="passenger">
-      <img src="../static/images/passenger.jpg" alt="" />
-      <h6 class="title">passenger</h6>
-      <h6 class="lang">English</h6>
-      <h6 class="genre">Movie</h6>
-    </div>
-    <div class="image-box" data-name="space">
-      <img src="../static/images/space.jpg" alt="" />
-      <h6 class="title">the space</h6>
-      <h6 class="lang">English</h6>
-      <h6 class="genre">Movie</h6>
-    </div>
-    <div class="image-box" data-name="spiderman">
-      <img src="../static/images/spiderman2.jpg" alt="" />
-      <h6 class="title">spiderman 2</h6>
-      <h6 class="lang">English</h6>
-      <h6 class="genre">Movie</h6>
-    </div>
-    <div class="image-box" data-name="universe">
-      <img src="../static/images/universe.jpg" alt="" />
-      <h6 class="title">the universe</h6>
-      <h6 class="lang">English</h6>
-      <h6 class="genre">Movie</h6>
-    </div>
-    <div class="image-box" data-name="spiderman">
-      <img src="../static/images/spiderman3.jpg" alt="" />
-      <h6 class="title">spiderman 3</h6>
-      <h6 class="lang">English</h6>
-      <h6 class="genre">Movie</h6>
-    </div>
-    <div class="image-box" data-name="holiday">
-      <img src="../static/images/holiday.jpg" alt="" />
-      <h6 class="title">holiday</h6>
-      <h6 class="lang">English</h6>
-      <h6 class="genre">Movie</h6>
-    </div>
-    <div class="image-box" data-name="ironman">
-      <img src="../static/images/ironman2.jpg" alt="" />
-      <h6 class="title">ironman 2</h6>
-      <h6 class="lang">English</h6>
-      <h6 class="genre">Movie</h6>
-    </div>
+    {% endfor %}
   </div>
 
   <div class="filters">
