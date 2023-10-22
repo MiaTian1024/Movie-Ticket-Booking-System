@@ -14,7 +14,8 @@ controller = Controller()
 
 @app.route("/")
 def home():
-    return render_template("home.html", title="homepage")
+    movie_list = controller.get_movie_list()
+    return render_template("home.html", movie_list=movie_list, title="homepage")
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -50,8 +51,8 @@ def login():
                 return render_template("staff_home.html")
             msg = "Login failed, Please try again"
             return render_template("login.html", msg = msg, title="Login")
-
     return render_template("login.html", title="Login")
+
 
 @app.route("/test")
 def test():

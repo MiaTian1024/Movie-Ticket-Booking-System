@@ -20,7 +20,15 @@
 {% block content %}
 
 <div class="home-container">
-  
+ 
+  <div>
+    {% for movie in movie_list %}
+    <p>{{ movie.title }}</p>
+    <p>{{ movie.language }}</p>
+    <p>{{ movie.genre }}</p>
+    <p>{{ movie.releaseDate }}</p>
+    {% endfor %}
+  </div>
 
   <div class="images">
     <div class="image-box" data-name="spiderman">

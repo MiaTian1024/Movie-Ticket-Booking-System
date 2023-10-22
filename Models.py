@@ -112,6 +112,38 @@ class Movie:
         self.__releaseDate = releaseDate
         self.__screeningList: List['Screening'] = []
 
+    @property
+    def title(self,):
+        return self.__title
+
+    @title.setter
+    def title(self, value):
+        self.__title = value
+
+    @property
+    def language(self,):
+        return self.__language
+
+    @language.setter
+    def language(self, value):
+        self.__language = value
+
+    @property
+    def genre(self,):
+        return self.__genre
+
+    @genre.setter
+    def genre(self, value):
+        self.__genre = value
+
+    @property
+    def releaseDate(self,):
+        return self.__releaseDate
+
+    @releaseDate.setter
+    def releaseDate(self, value):
+        self.__releaseDate = value
+
     def getScreeningList(self) -> List['Screening']:
         return self.__screeningList
     

@@ -63,7 +63,7 @@ class Controller:
     def search_movie_by_lang(self, lang):
         results = []
         for movie in self.__movies:
-            if movie.lang == lang:
+            if movie.language == lang:
                 results.append(movie)
         return results
     
@@ -74,13 +74,15 @@ class Controller:
                 results.append(movie)
         return results
 
-
     def search_movie_by_date(self, date):
         results = []
         for movie in self.__movies:
-            if movie.date == date:
+            if movie.releaseDate == date:
                 results.append(movie)
         return results
+    
+    def get_movie_list(self) -> str:
+        return self.__movies
 
     def view_movie_details(self, movie: 'Movie') -> str:
       
@@ -161,3 +163,5 @@ if __name__ == '__main__':
     controller = Controller()
     result = controller.register("hi","hi@gmail.com", "111")
     print(result)
+    movie_list = controller.display_movie_list()
+    print(movie_list)
