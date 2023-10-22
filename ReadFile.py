@@ -71,32 +71,3 @@ class ReadFile():
             staffObj.append(staff)
         return staffObj
 
-
-
-
-
-
-
-# admin_list = []        
-# # Open and read the admin file
-# with open("file/admin.txt", 'r') as file:
-#     for line in file:
-#         # Split the line into values using a comma as the delimiter
-#         values = line.strip().split(', ')    
-#         admin_list.append(values)
-# file.close()
-# # create customer Object
-# customer_obj = []
-# for record in customer_list:
-#     username, email, password = record
-#     customer = Customer(username, email, password)
-#     customer_obj.append(customer)
-
-# staff_list = []        
-# # Open and read the staff file
-# with open("file/staff.txt", 'r') as file:
-#     for line in file:
-#         # Split the line into values using a comma as the delimiter
-#         values = line.strip().split(', ')    
-#         staff_list.append(values)
-# file.close()

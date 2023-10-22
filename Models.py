@@ -155,23 +155,100 @@ class Movie:
         return f"Title: {self.__title}, Language: {self.__language}, Genre: {self.__genre}, Release Date: {self.__releaseDate}"
 
 class Screening:
-    def __init__(self, id: int, hall: 'Hall', date: date, startTime: datetime, endTime: datetime, screening_seats: List['ScreeningSeat']) -> None:
-        self._id = id
-        self._hall = hall
-        self._date = date
-        self._startTime = startTime
-        self._endTime = endTime
-        self._screening_seats = screening_seats
-        self._booked_seats = List['ScreeningSeat'] =[]
+    def __init__(self, screeningDate: date, startTime: datetime, endTime: datetime, hall: 'CinemaHall') -> None:
+        self.__screeningDate = screeningDate
+        self.__startTime = startTime
+        self.__endTime = endTime
+        self.__hall = hall
 
-    def get_screening_seats(self) -> List['ScreeningSeat']:
-  
-        return self._screening_seats
-    
-    def get_booked_seats(self) -> List['ScreeningSeat']:
+class Cinema:
+    def __init__(self, name: str, total_halls: int) -> None:
+        self._name = name
+        self._total_halls = total_halls
 
-        return self._booked_seats
-    
-    def get_available_seats(self) -> List['ScreeningSeat']:
+class CinemaHall:
+    def __init__(self, name: str, totalSeats: int):
+        self.__name = name
+        self.__totalSeats = totalSeats
+        self.__listOfSeats: List['ScreeningSeat'] = []
 
+class Seat(ABC):
+    def __init__(self, row: int, column: int) -> None:
+        self.row = row
+        self.column = column
+
+class ScreeningSeat(Seat):  
+    def __init__(self, row: int, column: int, price: float, booked: bool = False) -> None:
+        super().__init__(row, column)
+        self._price = price
+        self._booked = booked
+
+class Booking:
+    def __init__(self, bookingNum: str, customer: 'Customer', numberOfSeats: int, createdOn: date, status: int, 
+                 screening: 'Screening', screeningSeats: List['ScreeningSeat'], orderTotal: float, payment: 'Payment'):
+        self.__bookingNum = bookingNum
+        self.__customer = customer
+        self.__numberOfSeats = numberOfSeats
+        self.__createdOn = createdOn
+        self.__status = status
+        self.__screening = screening
+        self.__screeningSeats = screeningSeats
+        self.__orderTotal = orderTotal
+        self.__payment = payment
+
+    def sendNotification(self) -> 'Notification':
         pass
+
+class Notification:
+    def __init__(self, notificationID: int, createdOn: date, content: str):
+        self.__notificationID = notificationID
+        self.__createdOn = createdOn
+        self.__content = content
+
+class Payment(ABC):
+    def __int__(self, amount: float, createdOn: datetime, paymentID: int):
+        self.__amount = amount
+        self.__createdOn = createdOn
+        self.__paymentID = paymentID
+
+    # Abstract method for all user class
+    @abstractmethod
+    def calcDiscount(self) -> float:
+        pass
+
+    @abstractmethod
+    def calcFinalPayment(self) -> float:
+        pass
+    
+class CreditCard(Payment):
+    def __init__(self, amount: float, createdOn: datetime, paymentID: int, creditCardNum: str, cardType: str, expiryDate: datetime, nameOnCard: str):
+        super().__init__(amount, createdOn, paymentID)
+        self.__creditCardNum = creditCardNum
+        self.__cardType = cardType
+        self.__expiryDate = expiryDate
+        self.__nameOnCard = nameOnCard
+
+    def calcDiscount(self) -> float:
+        pass
+
+    def calcFinalPayment(self) -> float:
+        pass
+
+class DebitCard(Payment):
+    def __init__(self, amount: float, createdOn: datetime, paymentID: int, cardNum: str, bankName: str, nameOnCard: str):
+        super().__init__(amount, createdOn, paymentID)
+        self.__cardNum = cardNum
+        self.__bankName = bankName
+        self.__nameOnCard = nameOnCard
+
+    def calcDiscount(self) -> float:
+        pass
+
+    def calcFinalPayment(self) -> float:
+        pass
+
+class Coupon:
+    def __init__(self, couponID: str, expiryDate: datetime, discount: float):
+        self.__couponID = couponID
+        self.__expiryDate = expiryDate
+        self.__discount = discount
