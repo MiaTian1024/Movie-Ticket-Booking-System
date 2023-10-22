@@ -218,7 +218,7 @@
   .filter_items .card{
     width:450px;
     height:220px;
-    background-color: rgb(36, 79, 79);
+    background-color: #a2959567;
     margin-bottom: 10px;
     border-radius: 8px;
     padding:20px;
@@ -232,11 +232,11 @@
   }
 
 
-  input[type="radio"] {
+  .filter_items input[type="radio"] {
     display: none; /* Hide the default radio button */
   }
 
-  input[type="radio"] + label {
+  .filter_items input[type="radio"] + label {
       cursor: pointer;
       padding: 5px 15px;
       background-color: #f2f2f2;
@@ -245,23 +245,23 @@
       margin-right: 10px;
   }
 
-  input[type="radio"] + label:hover {
+  .filter_items input[type="radio"] + label:hover {
       background-color: #e0e0e0;
   }
 
-  input[type="radio"]:checked + label {
-      background-color: #007bff;
+  .filter_items input[type="radio"]:checked + label {
+      background-color: var(--nav-color);
       color: #fff;
   }
 
  
   /* Style the filter button */
-  button[type="submit"] {
+  .filter_items button[type="submit"] {
       position:absolute;
       bottom: -80px;
       left: 170px;
       padding: 5px 15px;
-      background-color: #007bff;
+      background-color: #205ac4e6;
       font-size: 16px;
       color: #fff;
       border: none;
@@ -269,21 +269,10 @@
       cursor: pointer;
   }
 
-  .filtered-movies{
-    background-color: #007bff;
-    width: 400px;
-    height:400px;
-    display: flex;
-  }
-
 
 
 
   
-
-
-
-
   
   .footer {
     width: 100%;
