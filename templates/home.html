@@ -29,6 +29,23 @@
   <div class="content">
 
     <div class="images">
+      {% if filtered_movies %}
+      {% for movie in filtered_movies %}
+      <div class="cards" data-name="{{ movie.title }}">
+        <div class="image-box" >
+          <img src="../static/images/{{ movie.title }}.jpg" alt="" />
+        </div>
+
+        <div class="info-box">
+          <h6 class="title">{{ movie.title }}</h6>
+          <h6 class="lang">{{ movie.language }}</h6>
+          <h6 class="genre">{{ movie.genre }}</h6>
+          <h6 class="date">{{ movie.releaseDate }}</h6>
+        </div>
+      </div>   
+      {% endfor %}
+      {% endif %}
+
       {% for movie in movie_list %}
       <div class="cards" data-name="{{ movie.title }}">
         <div class="image-box" >
@@ -42,7 +59,6 @@
           <h6 class="date">{{ movie.releaseDate }}</h6>
         </div>
       </div>
-
       {% endfor %}
     </div>
 
@@ -56,24 +72,61 @@
         <div class="card">
           <h3>Genre</h3>
           <div class="item">
-            <input type="checkbox" id="item1" name="item1" value="Movie">
-            <label for="item1"> Movie</label><br>
-            <p>Movie</p>
-            <p>Action</p>
+            <form id="filter-form" method="POST" action="/search_genre">
+              <input type="radio" id="genre-all" name="genre" value="All" checked>
+              <label for="genre-all">All</label>
+          
+              <input type="radio" id="genre-action" name="genre" value="Action">
+              <label for="genre-action">Action</label>
+          
+              <input type="radio" id="genre-drama" name="genre" value="Drama">
+              <label for="genre-drama">Drama</label>
+          
+              <input type="radio" id="genre-comedy" name="genre" value="Comedy">
+              <label for="genre-comedy">Comedy</label>
+          
+              <button type="submit">Filter</button>
+            </form> 
           </div>
         </div>
         <div class="card">
           <h3>Language</h3>
           <div class="item">
-            <p>Movie</p>
-            <p>Action</p>
+            <form id="filter-form" method="POST" action="/search_lang">
+              <input type="radio" id="lang-all" name="lang" value="All" checked>
+              <label for="lang-all">All</label>
+          
+              <input type="radio" id="lang-1" name="lang" value="English">
+              <label for="lang-1">English</label>
+          
+              <input type="radio" id="lang-2" name="lang" value="Chinese">
+              <label for="lang-2">Chinese</label>
+          
+              <input type="radio" id="lang-3" name="lang" value="French">
+              <label for="lang-3">French</label>
+          
+              <button type="submit">Filter</button>
+            </form> 
           </div>
         </div>
         <div class="card">
           <h3>Release Date</h3>
           <div class="item">
-            <p>Movie</p>
-            <p>Action</p>
+            <form id="filter-form" method="POST" action="/search_date">
+              <input type="radio" id="date-all" name="date" value="All" checked>
+              <label for="date-all">All</label>
+          
+              <input type="radio" id="date-1" name="date" value="2023">
+              <label for="date-1">2023</label>
+          
+              <input type="radio" id="date-2" name="date" value="2022">
+              <label for="date-2">2022</label>
+          
+              <input type="radio" id="date-3" name="date" value="2021">
+              <label for="date-3">2021</label>
+          
+              <button type="submit">Filter</button>
+            </form>
           </div>
         </div>
       </div>

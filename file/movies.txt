@@ -1,3 +1,3 @@
-SPIDERMAN, English, Action, 2012-07-03
-JOKER, English, Crime, 2019-10-04 
-IRONMAN, English, Action, 2008-05-02 
+SPIDERMAN, English, Action, 2022
+JOKER, English, Crime, 2021
+IRONMAN, English, Action, 2023

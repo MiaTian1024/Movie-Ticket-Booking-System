@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 import datetime
 
 
@@ -53,6 +53,45 @@ def login():
             return render_template("login.html", msg = msg, title="Login")
     return render_template("login.html", title="Login")
 
+@app.route("/search_genre", methods=['POST'])
+def search_genre():
+    genre = request.form.get('genre')
+    movies = controller.get_movie_list()
+    if genre == 'All':
+        filtered_movies = movies
+    else:
+        filtered_movies = [movie for movie in movies if movie.genre == genre]
+    return render_template("home.html", filtered_movies = filtered_movies)
+
+@app.route("/search_lang", methods=['POST'])
+def search_lang():
+    lang = request.form.get('lang')
+    movies = controller.get_movie_list()
+    if lang == 'All':
+        filtered_movies = movies
+    else:
+        filtered_movies = [movie for movie in movies if movie.language == lang]
+    return render_template("home.html", filtered_movies = filtered_movies)
+
+@app.route("/search_date", methods=['POST'])
+def search_date():
+    date = request.form.get('date')
+    movies = controller.get_movie_list()
+    if date == 'All':
+        filtered_movies = movies
+    else:
+        filtered_movies = [movie for movie in movies if movie.releaseDate == date]
+    return render_template("home.html", filtered_movies = filtered_movies)
+
+@app.route("/search_title", methods=['POST'])
+def search_title():
+    title = request.form.get('title')
+    movies = controller.get_movie_list()
+    if title == 'All':
+        filtered_movies = movies
+    else:
+        filtered_movies = [movie for movie in movies if movie.title == title]
+    return render_template("home.html", filtered_movies = filtered_movies)
 
 @app.route("/test")
 def test():

@@ -21,3 +21,4 @@ search.addEventListener("keyup", () =>{
         image.style.display = "flex";
     })
 })
+
