@@ -2,7 +2,7 @@
 # Import
 from typing import List
 from datetime import datetime, date
-from Models import Guest, Customer, Admin, FrontDeskStaff, Movie
+from Models import Guest, Customer, Admin, FrontDeskStaff, Movie, Screening
 from ReadFile import ReadFile
 
 # Read files
@@ -20,6 +20,7 @@ class Controller:
         self.__customers: List['Customer'] = customer_obj
         self.__admins: List['Admin'] = admin_obj
         self.__staffs: List['FrontDeskStaff'] = staff_obj
+        self.__screenings: List['Screening'] = []
 
     def register(self, username: str, email: str, password: str) -> bool:
         # Check if the email is already in use
@@ -116,13 +117,19 @@ class Controller:
         # Logic for canceling a booking
         pass
 
-    def add_movie(self, movie: 'Movie') -> bool:
-        self.__movies.append(movie)
+    def add_movie(self, admin: 'Admin', title: str, language: str, genre: str, releaseDate: datetime) -> bool:  
+        new_movie = admin.addMovie(title, language, genre, releaseDate)
+        if new_movie not in self.__movies:
+            self.__movies.append(new_movie)
+            return True
+        return False # Movie already exists
        
-    def add_screening(self, screening: 'Screening') -> bool:
-
-        # Logic for adding a screening
-        pass
+    def add_screening(self, admin: 'Admin', screeningDate: date, startTime: datetime, endTime: datetime, hall: 'CinemaHall') -> bool:
+        new_screening = admin.addScreening(screeningDate, startTime, endTime, hall)
+        if new_screening not in self.__screenings:
+            self.__screenings.append(new_screening)
+            return True
+        return False # Screening already exists
 
     def cancel_movie(self, movie: 'Movie') -> bool:
 
