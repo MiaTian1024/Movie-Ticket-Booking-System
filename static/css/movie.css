@@ -1,0 +1,155 @@
+.movie-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    max-width: 1200px;
+    width: 100%;
+    margin: 30px auto;
+  }
+
+
+.movie-container .content {
+    position: relative;
+    display: flex;
+    justify-content:space-between;
+    min-height: 100vh;
+    max-width: 1200px;
+    width: 100%;
+  }
+  
+ 
+  .movie-container .movies .image-box {
+    position: relative;
+    height: 300px;
+    width: 220px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .movie-container .movies .info-box {
+    position: relative;
+    height: 300px;
+    width: 900px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin:0px auto;
+  }
+
+.movies {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-top:150px;
+    margin-right:20px;
+    margin-left: -12px;
+    background-color: #a6a4a5b9;
+    border-radius: 8px;
+  }
+
+  .movies .cards {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 5px;   
+  }
+
+  .movies .image-box {
+    margin: 12px;
+  }
+
+  .movies .image-box img {
+    height: 100%;
+    width: 100%;
+    border-radius: 6px;
+    transition: transform 0.2s linear;
+  }
+
+  .movies .image-box:hover img {
+    transform: scale(1.05);
+  }
+
+  .movies .info-box .title {
+    position: absolute;
+    bottom: 240px;
+    left: 10px;
+    color: #fff;
+    font-size: 28px;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+
+  .movies .info-box .info {
+    position: absolute;
+    bottom: 200px;
+    left: 10px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+
+  .movies .info-box .lang {
+    position: absolute;
+    bottom: 80px;
+    left: 10px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+
+  .movies .info-box .genre {
+    position: absolute;
+    bottom: 40px;
+    left: 10px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+
+  .movies .info-box .date {
+    position: absolute;
+    bottom: 0px;
+    left: 10px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+
+  .movies .schedules{
+    background-color: aqua;
+    margin-top:10px;
+  }
+
+  .schedules .item{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+
+  .schedules input[type="radio"] {
+    display: none; /* Hide the default radio button */
+  }
+
+  .schedules input[type="radio"] + label {
+      cursor: pointer;
+      padding: 5px 15px;
+      background-color: #f2f2f2;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-right: 10px;
+  }
+
+  .schedules input[type="radio"] + label:hover {
+      background-color: #e0e0e0;
+  }
+
+  .schedules input[type="radio"]:checked + label {
+      background-color: var(--nav-color);
+      color: #fff;
+  }

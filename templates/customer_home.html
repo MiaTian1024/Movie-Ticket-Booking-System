@@ -3,11 +3,11 @@
 {% block header %}
 <header class="header">
   <nav class="nav">
-    <a href="#" class="nav_logo">Lincoln Cinema</a>
+    <a href="#" class="nav_logo">Lincoln Cinema <span>{{ role }}</span></a>
     <ul class="nav_items">
       <li class="nav_item">
-        <a href="#" class="nav_link">Home</a>
-        <a href="#" class="nav_link">Product</a>
+        <a href="/customer_home" class="nav_link">Home</a>
+        <a href="#" class="nav_link">Welcome {{ customer.username }}</a>
         <a href="#" class="nav_link">Services</a>
         <a href="#" class="nav_link">Contact</a>
       </li>
@@ -20,11 +20,6 @@
 {% block content %}
 
 <div class="home-container">
-
-  <h3>Welcome {{ role }}</h3>
-
-  <h3>Welcome {{ customer.username }}</h3>
-  
 
   <div class="search-box">
     <i class="bx bx-search"></i>
@@ -46,7 +41,7 @@
           <h6 class="lang">{{ movie.language }}</h6>
           <h6 class="genre">{{ movie.genre }}</h6>
           <h6 class="date">{{ movie.releaseDate }}</h6>
-          <h6 class="detail">Detail</h6>
+          <a href="/movie_detail?movie_id={{ movie.movieID }}">Detail</a>
         </div>
       </div>   
       {% endfor %}
@@ -63,8 +58,7 @@
           <h6 class="lang">{{ movie.language }}</h6>
           <h6 class="genre">{{ movie.genre }}</h6>
           <h6 class="date">{{ movie.releaseDate }}</h6>
-          <h6 class="detail">Detail</h6>
-          <a href="/movie_detail?movie_id={{ movie.movieID }}">Booking</a>
+          <a href="/movie_detail?movie_id={{ movie.movieID }}">Detail</a>
         </div>
       </div>
       {% endfor %}

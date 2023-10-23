@@ -21,6 +21,29 @@ def home():
     movie_list = controller.get_movie_list()
     return render_template("home.html", movie_list=movie_list, title="homepage")
 
+@app.route("/customer_home")
+def customer_home():
+    movie_list = controller.get_movie_list()
+    role = session.get('role')
+    customer_serialized = session.get('customer')
+    customer = pickle.loads(customer_serialized)
+    return render_template("customer_home.html", movie_list=movie_list, role=role, customer=customer, title="customer_homepage")
+
+@app.route("/admin_home")
+def admin_home():
+    movie_list = controller.get_movie_list()
+    role = session.get('role')
+    admin_serialized = session.get('admin')
+    admin = pickle.loads(admin_serialized)
+    return render_template("admin_home.html", movie_list=movie_list, role=role, admin=admin, title="admin_homepage")
+
+@app.route("/staff_home")
+def staff_home():
+    movie_list = controller.get_movie_list()
+    role = session.get('role')
+    staff_serialized = session.get('staff')
+    staff = pickle.loads(staff_serialized)
+    return render_template("staff_home.html", movie_list=movie_list, role=role, staff=staff, title="staff_homepage")
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -53,14 +76,20 @@ def login():
             return render_template("login.html", msg = msg, title="Login")
         if role == "admin":
             if controller.admin_login(email, password):
+                admin = controller.admin_login(email, password)
+                admin_serialized = pickle.dumps(admin)
+                session['admin'] = admin_serialized
                 session['role'] = 'Admin'
-                return render_template("admin_home.html", movie_list=movie_list, role=session['role'])
+                return render_template("admin_home.html", movie_list=movie_list, role=session['role'], admin=admin)
             msg = "Login failed, Please try again"
             return render_template("login.html", msg = msg, title="Login")
         if role == "staff":
             if controller.staff_login(email, password):
+                staff = controller.staff_login(email, password)
+                staff_serialized = pickle.dumps(staff)
+                session['staff'] = staff_serialized
                 session['role'] = 'Staff'
-                return render_template("staff_home.html", movie_list=movie_list, role=session['role'])
+                return render_template("staff_home.html", movie_list=movie_list, role=session['role'], staff=staff)
             msg = "Login failed, Please try again"
             return render_template("login.html", msg = msg, title="Login")
     return render_template("login.html", title="Login")
@@ -81,11 +110,17 @@ def search_genre():
     else:
         filtered_movies = [movie for movie in movies if movie.genre == genre]
     if role == 'Customer':
-        return render_template("customer_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+        customer_serialized = session.get('customer')
+        customer = pickle.loads(customer_serialized)
+        return render_template("customer_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'], customer=customer)
     elif role == 'Admin':
-        return render_template("admin_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+        admin_serialized = session.get('admin')
+        admin = pickle.loads(admin_serialized)
+        return render_template("admin_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'], admin=admin)
     elif role == 'Staff':
-        return render_template("staff_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+        staff_serialized = session.get('staff')
+        staff = pickle.loads(staff_serialized)
+        return render_template("staff_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'], staff=staff)
     else:
         return render_template("home.html", filtered_movies = filtered_movies)
 
@@ -99,11 +134,17 @@ def search_lang():
     else:
         filtered_movies = [movie for movie in movies if movie.language == lang]
     if role == 'Customer':
-        return render_template("customer_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+        customer_serialized = session.get('customer')
+        customer = pickle.loads(customer_serialized)
+        return render_template("customer_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'], customer=customer)
     elif role == 'Admin':
-        return render_template("admin_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+        admin_serialized = session.get('admin')
+        admin = pickle.loads(admin_serialized)
+        return render_template("admin_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'], admin=admin)
     elif role == 'Staff':
-        return render_template("staff_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+        staff_serialized = session.get('staff')
+        staff = pickle.loads(staff_serialized)
+        return render_template("staff_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'], staff=staff)
     else:
         return render_template("home.html", filtered_movies = filtered_movies)
 
@@ -117,11 +158,17 @@ def search_date():
     else:
         filtered_movies = [movie for movie in movies if movie.releaseDate == date]
     if role == 'Customer':
-        return render_template("customer_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+        customer_serialized = session.get('customer')
+        customer = pickle.loads(customer_serialized)
+        return render_template("customer_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'], customer=customer)
     elif role == 'Admin':
-        return render_template("admin_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+        admin_serialized = session.get('admin')
+        admin = pickle.loads(admin_serialized)
+        return render_template("admin_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'], admin=admin)
     elif role == 'Staff':
-        return render_template("staff_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+        staff_serialized = session.get('staff')
+        staff = pickle.loads(staff_serialized)
+        return render_template("staff_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'], staff=staff)
     else:
         return render_template("home.html", filtered_movies = filtered_movies)
 
@@ -135,25 +182,44 @@ def search_title():
     else:
         filtered_movies = [movie for movie in movies if movie.title == title]
     if role == 'Customer':
-        return render_template("customer_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+        customer_serialized = session.get('customer')
+        customer = pickle.loads(customer_serialized)
+        return render_template("customer_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'], customer=customer)
     elif role == 'Admin':
-        return render_template("admin_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+        admin_serialized = session.get('admin')
+        admin = pickle.loads(admin_serialized)
+        return render_template("admin_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'], admin=admin)
     elif role == 'Staff':
-        return render_template("staff_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+        staff_serialized = session.get('staff')
+        staff = pickle.loads(staff_serialized)
+        return render_template("staff_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'], staff=staff)
     else:
         return render_template("home.html", filtered_movies = filtered_movies)
 
 @app.route('/movie_detail', methods=['GET'])
 def movie_detail():
     role = session.get('role')
-    customer_serialized = session.get('customer')
-    customer = pickle.loads(customer_serialized)
-    movie_id = request.args.get('movie_id')
-    movie = controller.search_movie_by_id(int(movie_id))
-    title=movie.title
-    # Use the role as needed in this route
-    return render_template("movie_detail.html", title=title, movie=movie, movie_id=movie_id, role=role, customer=customer)
-
+    if role == 'Customer':
+        customer_serialized = session.get('customer')
+        customer = pickle.loads(customer_serialized)
+        movie_id = request.args.get('movie_id')
+        movie = controller.search_movie_by_id(int(movie_id))
+        title=movie.title
+        return render_template("movie_detail.html", title=title, movie=movie, movie_id=movie_id, role=role, customer=customer)
+    if role == 'Admin':
+        admin_serialized = session.get('admin')
+        admin = pickle.loads(admin_serialized)
+        movie_id = request.args.get('movie_id')
+        movie = controller.search_movie_by_id(int(movie_id))
+        title=movie.title
+        return render_template("movie_detail.html", title=title, movie=movie, movie_id=movie_id, role=role, admin=admin)
+    if role == 'Staff':
+        staff_serialized = session.get('staff')
+        staff = pickle.loads(staff_serialized)
+        movie_id = request.args.get('movie_id')
+        movie = controller.search_movie_by_id(int(movie_id))
+        title=movie.title
+        return render_template("movie_detail.html", title=title, movie=movie, movie_id=movie_id, role=role, staff=staff)
 
 @app.route("/test")
 def test():

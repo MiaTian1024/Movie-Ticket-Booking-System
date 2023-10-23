@@ -11,6 +11,16 @@
   width: 100%;
   margin: 0 auto;
 }
+
+.nav span{
+  font-size: 18px;
+  margin-left: 5px;
+  padding: 5px 15px;
+  background-color: black;
+  border: 1px solid #999;
+  border-radius: 4px;
+  color:#999;
+}
 .nav,
 .nav_item {
   display: flex;
@@ -184,6 +194,18 @@
     font-weight: 400;
     text-transform: capitalize;
   }
+
+  .info-box a{
+    position: absolute;
+    bottom: 0px;
+    left: 240px;
+    font-size: 22px;
+    padding: 5px 30px;
+    background-color: black;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    color:#ffffff;
+    }
 
   .filters {
     width: 40%;

@@ -6,9 +6,7 @@
 /* other css file imports */
 @import url("css/home.css");
 @import url("css/login.css"); 
-@import url("css/dashboard.css");
-@import url("css/bookings.css");
-@import url("css/newBooking.css");
+@import url("css/movie.css");
 
 
 /* CSS variables for reusablity across all files (including above imported) */

@@ -43,14 +43,14 @@ class Controller:
         # Logic for admin login
         for admin in self.__admins:
             if admin.login(email, password):
-                return True
+                return admin
         return False
     
     def staff_login(self, email: str, password:str) -> bool: 
         # Logic for customer login
         for staff in self.__staffs:
             if staff.login(email, password):
-                return True
+                return staff
         return False
     
     def search_movie_by_id(self, id):
