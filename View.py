@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, session, jsonify, redirect, url_for
 import datetime
+import pickle
 
 
 from Controller import Controller
@@ -43,8 +44,11 @@ def login():
         movie_list = controller.get_movie_list()
         if role == "customer":
             if controller.customer_login(email, password):
+                customer = controller.customer_login(email, password)               
+                customer_serialized = pickle.dumps(customer)
+                session['customer'] = customer_serialized
                 session['role'] = 'Customer'
-                return render_template("customer_home.html", movie_list=movie_list, role=session['role'])
+                return render_template("customer_home.html", movie_list=movie_list, role=session['role'], customer=customer)
             msg = "Login failed, Please try again"
             return render_template("login.html", msg = msg, title="Login")
         if role == "admin":
@@ -138,6 +142,18 @@ def search_title():
         return render_template("staff_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
     else:
         return render_template("home.html", filtered_movies = filtered_movies)
+
+@app.route('/movie_detail', methods=['GET'])
+def movie_detail():
+    role = session.get('role')
+    customer_serialized = session.get('customer')
+    customer = pickle.loads(customer_serialized)
+    movie_id = request.args.get('movie_id')
+    movie = controller.search_movie_by_id(int(movie_id))
+    title=movie.title
+    # Use the role as needed in this route
+    return render_template("movie_detail.html", title=title, movie=movie, movie_id=movie_id, role=role, customer=customer)
+
 
 @app.route("/test")
 def test():

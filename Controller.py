@@ -32,11 +32,11 @@ class Controller:
         self.__customers.append(new_customer)
         return True
 
-    def customer_login(self, email: str, password:str) -> bool: 
+    def customer_login(self, email: str, password:str): 
         # Logic for customer login
         for customer in self.__customers:
             if customer.login(email, password):
-                return True
+                return customer
         return False
     
     def admin_login(self, email: str, password:str) -> bool: 
@@ -53,6 +53,12 @@ class Controller:
                 return True
         return False
     
+    def search_movie_by_id(self, id):
+        for movie in self.__movies:
+            if movie.movieID == id:
+                return movie       
+        return None
+        
 
     def search_movie_by_title(self, title):
         results = []

@@ -6,7 +6,7 @@ from datetime import datetime, date
 class User(ABC):
     # The abstract user class
     def __init__(self, username: str, email: str, password: str) -> None:   
-        self._username = username
+        self.username = username
         self._email = email
         self._password = password
 
@@ -111,12 +111,19 @@ class Guest():
         return Customer(username, email, password)   
 
 class Movie:
+    nextID = 1000
     def __init__(self, title: str, language: str, genre: str, releaseDate: datetime) -> None:
+        self.__movieID = Movie.nextID
         self.__title = title
         self.__language = language
         self.__genre = genre
         self.__releaseDate = releaseDate
         self.__screeningList: List['Screening'] = []
+        Movie.nextID += 1
+
+    @property
+    def movieID(self,):
+        return self.__movieID
 
     @property
     def title(self,):
