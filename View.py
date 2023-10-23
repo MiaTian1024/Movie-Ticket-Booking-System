@@ -1,10 +1,13 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask import Flask, render_template, request, session, jsonify, redirect, url_for
 import datetime
 
 
 from Controller import Controller
 
 app = Flask(__name__)
+
+# Set a secret key for session management
+app.config['SECRET_KEY'] = 'your_secret_key_here'
 
 #Date time global variables for queries
 today=datetime.date.today()
@@ -16,6 +19,7 @@ controller = Controller()
 def home():
     movie_list = controller.get_movie_list()
     return render_template("home.html", movie_list=movie_list, title="homepage")
+
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -36,62 +40,104 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
         role = request.form.get('role')
+        movie_list = controller.get_movie_list()
         if role == "customer":
             if controller.customer_login(email, password):
-                return render_template("customer_home.html")
+                session['role'] = 'Customer'
+                return render_template("customer_home.html", movie_list=movie_list, role=session['role'])
             msg = "Login failed, Please try again"
             return render_template("login.html", msg = msg, title="Login")
         if role == "admin":
             if controller.admin_login(email, password):
-                return render_template("admin_home.html")
+                session['role'] = 'Admin'
+                return render_template("admin_home.html", movie_list=movie_list, role=session['role'])
             msg = "Login failed, Please try again"
             return render_template("login.html", msg = msg, title="Login")
         if role == "staff":
             if controller.staff_login(email, password):
-                return render_template("staff_home.html")
+                session['role'] = 'Staff'
+                return render_template("staff_home.html", movie_list=movie_list, role=session['role'])
             msg = "Login failed, Please try again"
             return render_template("login.html", msg = msg, title="Login")
     return render_template("login.html", title="Login")
 
+@app.route('/logout', methods=['GET'])
+def logout():
+    # Clear the session data
+    session.clear()
+    return redirect(url_for('login'))
+
 @app.route("/search_genre", methods=['POST'])
 def search_genre():
+    role = session.get('role')
     genre = request.form.get('genre')
     movies = controller.get_movie_list()
     if genre == 'All':
         filtered_movies = movies
     else:
         filtered_movies = [movie for movie in movies if movie.genre == genre]
-    return render_template("home.html", filtered_movies = filtered_movies)
+    if role == 'Customer':
+        return render_template("customer_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+    elif role == 'Admin':
+        return render_template("admin_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+    elif role == 'Staff':
+        return render_template("staff_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+    else:
+        return render_template("home.html", filtered_movies = filtered_movies)
 
 @app.route("/search_lang", methods=['POST'])
 def search_lang():
+    role = session.get('role')
     lang = request.form.get('lang')
     movies = controller.get_movie_list()
     if lang == 'All':
         filtered_movies = movies
     else:
         filtered_movies = [movie for movie in movies if movie.language == lang]
-    return render_template("home.html", filtered_movies = filtered_movies)
+    if role == 'Customer':
+        return render_template("customer_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+    elif role == 'Admin':
+        return render_template("admin_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+    elif role == 'Staff':
+        return render_template("staff_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+    else:
+        return render_template("home.html", filtered_movies = filtered_movies)
 
 @app.route("/search_date", methods=['POST'])
 def search_date():
+    role = session.get('role')
     date = request.form.get('date')
     movies = controller.get_movie_list()
     if date == 'All':
         filtered_movies = movies
     else:
         filtered_movies = [movie for movie in movies if movie.releaseDate == date]
-    return render_template("home.html", filtered_movies = filtered_movies)
+    if role == 'Customer':
+        return render_template("customer_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+    elif role == 'Admin':
+        return render_template("admin_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+    elif role == 'Staff':
+        return render_template("staff_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+    else:
+        return render_template("home.html", filtered_movies = filtered_movies)
 
 @app.route("/search_title", methods=['POST'])
 def search_title():
+    role = session.get('role')
     title = request.form.get('title')
     movies = controller.get_movie_list()
     if title == 'All':
         filtered_movies = movies
     else:
         filtered_movies = [movie for movie in movies if movie.title == title]
-    return render_template("home.html", filtered_movies = filtered_movies)
+    if role == 'Customer':
+        return render_template("customer_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+    elif role == 'Admin':
+        return render_template("admin_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+    elif role == 'Staff':
+        return render_template("staff_home.html", filtered_movies = filtered_movies,  movie_list=movies, role=session['role'])
+    else:
+        return render_template("home.html", filtered_movies = filtered_movies)
 
 @app.route("/test")
 def test():
