@@ -41,6 +41,15 @@
 
 <div class="movie-container">
 
+  {% if msg %}
+  <div class="overlay_popup">
+      <div class="popup">
+          <p>{{ msg }}</p>
+          <button onclick="closePopup()">Close</button>
+      </div>
+  </div>
+  {% endif %}
+
 <div class="content">
     <div class="movies">
       <div class="cards" data-name="{{ movie.title }}">
@@ -49,7 +58,6 @@
         </div>
         <div class="info-box">
           <h6 class="title">{{ movie.title }}</h6>
-          <h6 class="info">Information of the movie</h6>
           <h6 class="lang">Language: {{ movie.language }}</h6>
           <h6 class="genre">Genre: {{ movie.genre }}</h6>
           <h6 class="date">Release Date{{ movie.releaseDate }}</h6>
@@ -57,23 +65,70 @@
       </div>
       
       <div class="schedules">
-        <h3>2023-03-03</h3>
-        <h3>2023-03-03</h3>
-        <div class="item">
-            <form id="filter-form" method="POST" action="/search_date">
-              <input type="radio" id="date-all" name="date" value="All" checked>
-              <label for="date-all">All</label>
-          
-              <input type="radio" id="date-1" name="date" value="2023">
-              <label for="date-1">2023</label>
-          
-              <input type="radio" id="date-2" name="date" value="2022">
-              <label for="date-2">2022</label>
-          
-              <input type="radio" id="date-3" name="date" value="2021">
-              <label for="date-3">2021</label>
-            </form>
-          </div>
+        <div class="schedule-info">
+          <h2>Movie schedules</h2>
+        </div>
+        <form id="filter-form" method="POST" action="/search_date">   
+           <div class="item">
+              <div class="form-item">
+                <input type="radio" id="date-all" name="date" value="All" checked>
+                <label for="date-all">
+                  <h3>2023-03-03</h3>
+                  <h3>7:00-9:00</h3>
+                </label>
+              </div>
+
+              <div class="form-item">
+                <input type="radio" id="date-1" name="date" value="2023">
+                <label for="date-1">
+                  <h3>2023-03-03</h3>
+                  <h3>7:00-9:00</h3>
+                </label>
+              </div>
+
+              <div class="form-item">
+                <input type="radio" id="date-2" name="date" value="2022">
+                <label for="date-2">
+                  <h3>2023-03-03</h3>
+                  <h3>7:00-9:00</h3>
+                </label>
+              </div>
+            </div>
+        </form> 
+        
+        {% if role == "Admin" %}
+        <div class="add-screening">
+          <button id="openModalButton" class="add-screening-button">Add A Screening</button>
+          <div id="myModal" class="modal">
+              <div class="modal-content">
+                  <span class="close" id="closeModalButton">&times;</span>
+                  <h2>Add A New Movie</h2>
+                    <form action="/add_screening" method="post">
+                      <div class="form-group">
+                          <label for="title">Title:</label>
+                          <input type="text" id="title" name="title" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="language">Language:</label>
+                          <input type="text" id="language" name="language" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="genre">Genre:</label>
+                          <input type="text" id="genre" name="genre" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="releaseDate">Release Date:</label>
+                          <input type="date" id="releaseDate" name="releaseDate" required>
+                      </div>
+                      <div class="form-group">
+                          <button type="submit">Add Movie</button>
+                      </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+      {% endif %}
+
       </div>
 
     </div>

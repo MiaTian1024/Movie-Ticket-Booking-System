@@ -21,6 +21,15 @@
 
 <div class="home-container">
 
+  {% if msg %}
+  <div class="overlay_popup">
+      <div class="popup">
+          <p>{{ msg }}</p>
+          <button onclick="closePopup()">Close</button>
+      </div>
+  </div>
+  {% endif %}
+
   <div class="search-box">
     <i class="bx bx-search"></i>
     <input type="text" placeholder="Search a movie" />
@@ -67,16 +76,16 @@
 
     <div class="filters">   
       <div class="filter-box">
-        <h3>Add Movie</h3>
-        <i class='bx bx-layer-plus'></i>
+        <h3>Admin Menu</h3>
+        <i class='bx bx-menu'></i>
       </div>
       <div class="add_items">
-        <div class="card" style="height:120px;">         
-          <button id="openModalButton">Add New Movie</button>
+        <div class="card" style="height:150px;">         
+          <button id="openModalButton" class="add-movie-button">Add A Movie</button>
           <div id="myModal" class="modal">
               <div class="modal-content">
                   <span class="close" id="closeModalButton">&times;</span>
-                  <h2>Add a New Movie</h2>
+                  <h2>Add A New Movie</h2>
                     <form action="/add_movie" method="post" class="add-movie">
                       <div class="form-group">
                           <label for="title">Title:</label>
@@ -100,6 +109,36 @@
                     </form>
                 </div>
             </div>
+
+            <button id="openModalButton" class="add-movie-button">Cancel A Movie</button>
+            <div id="myModal" class="modal">
+              <div class="modal-content">
+                  <span class="close" id="closeModalButton">&times;</span>
+                  <h2>Add a New Movie</h2>
+                    <form action="/cancel_movie" method="post" class="add-movie">
+                      <div class="form-group">
+                          <label for="title">Title:</label>
+                          <input type="text" id="title" name="title" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="language">Language:</label>
+                          <input type="text" id="language" name="language" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="genre">Genre:</label>
+                          <input type="text" id="genre" name="genre" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="releaseDate">Release Date:</label>
+                          <input type="date" id="releaseDate" name="releaseDate" required>
+                      </div>
+                      <div class="form-group">
+                          <button type="submit">Cancel Movie</button>
+                      </div>
+                    </form>
+                </div>
+            </div>
+
         </div>
 
       <div class="filter-box">
@@ -140,8 +179,8 @@
               <input type="radio" id="lang-2" name="lang" value="Chinese">
               <label for="lang-2">Chinese</label>
           
-              <input type="radio" id="lang-3" name="lang" value="French">
-              <label for="lang-3">French</label>
+              <input type="radio" id="lang-3" name="lang" value="Spanish">
+              <label for="lang-3">Spanish</label>
           
               <button type="submit">Filter</button>
             </form> 
@@ -162,6 +201,9 @@
           
               <input type="radio" id="date-3" name="date" value="2021">
               <label for="date-3">2021</label>
+
+              <input type="radio" id="date-4" name="date" value="2020">
+              <label for="date-4">2020</label>
           
               <button type="submit">Filter</button>
             </form>

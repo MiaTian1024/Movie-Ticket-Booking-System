@@ -120,36 +120,71 @@
   }
 
   .movies .schedules{
-    background-color: aqua;
-    margin-top:10px;
+    margin-top: 30px;
+    border-top: 2px solid #ccc;
+  }
+
+  .schedules .schedule-info{
+    margin:20px auto;
+    font-size: 24px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    color: #fff;
   }
 
   .schedules .item{
-    position: relative;
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    justify-content:center;
+    margin-top: 30px;
   }
 
+  .schedules .item .form-item{
+    margin-right: 30px;
+    background-color: #ccc;
+    padding:10px;
+    cursor: pointer;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .schedules .item .form-item:hover {
+    background-color: #678bac;
+  }
 
   .schedules input[type="radio"] {
     display: none; /* Hide the default radio button */
   }
 
   .schedules input[type="radio"] + label {
-      cursor: pointer;
-      padding: 5px 15px;
-      background-color: #f2f2f2;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      margin-right: 10px;
+    cursor: pointer;
   }
 
-  .schedules input[type="radio"] + label:hover {
-      background-color: #e0e0e0;
+  .add-screening{
+    display: flex;
+    margin: 30px auto;
   }
 
-  .schedules input[type="radio"]:checked + label {
-      background-color: var(--nav-color);
-      color: #fff;
+  .add-screening-button{
+    background-color: black;;
+    color: #999;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 300px;
+    height:70px;
+    align-items: center;
+    font-size: 20px;
+    margin: 10px auto;
   }
+
+  .add-screening-button:hover {
+    background-color: #0056b3;
+  }
+
+  .add-screening-button:active {
+    background-color: #003a6e;
+  }
+

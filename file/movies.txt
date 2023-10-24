@@ -1,3 +1,5 @@
-SPIDERMAN, English, Action, 2022
-JOKER, English, Crime, 2021
-IRONMAN, English, Action, 2023
+SPIDERMAN, English, Action, 2020-02-10
+JOKER, English, Drama, 2021-05-06
+IRONMAN, English, Action, 2022-04-09
+FADING MEMORIES, Spanish, Drama, 2023-05-15
+COMEDY CENTRAL, Chinese, Comedy, 2022-03-10

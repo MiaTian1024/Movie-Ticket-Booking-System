@@ -43,3 +43,7 @@ window.addEventListener('click', function(event) {
         modal.style.display = 'none';
     }
 });
+
+function closePopup() {
+    document.querySelector('.overlay_popup').style.display = 'none';
+}

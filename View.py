@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, jsonify, redirect, url_for
-import datetime
+from datetime import datetime
 import pickle
 
 
@@ -9,10 +9,6 @@ app = Flask(__name__)
 
 # Set a secret key for session management
 app.config['SECRET_KEY'] = 'your_secret_key_here'
-
-#Date time global variables for queries
-today=datetime.date.today()
-today_string=today.strftime("%Y-%m-%d")
 
 controller = Controller()
 
@@ -156,7 +152,12 @@ def search_date():
     if date == 'All':
         filtered_movies = movies
     else:
-        filtered_movies = [movie for movie in movies if movie.releaseDate == date]
+        filtered_movies = []
+        for movie in movies:
+            releaseDate = datetime.strptime(movie.releaseDate, '%Y-%m-%d')
+            year = releaseDate.year
+            if str(year) == date:
+                filtered_movies.append(movie)
     if role == 'Customer':
         customer_serialized = session.get('customer')
         customer = pickle.loads(customer_serialized)
@@ -220,6 +221,23 @@ def movie_detail():
         movie = controller.search_movie_by_id(int(movie_id))
         title=movie.title
         return render_template("movie_detail.html", title=title, movie=movie, movie_id=movie_id, role=role, staff=staff)
+
+@app.route('/add_movie', methods=['POST'])
+def add_movie():
+    title = request.form.get('title')
+    language = request.form.get('language')
+    genre = request.form.get('genre')
+    releaseDate = request.form.get('releaseDate')
+    role = session.get('role')  
+    if role == 'Admin':
+        admin_serialized = session.get('admin')
+        admin = pickle.loads(admin_serialized)
+        if controller.add_movie(admin, title, language, genre, releaseDate):
+            msg="New movie added"
+        else:
+            msg="Add movie failed"
+        movie_list = controller.get_movie_list()
+        return render_template("admin_home.html", msg=msg, movie_list=movie_list, role=role, admin=admin, title="admin_homepage")
 
 @app.route("/test")
 def test():
