@@ -53,31 +53,56 @@
 
   <div class="content">
     
-    <div class="cinema-hall">
-        <h3>Hall-1 (120 seats)</h3>
-        <div class="seating-plan">
-          {% for row in seats.row %}
-            <div class="row">
-              <span class="row-number">{{ row }}</span>
-              {% for col in seats.column %}
-                <div class="seat">
-                  {% if seat in booked_seats %}
-                    <div class="booked">B</div>
-                  {% else %}
-                    <div class="not-booked">N</div>
-                  {% endif %}
-                </div>
-              {% endfor %}
-            </div>
+    <div class="movie-container">
+      <label>Pick a movie:</label>
+      <select id="movie">
+        <option value="10">Avengers: Endgame ($10)</option>
+        <option value="12">Joker ($12)</option>
+        <option value="8">Toy Story 4 ($8)</option>
+        <option value="9">The Lion King ($9)</option>
+      </select>
+    </div>
+
+    <ul class="showcase">
+      <li>
+        <div class="seat"></div>
+        <small>N/A</small>
+      </li>
+      <li>
+        <div class="seat selected"></div>
+        <small>Selected</small>
+      </li>
+      <li>
+        <div class="seat occupied"></div>
+        <small>Occupied</small>
+      </li>
+    </ul>
+
+    <div class="container">
+      <div class="screen"></div>
+
+      {% for row in rows%}
+        <div class="row">
+          {% for col in cols%}
+          <div class="seat"></div> 
           {% endfor %}
-        </div>
       </div>
+      {% endfor %}
+
+    </div>
+
+    <p class="text">
+      You have selected <span id="count">0</span> seats for a price of $<span
+        id="total"
+        >0</span
+      >
+    </p>
 
   </div>
 
 
 </div>
 
-<script src="../static/js/movie.js"></script>
+<script src="../static/js/seat.js"></script>
 
 {% endblock %}

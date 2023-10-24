@@ -108,10 +108,9 @@ class Controller:
                 return hall      
         return None
     
-    def search_screening_by_id(self, screeningID):
-        for screening in self.__screenings:
-            if screening.screeningID == screeningID:
-                return screening      
+    def search_screening_by_id(self, movie: 'Movie', screeningID):
+        if movie.search_screening(screeningID):
+            return movie.search_screening(screeningID)        
         return None
 
     def view_movie_details(self, movie: 'Movie') -> str:
@@ -208,4 +207,6 @@ if __name__ == '__main__':
     print(movie)
     screenings=movie.getScreeningList
     print(screenings)
+    screening = controller.search_screening_by_id(100)
+    print(screening)
  

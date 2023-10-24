@@ -267,13 +267,23 @@ def add_screening():
 @app.route('/screening_seat', methods=['POST'])
 def screening_seat(): 
     screeningID = request.form.get('screeningID')
-    screening = controller.search_screening_by_id(int(screeningID))
-    hall = screening.hall
-    seats = hall.listOfSeats
     movieID = request.form.get('movieID')
+    movie = controller.search_movie_by_id(int(movieID)) 
+    screening = controller.search_screening_by_id(movie, int(screeningID))
+    hall = screening.hall()
+    seats = hall.listOfSeats
+    rows = []
+    for seat in seats:
+        if seat.row not in rows:
+            rows.append(seat.row)
+    print(rows)
+    cols = []
+    for seat in seats:
+        if seat.column not in cols:
+            cols.append(seat.column)
+    print(cols)
     role = session.get('role')
-    movie = controller.search_movie_by_id(int(movieID))  
-    return render_template("seat.html", seats=seats, movie=movie,  role=role, title="Seat")
+    return render_template("seat.html", rows=rows, cols=cols,seats=seats, movie=movie,  role=role, title="Seat")
 
 
 @app.route("/test")

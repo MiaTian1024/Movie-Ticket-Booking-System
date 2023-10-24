@@ -164,6 +164,12 @@ class Movie:
         self.__screeningList.append(screening)
         return True
     
+    def search_screening(self, screeningID):
+        for screening in self.__screeningList:
+            if screening.screeningID == screeningID:
+                return screening
+        return None
+    
     
     def get_info(self) -> str:
         return f"Title: {self.__title}, Language: {self.__language}, Genre: {self.__genre}, Release Date: {self.__releaseDate}"
