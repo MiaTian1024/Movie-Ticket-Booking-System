@@ -50,6 +50,13 @@
   </div>
   {% endif %}
 
+  {% if screenglist %}
+  {% for screening in screenglist %}
+  <h3>{{screening.endTime}}</h3>
+  <h3>{{screening.startTime}}</h3>
+  {% endfor %}
+  {% endif %}
+
 <div class="content">
     <div class="movies">
       <div class="cards" data-name="{{ movie.title }}">
@@ -105,23 +112,27 @@
                   <h2>Add A New Movie</h2>
                     <form action="/add_screening" method="post">
                       <div class="form-group">
-                          <label for="title">Title:</label>
-                          <input type="text" id="title" name="title" required>
+                        <label for="movie_id">Movie:</label>
+                        <input type="text" id="movie_id" name="movie_id" value="{{ movie.movieID }}">
                       </div>
                       <div class="form-group">
-                          <label for="language">Language:</label>
-                          <input type="text" id="language" name="language" required>
+                          <label for="date">Date:</label>
+                          <input type="text" id="date" name="date" required>
                       </div>
                       <div class="form-group">
-                          <label for="genre">Genre:</label>
-                          <input type="text" id="genre" name="genre" required>
+                          <label for="start">Start Time:</label>
+                          <input type="date" id="start" name="startTime" required>
                       </div>
                       <div class="form-group">
-                          <label for="releaseDate">Release Date:</label>
-                          <input type="date" id="releaseDate" name="releaseDate" required>
+                          <label for="end">End Time:</label>
+                          <input type="date" id="end" name="endTime" required>
                       </div>
                       <div class="form-group">
-                          <button type="submit">Add Movie</button>
+                          <label for="hall">Hall Name:</label>
+                          <input type="text" id="hall" name="hallName" required>
+                      </div>
+                      <div class="form-group">
+                          <button type="submit">Add Screening</button>
                       </div>
                     </form>
                 </div>

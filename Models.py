@@ -162,7 +162,8 @@ class Movie:
     
     def add_screening(self, screening: 'Screening') -> bool:
         self.__screeningList.append(screening)
-        pass
+        return True
+    
     
     def get_info(self) -> str:
         return f"Title: {self.__title}, Language: {self.__language}, Genre: {self.__genre}, Release Date: {self.__releaseDate}"
@@ -174,6 +175,18 @@ class Screening:
         self.__endTime = endTime
         self.__hall = hall
 
+    @property
+    def screeningDate(self,):
+        return self.__screeningDate
+    
+    @property
+    def startTime(self,):
+        return self.__startTime
+    
+    @property
+    def endTime(self,):
+        return self.__endTime
+
 class Cinema:
     def __init__(self, name: str, total_halls: int) -> None:
         self._name = name
@@ -184,6 +197,15 @@ class CinemaHall:
         self.__name = name
         self.__totalSeats = totalSeats
         self.__listOfSeats: List['ScreeningSeat'] = []
+
+    @property
+    def name(self,):
+        return self.__name
+    
+    @property
+    def totalSeats(self,):
+        return self.__totalSeats
+    
 
 class Seat(ABC):
     def __init__(self, row: int, column: int) -> None:

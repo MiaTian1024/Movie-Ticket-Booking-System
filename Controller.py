@@ -2,7 +2,7 @@
 # Import
 from typing import List
 from datetime import datetime, date
-from Models import Guest, Customer, Admin, FrontDeskStaff, Movie, Screening
+from Models import Guest, Customer, Admin, FrontDeskStaff, Movie, Screening, CinemaHall
 from ReadFile import ReadFile
 
 # Read files
@@ -11,6 +11,7 @@ customer_obj = file.getCustomerObj("file/customer.txt")
 movie_obj = file.getMovieObj("file/movies.txt")
 admin_obj = file.getAdminObj("file/admin.txt")
 staff_obj = file.getStaffObj("file/staff.txt")
+hall_obj = file.getHallObj("file/hall.txt")
 
 
 # MovieTicketSystemController class handles user interactions and system operations.
@@ -20,6 +21,7 @@ class Controller:
         self.__customers: List['Customer'] = customer_obj
         self.__admins: List['Admin'] = admin_obj
         self.__staffs: List['FrontDeskStaff'] = staff_obj
+        self.__halls: List['CinemaHall'] = hall_obj
         self.__screenings: List['Screening'] = []
 
     def register(self, username: str, email: str, password: str) -> bool:
@@ -130,10 +132,10 @@ class Controller:
             return True
         return False # Movie already exists
        
-    def add_screening(self, admin: 'Admin', screeningDate: date, startTime: datetime, endTime: datetime, hall: 'CinemaHall') -> bool:
+    def add_screening(self, admin: 'Admin', movie: 'Movie', screeningDate: date, startTime: datetime, endTime: datetime, hall: 'CinemaHall') -> bool:
         new_screening = admin.addScreening(screeningDate, startTime, endTime, hall)
-        if new_screening not in self.__screenings:
-            self.__screenings.append(new_screening)
+        if new_screening not in movie.getScreeningList():
+            movie.add_screening(new_screening)
             return True
         return False # Screening already exists
 
@@ -170,6 +172,12 @@ class Controller:
         # Method to send a cancel booking notification.
       
         pass
+
+    def search_hall(self, hallName):
+        for hall in self.__halls:
+            if hall.name == hallName:
+                return hall      
+        return None
 
 
 if __name__ == '__main__':
