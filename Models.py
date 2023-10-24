@@ -212,17 +212,12 @@ class CinemaHall:
     def totalSeats(self,):
         return self.__totalSeats
     
-
-class Seat(ABC):
-    def __init__(self, row: int, column: int) -> None:
+class ScreeningSeat():  
+    def __init__(self, row: int, column: int, price: float, booked: bool = False) -> None:
         self.row = row
         self.column = column
-
-class ScreeningSeat(Seat):  
-    def __init__(self, row: int, column: int, price: float, booked: bool = False) -> None:
-        super().__init__(row, column)
-        self._price = price
-        self._booked = booked
+        self.price = price
+        self.booked = booked
 
 class Booking:
     def __init__(self, bookingNum: str, customer: 'Customer', numberOfSeats: int, createdOn: date, status: int, 

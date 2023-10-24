@@ -267,6 +267,9 @@ def add_screening():
 @app.route('/screening_seat', methods=['POST'])
 def screening_seat(): 
     screeningID = request.form.get('screeningID')
+    screening = controller.search_screening_by_id(int(screeningID))
+    hall = screening.hall
+    hall_name = hall.name
     movieID = request.form.get('movieID')
     role = session.get('role')
     movie_id = request.form.get('movie_id')
