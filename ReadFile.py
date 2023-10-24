@@ -80,6 +80,17 @@ class ReadFile():
             staffObj.append(staff)
         return staffObj
     
+    def getSeatObj(self, file_path):
+        screening_seats = []
+        with open(file_path, 'r') as file:
+            for row, line in enumerate(file, start=1):
+                for column, char in enumerate(line.strip(), start=1):
+                    if char == 'X':
+                        seat = ScreeningSeat(row, column, 10.0)  # Adjust the price as needed
+                        screening_seats.append(seat)
+        file.close()
+        return screening_seats
+    
     def getHallObj(self, file_path):
         # Open and read the movie file
         with open(file_path, 'r') as file:
@@ -88,11 +99,24 @@ class ReadFile():
                 values = line.strip().split(', ')    
                 self.__hallList.append(values)
         file.close()
+        hall_1_seat = self.getSeatObj("file/hall-1-seats.txt")
+        hall_2_seat = self.getSeatObj("file/hall-2-seats.txt")
+        hall_3_seat = self.getSeatObj("file/hall-3-seats.txt")
+        hall_4_seat = self.getSeatObj("file/hall-4-seats.txt")
         # create movie Object
         hallObj = []
         for record in self.__hallList:
             name, totalSeats = record
             hall = CinemaHall(name, totalSeats)
+            # Assign seat data based on hall name
+            if name == "Hall-1":
+                hall.listOfSeats = hall_1_seat
+            elif name == "Hall-2":
+                hall.listOfSeats = hall_2_seat
+            elif name == "Hall-3":
+                hall.listOfSeats = hall_3_seat
+            elif name == "Hall-4":
+                hall.listOfSeats = hall_4_seat
             hallObj.append(hall)
         return hallObj
     
@@ -105,23 +129,12 @@ class ReadFile():
         file.close()
         hall_obj = self.getHallObj("file/hall.txt")
         screeningObj = []
-
         for i, record in enumerate(self.__screeningList):
             screeningDate, startTime, endTime = record
             hall = hall_obj[i % len(hall_obj)]  # Cyclically repeat halls
             screening = Screening(screeningDate, startTime, endTime, hall)
             screeningObj.append(screening)
-
         return screeningObj
     
-    def getSeatObj(self, file_path):
-        screening_seats = []
-        with open(file_path, 'r') as file:
-            for row, line in enumerate(file, start=1):
-                for column, char in enumerate(line.strip(), start=1):
-                    if char == 'X':
-                        seat = ScreeningSeat(row, column, 10.0)  # Adjust the price as needed
-                        screening_seats.append(seat)
-        file.close()
-        return screening_seats
+    
 

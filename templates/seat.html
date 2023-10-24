@@ -56,10 +56,10 @@
     <div class="cinema-hall">
         <h3>Hall-1 (120 seats)</h3>
         <div class="seating-plan">
-          {% for row in range(1, 11) %}
+          {% for row in seats.row %}
             <div class="row">
               <span class="row-number">{{ row }}</span>
-              {% for seat in range(1, 13) %}
+              {% for col in seats.column %}
                 <div class="seat">
                   {% if seat in booked_seats %}
                     <div class="booked">B</div>

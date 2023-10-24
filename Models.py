@@ -179,23 +179,22 @@ class Screening:
         Screening.nextID += 1
 
     @property
-    def screeningID(self,):
+    def screeningID(self):
         return self.__screeningID
 
     @property
-    def screeningDate(self,):
+    def screeningDate(self):
         return self.__screeningDate
     
     @property
-    def startTime(self,):
+    def startTime(self):
         return self.__startTime
     
     @property
-    def endTime(self,):
+    def endTime(self):
         return self.__endTime
     
-    @property
-    def hall(self,):
+    def hall(self):
         return self.__hall
 
 class CinemaHall:
@@ -205,12 +204,15 @@ class CinemaHall:
         self.__listOfSeats: List['ScreeningSeat'] = []
 
     @property
-    def name(self,):
+    def name(self):
         return self.__name
     
     @property
-    def totalSeats(self,):
+    def totalSeats(self):
         return self.__totalSeats
+    
+    def listOfSeats(self):
+        return self.__listOfSeats
     
 class ScreeningSeat():  
     def __init__(self, row: int, column: int, price: float, booked: bool = False) -> None:

@@ -13,8 +13,6 @@ admin_obj = file.getAdminObj("file/admin.txt")
 staff_obj = file.getStaffObj("file/staff.txt")
 hall_obj = file.getHallObj("file/hall.txt")
 screening_obj = file.getScreeningObj("file/screening.txt")
-hall_1_seat_obj = file.getSeatObj("file/hall-1-seats.txt")
-hall_2_seat_obj = file.getSeatObj("file/hall-2-seats.txt")
 
 # Get Hall 
 
@@ -27,6 +25,12 @@ class Controller:
         self.__customers: List['Customer'] = customer_obj
         self.__admins: List['Admin'] = admin_obj
         self.__staffs: List['FrontDeskStaff'] = staff_obj
+
+    def halls(self):
+        return self.__halls
+    
+    def screenings(self):
+        return self.__screenings
               
 
     def register(self, username: str, email: str, password: str) -> bool:
@@ -197,7 +201,11 @@ class Controller:
 if __name__ == '__main__':
     controller = Controller()
     result = controller.register("hi","hi@gmail.com", "111")
-    for seat in hall_1_seat_obj:
-        print(seat.row)
-   
+    halls = controller.halls()
+    screenings = controller.screenings()
+    print(screenings)
+    movie = controller.search_movie_by_id(1000)
+    print(movie)
+    screenings=movie.getScreeningList
+    print(screenings)
  
