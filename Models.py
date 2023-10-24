@@ -169,11 +169,18 @@ class Movie:
         return f"Title: {self.__title}, Language: {self.__language}, Genre: {self.__genre}, Release Date: {self.__releaseDate}"
 
 class Screening:
+    nextID = 100
     def __init__(self, screeningDate: date, startTime: datetime, endTime: datetime, hall: 'CinemaHall') -> None:
+        self.__screeningID = Screening.nextID
         self.__screeningDate = screeningDate
         self.__startTime = startTime
         self.__endTime = endTime
         self.__hall = hall
+        Screening.nextID += 1
+
+    @property
+    def screeningID(self,):
+        return self.__screeningID
 
     @property
     def screeningDate(self,):
@@ -186,11 +193,10 @@ class Screening:
     @property
     def endTime(self,):
         return self.__endTime
-
-class Cinema:
-    def __init__(self, name: str, total_halls: int) -> None:
-        self._name = name
-        self._total_halls = total_halls
+    
+    @property
+    def hall(self,):
+        return self.__hall
 
 class CinemaHall:
     def __init__(self, name: str, totalSeats: int):

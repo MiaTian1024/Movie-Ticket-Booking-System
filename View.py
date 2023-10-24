@@ -206,21 +206,24 @@ def movie_detail():
         movie_id = request.args.get('movie_id')
         movie = controller.search_movie_by_id(int(movie_id))
         title=movie.title
-        return render_template("movie_detail.html", title=title, movie=movie, movie_id=movie_id, role=role, customer=customer)
+        screenglist = movie.getScreeningList()
+        return render_template("movie_detail.html", screenglist=screenglist, title=title, movie=movie, movie_id=movie_id, role=role, customer=customer)
     if role == 'Admin':
         admin_serialized = session.get('admin')
         admin = pickle.loads(admin_serialized)
         movie_id = request.args.get('movie_id')
         movie = controller.search_movie_by_id(int(movie_id))
         title=movie.title
-        return render_template("movie_detail.html", title=title, movie=movie, movie_id=movie_id, role=role, admin=admin)
+        screenglist = movie.getScreeningList()
+        return render_template("movie_detail.html", screenglist=screenglist, title=title, movie=movie, movie_id=movie_id, role=role, admin=admin)
     if role == 'Staff':
         staff_serialized = session.get('staff')
         staff = pickle.loads(staff_serialized)
         movie_id = request.args.get('movie_id')
         movie = controller.search_movie_by_id(int(movie_id))
         title=movie.title
-        return render_template("movie_detail.html", title=title, movie=movie, movie_id=movie_id, role=role, staff=staff)
+        screenglist = movie.getScreeningList()
+        return render_template("movie_detail.html", screenglist=screenglist, title=title, movie=movie, movie_id=movie_id, role=role, staff=staff)
 
 @app.route('/add_movie', methods=['POST'])
 def add_movie():
@@ -260,6 +263,24 @@ def add_screening():
         screenglist = movie.getScreeningList()
         return render_template("movie_detail.html", movie=movie, screenglist=screenglist, msg=msg, movie_list=movie_list, role=role, admin=admin, title="admin_homepage")
 
+
+@app.route('/screening_seat', methods=['POST'])
+def screening_seat(): 
+    screeningID = request.form.get('screeningID')
+    movieID = request.form.get('movieID')
+    role = session.get('role')
+    movie_id = request.form.get('movie_id')
+    movie = controller.search_movie_by_id(int(movie_id))  
+    if role == 'Admin':
+        admin_serialized = session.get('admin')
+        admin = pickle.loads(admin_serialized)
+        if controller.add_screening(admin, movie):
+            msg="New screening added"
+        else:
+            msg="Add screening failed"
+        movie_list = controller.get_movie_list()
+        screenglist = movie.getScreeningList()
+        return render_template("seat.html", booked_seats=booked_seats, movie=movie, screenglist=screenglist, msg=msg, movie_list=movie_list, role=role, admin=admin, title="admin_homepage")
 
 @app.route("/test")
 def test():

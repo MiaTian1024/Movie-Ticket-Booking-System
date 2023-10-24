@@ -1,0 +1,45 @@
+.cinema-hall {
+    text-align: center;
+  }
+  
+  .seating-plan {
+    display: inline-block;
+    border: 2px solid #000;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #f0f0f0;
+  }
+  
+  .row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 0;
+  }
+  
+  .row-number {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .seat {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    margin: 0 5px;
+  }
+  
+  .booked {
+    background-color: red;
+    color: white;
+  }
+  
+  .not-booked {
+    background-color: green;
+    color: white;
+  }
+  

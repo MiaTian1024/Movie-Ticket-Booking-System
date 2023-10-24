@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block header %}
+<header class="header">
+  <nav class="nav">
+    <a href="#" class="nav_logo">Lincoln Cinema <span>{{ role }}</span></a>
+    {% if role == "Customer" %}
+    <ul class="nav_items">
+      <li class="nav_item">
+        <a href="/customer_home" class="nav_link">Home</a>
+        <a href="#" class="nav_link">Product</a>
+        <a href="#" class="nav_link">Services</a>
+        <a href="#" class="nav_link">Contact</a>
+      </li>
+    </ul>
+    {% elif role == "Admin" %}
+    <ul class="nav_items">
+        <li class="nav_item">
+          <a href="/admin_home" class="nav_link">Home</a>
+          <a href="#" class="nav_link">Product</a>
+          <a href="#" class="nav_link">Services</a>
+          <a href="#" class="nav_link">Contact</a>
+        </li>
+    </ul>
+    {% else %}
+    <ul class="nav_items">
+        <li class="nav_item">
+        <a href="/staff_home" class="nav_link">Home</a>
+        <a href="#" class="nav_link">Product</a>
+        <a href="#" class="nav_link">Services</a>
+        <a href="#" class="nav_link">Contact</a>
+        </li>
+    </ul>
+    {% endif %}
+    <a class="button" href="/logout">Logout</a>
+  </nav>
+</header>
+{% endblock %}
+
+{% block content %}
+
+<div class="movie-container">
+
+  {% if msg %}
+  <div class="overlay_popup">
+      <div class="popup">
+          <p>{{ msg }}</p>
+          <button onclick="closePopup()">Close</button>
+      </div>
+  </div>
+  {% endif %}
+
+
+  <div class="content">
+    
+    <div class="cinema-hall">
+        <h3>Hall-1 (120 seats)</h3>
+        <div class="seating-plan">
+          {% for row in range(1, 11) %}
+            <div class="row">
+              <span class="row-number">{{ row }}</span>
+              {% for seat in range(1, 13) %}
+                <div class="seat">
+                  {% if seat in booked_seats %}
+                    <div class="booked">B</div>
+                  {% else %}
+                    <div class="not-booked">N</div>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+  </div>
+
+
+</div>
+
+<script src="../static/js/movie.js"></script>
+
+{% endblock %}

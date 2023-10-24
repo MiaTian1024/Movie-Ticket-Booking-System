@@ -12,17 +12,22 @@ movie_obj = file.getMovieObj("file/movies.txt")
 admin_obj = file.getAdminObj("file/admin.txt")
 staff_obj = file.getStaffObj("file/staff.txt")
 hall_obj = file.getHallObj("file/hall.txt")
+screening_obj = file.getScreeningObj("file/screening.txt")
+hall_1_seat_obj = file.getSeatObj("file/hall-1-seats.txt")
+hall_2_seat_obj = file.getSeatObj("file/hall-2-seats.txt")
 
+# Get Hall 
 
 # MovieTicketSystemController class handles user interactions and system operations.
 class Controller:
     def __init__(self) -> None:
+        self.__halls: List['CinemaHall'] = hall_obj
+        self.__screenings: List['Screening'] = screening_obj
         self.__movies: List['Movie'] = movie_obj
         self.__customers: List['Customer'] = customer_obj
         self.__admins: List['Admin'] = admin_obj
         self.__staffs: List['FrontDeskStaff'] = staff_obj
-        self.__halls: List['CinemaHall'] = hall_obj
-        self.__screenings: List['Screening'] = []
+              
 
     def register(self, username: str, email: str, password: str) -> bool:
         # Check if the email is already in use
@@ -92,6 +97,18 @@ class Controller:
     
     def get_movie_list(self) -> str:
         return self.__movies
+    
+    def search_hall(self, hallName):
+        for hall in self.__halls:
+            if hall.name == hallName:
+                return hall      
+        return None
+    
+    def search_screening_by_id(self, screeningID):
+        for screening in self.__screenings:
+            if screening.screeningID == screeningID:
+                return screening      
+        return None
 
     def view_movie_details(self, movie: 'Movie') -> str:
       
@@ -134,6 +151,7 @@ class Controller:
        
     def add_screening(self, admin: 'Admin', movie: 'Movie', screeningDate: date, startTime: datetime, endTime: datetime, hall: 'CinemaHall') -> bool:
         new_screening = admin.addScreening(screeningDate, startTime, endTime, hall)
+        self.__screenings.append(new_screening)
         if new_screening not in movie.getScreeningList():
             movie.add_screening(new_screening)
             return True
@@ -173,16 +191,13 @@ class Controller:
       
         pass
 
-    def search_hall(self, hallName):
-        for hall in self.__halls:
-            if hall.name == hallName:
-                return hall      
-        return None
+    
 
 
 if __name__ == '__main__':
     controller = Controller()
     result = controller.register("hi","hi@gmail.com", "111")
-    print(result)
-    movie_list = controller.display_movie_list()
-    print(movie_list)
+    for seat in hall_1_seat_obj:
+        print(seat.row)
+   
+ 

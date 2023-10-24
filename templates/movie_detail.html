@@ -50,13 +50,6 @@
   </div>
   {% endif %}
 
-  {% if screenglist %}
-  {% for screening in screenglist %}
-  <h3>{{screening.endTime}}</h3>
-  <h3>{{screening.startTime}}</h3>
-  {% endfor %}
-  {% endif %}
-
 <div class="content">
     <div class="movies">
       <div class="cards" data-name="{{ movie.title }}">
@@ -75,33 +68,22 @@
         <div class="schedule-info">
           <h2>Movie schedules</h2>
         </div>
-        <form id="filter-form" method="POST" action="/search_date">   
-           <div class="item">
+        
+        <form id="filter-form" method="POST" action="/screening_seat">   
+           <div class="item"> 
+            {% for screening in screenglist %}
               <div class="form-item">
-                <input type="radio" id="date-all" name="date" value="All" checked>
-                <label for="date-all">
-                  <h3>2023-03-03</h3>
-                  <h3>7:00-9:00</h3>
-                </label>
-              </div>
-
-              <div class="form-item">
-                <input type="radio" id="date-1" name="date" value="2023">
-                <label for="date-1">
-                  <h3>2023-03-03</h3>
-                  <h3>7:00-9:00</h3>
-                </label>
-              </div>
-
-              <div class="form-item">
-                <input type="radio" id="date-2" name="date" value="2022">
-                <label for="date-2">
-                  <h3>2023-03-03</h3>
-                  <h3>7:00-9:00</h3>
-                </label>
-              </div>
+                <input type="text" name="movieID" value="{{ movie.movieID }}" style="display: none;">            
+                <input type="radio" id="{{screening.screeningID}}" name="screeningID" value="{{screening.screeningID}}" checked>
+                <label for="{{screening.screeningID}}">
+                  <h3>{{ screening.screeningDate }}</h3>
+                  <h3>Start Time: {{screening.startTime}}</h3>
+                  <h3>End Time: {{screening.startTime}}</h3>
+                </label>          
+              </div>    
+              {% endfor %}            
             </div>
-        </form> 
+        </form>    
         
         {% if role == "Admin" %}
         <div class="add-screening">
@@ -109,27 +91,32 @@
           <div id="myModal" class="modal">
               <div class="modal-content">
                   <span class="close" id="closeModalButton">&times;</span>
-                  <h2>Add A New Movie</h2>
-                    <form action="/add_screening" method="post">
-                      <div class="form-group">
+                  <h2>Add A New Screening</h2>
+                    <form action="/add_screening" method="post" class="add-screening-form">
+                      <div class="form-group" style="display: none;">
                         <label for="movie_id">Movie:</label>
                         <input type="text" id="movie_id" name="movie_id" value="{{ movie.movieID }}">
                       </div>
                       <div class="form-group">
                           <label for="date">Date:</label>
-                          <input type="text" id="date" name="date" required>
+                          <input type="date" id="date" name="date" required>
                       </div>
                       <div class="form-group">
                           <label for="start">Start Time:</label>
-                          <input type="date" id="start" name="startTime" required>
+                          <input type="text" id="start" name="startTime" required>
                       </div>
                       <div class="form-group">
                           <label for="end">End Time:</label>
-                          <input type="date" id="end" name="endTime" required>
+                          <input type="text" id="end" name="endTime" required>
                       </div>
                       <div class="form-group">
                           <label for="hall">Hall Name:</label>
-                          <input type="text" id="hall" name="hallName" required>
+                          <select id="hall" name="hallName" required>
+                            <option value="Hall-1">Hall-1</option>
+                            <option value="Hall-2">Hall-2</option>
+                            <option value="Hall-3">Hall-3</option>
+                            <option value="Hall-4">Hall-4</option>
+                          </select>
                       </div>
                       <div class="form-group">
                           <button type="submit">Add Screening</button>

@@ -7,6 +7,7 @@
 @import url("css/home.css");
 @import url("css/login.css"); 
 @import url("css/movie.css");
+@import url("css/seat.css");
 
 
 /* CSS variables for reusablity across all files (including above imported) */
