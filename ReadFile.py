@@ -86,7 +86,7 @@ class ReadFile():
             for row, line in enumerate(file, start=1):
                 for column, char in enumerate(line.strip(), start=1):
                     if char == 'X':
-                        seat = ScreeningSeat(row, column, 10.0)  # Adjust the price as needed
+                        seat = ScreeningSeat(row, column, 10)  # Adjust the price as needed
                         screening_seats.append(seat)
         file.close()
         return screening_seats

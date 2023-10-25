@@ -52,13 +52,7 @@
 
     
     <div class="movie-seat-container">
-      <label>Pick a movie:</label>
-      <select id="movie">
-        <option value="10">Avengers: Endgame ($10)</option>
-        <option value="12">Joker ($12)</option>
-        <option value="8">Toy Story 4 ($8)</option>
-        <option value="9">The Lion King ($9)</option>
-      </select>
+      <label>Movie info:</label>
     </div>
 
     <ul class="showcase">
@@ -76,24 +70,89 @@
       </li>
     </ul>
 
+    {% set num_rows = max_row|int %}
+    {% set num_cols = max_column|int %}
+
+    <div class="seat-grid">
 
     <div class="container"> 
+    
+      <style>
+        .container {
+          display: grid;
+          grid-template-rows: repeat({{ num_rows }}, 70px);
+          grid-template-columns: repeat({{ num_cols }}, 70px);
+        }
+      </style>
+
         {% for seat in seats %}
-          <div class="seat {% if seat.booked %}booked{% endif %}"
-            data-row="{{ seat.row }}" data-column="{{ seat.column }}">
-            {{seat.row}}
+          <div class="seat {% if seat.booked %}occupied{% endif %}"
+            data-row="{{ seat.row }}" 
+            data-column="{{ seat.column }}"
+            data-price={{seat.price|int}}
+            onclick="selectSeat(event)">
+            {{seat.row}}-{{seat.column}}
           </div>
         {% endfor %}
+
+        </div>
     </div>
 
     <p class="text">
-      You have selected <span id="count">0</span> seats for a price of $<span
-        id="total"
-        >0</span
-      >
+      You have selected <span id="count">{{selected_seats|length}}</span> seats for a price of $
+      <span id="total">{{total_price|int}}</span>
     </p>
 </div>
 
-<script src="../static/js/seat.js"></script>
+<button id="submit-seats">Submit Seats</button>
+
+<form id="seats-form" method="POST" action="{{ url_for('update_seats') }}">
+  <input type="hidden" name="selected_seats" value="{{ selected_seats }}">
+  <input type="hidden" name="total_price" value="{{ total_price }}">  
+</form>
+
+<script>
+  let selectedSeats = {% if selected_seats %} {{ selected_seats|tojson }} {% else %} [] {% endif %};
+
+  let totalPrice = {% if total_price %} {{ total_price|int }} {% else %} 0 {% endif %};
+
+  function selectSeat(event) {
+
+    const seat = event.target;
+  
+    // Toggle selected class
+    seat.classList.toggle('selected');
+  
+    // Update totals
+    if(seat.classList.contains('selected')) {
+      selectedSeats.push(seat.dataset.seatNumber); 
+      totalPrice += Number(seat.dataset.price);
+    } else {
+      // Remove seat from selection
+      selectedSeats = selectedSeats.filter(num => num !== seat.dataset.seatNumber)
+      totalPrice -= seat.dataset.price;
+    }
+  
+    // Update DOM
+    document.getElementById('count').innerText = selectedSeats.length;
+    document.getElementById('total').innerText = totalPrice;  
+  }
+
+
+  const submitBtn = document.getElementById('submit-seats');
+  const seatsForm = document.getElementById('seats-form');
+
+  submitBtn.addEventListener('click', () => {
+
+    // Update hidden inputs with current values
+    seatsForm.querySelector('[name="selected_seats"]').value = selectedSeats.length;  
+    seatsForm.querySelector('[name="total_price"]').value = totalPrice;
+    
+    seatsForm.submit();
+
+  });
+
+
+</script>
 
 {% endblock %}

@@ -272,10 +272,24 @@ def screening_seat():
     screening = controller.search_screening_by_id(movie, int(screeningID))
     hall = screening.hall()
     seats = hall.listOfSeats
-  
-    
+    # Get max row and column values
+    max_row = max(seat.row for seat in seats)  
+    max_column = max(seat.column for seat in seats)
+    selected_seats = [] 
+    total_price = 0   
     role = session.get('role')
-    return render_template("seat.html",seats=seats, movie=movie,  role=role, title="Seat")
+    return render_template("seat.html",total_price=total_price , selected_seats=selected_seats, max_row=max_row, max_column=max_column, seats=seats, movie=movie,  role=role, title="Seat")
+
+@app.route('/update-seats', methods=['POST'])
+def update_seats():
+
+  selected_seats = request.form.get('selected_seats')
+  total_price = request.form.get('total_price') 
+  
+  print(selected_seats)
+  print(total_price)
+
+  return redirect(url_for('screening_seat'))
 
 
 @app.route("/test")
