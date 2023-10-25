@@ -39,7 +39,7 @@
 
 {% block content %}
 
-<div class="movie-container">
+<div class="seat-container">
 
   {% if msg %}
   <div class="overlay_popup">
@@ -50,10 +50,8 @@
   </div>
   {% endif %}
 
-
-  <div class="content">
     
-    <div class="movie-container">
+    <div class="movie-seat-container">
       <label>Pick a movie:</label>
       <select id="movie">
         <option value="10">Avengers: Endgame ($10)</option>
@@ -78,17 +76,14 @@
       </li>
     </ul>
 
-    <div class="container">
-      <div class="screen"></div>
 
-      {% for row in rows%}
-        <div class="row">
-          {% for col in cols%}
-          <div class="seat"></div> 
-          {% endfor %}
-      </div>
-      {% endfor %}
-
+    <div class="container"> 
+        {% for seat in seats %}
+          <div class="seat {% if seat.booked %}booked{% endif %}"
+            data-row="{{ seat.row }}" data-column="{{ seat.column }}">
+            {{seat.row}}
+          </div>
+        {% endfor %}
     </div>
 
     <p class="text">
@@ -97,10 +92,6 @@
         >0</span
       >
     </p>
-
-  </div>
-
-
 </div>
 
 <script src="../static/js/seat.js"></script>

@@ -272,18 +272,10 @@ def screening_seat():
     screening = controller.search_screening_by_id(movie, int(screeningID))
     hall = screening.hall()
     seats = hall.listOfSeats
-    rows = []
-    for seat in seats:
-        if seat.row not in rows:
-            rows.append(seat.row)
-    print(rows)
-    cols = []
-    for seat in seats:
-        if seat.column not in cols:
-            cols.append(seat.column)
-    print(cols)
+  
+    
     role = session.get('role')
-    return render_template("seat.html", rows=rows, cols=cols,seats=seats, movie=movie,  role=role, title="Seat")
+    return render_template("seat.html",seats=seats, movie=movie,  role=role, title="Seat")
 
 
 @app.route("/test")

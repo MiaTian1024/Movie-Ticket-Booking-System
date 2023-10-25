@@ -1,10 +1,43 @@
+.seat-container {
+  height: 100vh;
+  padding-top: 100px;
+  align-items: center;
+
+
+}
+
+
+.movie-seat-container {
+  margin: 20px auto;
+}
+
+.movie-seat-container select {
+  background-color: #fff;
+  border: 0;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-left: 10px;
+  padding: 5px 15px 5px 15px;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.seat-container .container {
+  perspective: 1000px;
+  margin-bottom: 30px;
+}
+
 .seat {
-  background-color: #444451;
-  height: 12px;
-  width: 15px;
-  margin: 3px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  border: 1px solid #aaa;
+  margin: 5px;
+}
+
+.seat.booked {
+  background-color: #ccc;
 }
 
 .seat.selected {
@@ -52,17 +85,4 @@
 
 .showcase li small {
   margin-left: 2px;
-}
-
-.row {
-  display: flex;
-}
-
-.screen {
-  background-color: #fff;
-  height: 70px;
-  width: 100%;
-  margin: 15px 0;
-  transform: rotateX(-45deg);
-  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.7);
 }
