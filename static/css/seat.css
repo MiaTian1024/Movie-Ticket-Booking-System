@@ -10,6 +10,12 @@
  
 }
 
+.movie-seat-container .seat-info{
+  color:#ccc;
+  font-size: 18px;
+ 
+}
+
 .movie-seat-container select {
   background-color: #fff;
   border: 0;
@@ -30,7 +36,7 @@
 
 .seat {
   display: inline-block;
-  background-color: #444451;
+  background-color: #4e4e72;
   height: 32px;
   width: 50px;
   margin: 5px;
@@ -103,6 +109,40 @@
 }
 
 .seat-container .text{
-  font-size: 20px;
+  font-size: 22px;
   color:#ccc;
+  margin-top: 5px;
 }
+
+.seat-confirm{
+  display: flex;
+}
+
+.seat-confirm .submit{
+  background-color: #6feaf6;
+  font-size: 18px;
+  padding:5px 15px;
+  cursor: pointer;
+  margin-left: 60px;
+  border-radius: 5px;
+}
+
+.seat-confirm .submit:hover{
+  background-color: #000000;
+  color:#ccc
+}
+
+.seat-confirm .back{
+  background-color: #b8b5b5;
+  font-size: 18px;
+  padding:5px 15px;
+  cursor: pointer;
+  margin-left: 20px;
+  border-radius: 5px;
+}
+
+.seat-confirm .back:hover{
+  background-color: #000000;
+  color:#ccc
+}
+

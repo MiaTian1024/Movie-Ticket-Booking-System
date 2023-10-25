@@ -142,23 +142,29 @@
   .schedules .item .form-item{
     margin-right: 30px;
     background-color: #ccc;
-    padding:10px;
-    cursor: pointer;
+    padding:10px 30px;
     background-color: #f2f2f2;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
 
-  .schedules .item .form-item:hover {
-    background-color: #678bac;
+  .schedules .item .form-item button {
+    background-color: #f2f2f2;
+    font-size: 18px;
+    padding:5px 15px;
+    cursor: pointer;
+    margin-left: 21px;
+    margin-top: 10px;
+    border-radius: 4px;
+  }
+
+  .schedules .item .form-item button:hover {
+    background-color: #000000;
+    color: #ccc;
   }
 
   .schedules input[type="radio"] {
     display: none; /* Hide the default radio button */
-  }
-
-  .schedules input[type="radio"] + label {
-    cursor: pointer;
   }
 
   .add-screening{

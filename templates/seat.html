@@ -52,7 +52,10 @@
 
     
     <div class="movie-seat-container">
-      <label>Movie info:</label>
+      <p class="seat-info">Movie: {{movie.title}}</p>
+      <p class="seat-info">Hall: {{hall.name}}</p>
+      <p class="seat-info">Start Time: {{screening.startTime}}</p>
+      <p class="seat-info">End Time: {{screening.endTime}}</p>
     </div>
 
     <ul class="showcase">
@@ -80,7 +83,7 @@
       <style>
         .container {
           display: grid;
-          grid-template-rows: repeat({{ num_rows }}, 70px);
+          grid-template-rows: repeat({{ num_rows }}, 50px);
           grid-template-columns: repeat({{ num_cols }}, 70px);
         }
       </style>
@@ -98,13 +101,17 @@
         </div>
     </div>
 
+    <div class="seat-confirm">
     <p class="text">
       You have selected <span id="count">{{selected_seats|length}}</span> seats for a price of $
       <span id="total">{{total_price|int}}</span>
     </p>
+    <button id="submit-seats" class="submit">Proceed to Payment</button>
+    <button class="back" onclick="history.back()">Back</button>
+    <div>
 </div>
 
-<button id="submit-seats">Submit Seats</button>
+
 
 <form id="seats-form" method="POST" action="{{ url_for('update_seats') }}">
   <input type="hidden" name="selected_seats" value="{{ selected_seats }}">

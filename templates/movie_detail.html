@@ -69,7 +69,7 @@
           <h2>Movie schedules</h2>
         </div>
         
-        <form id="filter-form" method="POST" action="/screening_seat">   
+        <form method="POST" action="/screening_seat">   
            <div class="item"> 
             {% for screening in screenglist %}
               <div class="form-item">
@@ -78,8 +78,9 @@
                 <label for="{{screening.screeningID}}">
                   <h3>{{ screening.screeningDate }}</h3>
                   <h3>Start Time: {{screening.startTime}}</h3>
-                  <h3>End Time: {{screening.startTime}}</h3>
-                </label>          
+                  <h3>End Time: {{screening.endTime}}</h3>
+                </label> 
+                <button type="submit">Booking</button>         
               </div>    
               {% endfor %}            
             </div>

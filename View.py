@@ -278,7 +278,7 @@ def screening_seat():
     selected_seats = [] 
     total_price = 0   
     role = session.get('role')
-    return render_template("seat.html",total_price=total_price , selected_seats=selected_seats, max_row=max_row, max_column=max_column, seats=seats, movie=movie,  role=role, title="Seat")
+    return render_template("seat.html",hall=hall, screening=screening, total_price=total_price , selected_seats=selected_seats, max_row=max_row, max_column=max_column, seats=seats, movie=movie,  role=role, title="Seat")
 
 @app.route('/update-seats', methods=['POST'])
 def update_seats():
