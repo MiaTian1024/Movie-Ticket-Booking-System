@@ -280,16 +280,15 @@ def screening_seat():
     role = session.get('role')
     return render_template("seat.html",hall=hall, screening=screening, total_price=total_price , selected_seats=selected_seats, max_row=max_row, max_column=max_column, seats=seats, movie=movie,  role=role, title="Seat")
 
-@app.route('/update-seats', methods=['POST'])
-def update_seats():
-
+@app.route('/booking_seat', methods=['POST'])
+def booking_seat():
   selected_seats = request.form.get('selected_seats')
   total_price = request.form.get('total_price') 
-  
+  role = session.get('role')  
   print(selected_seats)
   print(total_price)
+  return render_template("payment.html",total_price=total_price , selected_seats=selected_seats, role=role, title="Payment")
 
-  return redirect(url_for('screening_seat'))
 
 
 @app.route("/test")

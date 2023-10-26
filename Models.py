@@ -6,14 +6,38 @@ from datetime import datetime, date
 class User(ABC):
     # The abstract user class
     def __init__(self, username: str, email: str, password: str) -> None:   
-        self.username = username
-        self._email = email
-        self._password = password
+        self.__username = username
+        self.__email = email
+        self.__password = password
+
+    @property
+    def username(self,):
+        return self.__username
+
+    @username.setter
+    def username(self, value):
+        self.__username = value
+
+    @property
+    def email(self,):
+        return self.__email
+
+    @email.setter
+    def email(self, value):
+        self.__email = value
+
+    @property
+    def password(self,):
+        return self.__password
+
+    @password.setter
+    def password(self, value):
+        self.__password = value
 
     # Abstract method for all user class
     @abstractmethod
     def login(self, email: str, password:str) -> bool:
-        return self._email == email and self._password == password
+        return self.__email == email and self.__password == password
 
     @abstractmethod
     def logout(self) -> bool:
@@ -21,7 +45,7 @@ class User(ABC):
 
     @abstractmethod
     def resetPassword(self, newPassword:str) -> bool:
-        self._password = newPassword
+        self.__password = newPassword
         return True
 
 # Customer class inherit from User class
@@ -32,13 +56,13 @@ class Customer(User):
         self.__notificationList: List['Notification'] =[]
 
     def login(self, email: str, password:str) -> bool:  
-        return self._email == email and self._password == password
+        return self.email == email and self.password == password
 
-    def logout(self, email: str, password:str) -> bool:     
+    def logout(self) -> bool:     
         return True
 
     def resetPassword(self, newPassword:str) -> bool:      
-        self._password = newPassword
+        self.password = newPassword
         return True
 
     def makeBooking(self, booking: 'Booking') -> bool:
@@ -55,19 +79,18 @@ class Customer(User):
         return self.__bookingList
 
 # Admin class inherit from User class  
-class Admin(User):
-  
+class Admin(User): 
     def __init__(self, username: str, email: str, password: str) -> None:      
         super().__init__(username, email, password)
 
     def login(self, email: str, password:str) -> bool:    
-        return self._email == email and self._password == password
+        return self.email == email and self.password == password
 
     def logout(self) -> bool:     
         return True
 
     def resetPassword(self, newPassword:str) -> bool:      
-        self._password = newPassword
+        self.password = newPassword
         return True
 
     def addMovie(self, title: str, language: str, genre: str, releaseDate: datetime):      
@@ -89,13 +112,13 @@ class FrontDeskStaff(User):
         super().__init__(username, email, password)
 
     def login(self, email: str, password:str) -> bool:    
-        return self._email == email and self._password == password
+        return self.email == email and self.password == password
 
     def logout(self) -> bool:     
         return True
 
     def resetPassword(self, newPassword: str) -> bool:
-        self._password = newPassword
+        self.password = newPassword
         return True
 
     def makeBooking(self, booking: 'Booking') -> bool:    
@@ -169,8 +192,7 @@ class Movie:
             if screening.screeningID == screeningID:
                 return screening
         return None
-    
-    
+       
     def get_info(self) -> str:
         return f"Title: {self.__title}, Language: {self.__language}, Genre: {self.__genre}, Release Date: {self.__releaseDate}"
 
@@ -222,10 +244,42 @@ class CinemaHall:
     
 class ScreeningSeat():  
     def __init__(self, row: int, column: int, price: float, booked: bool = False) -> None:
-        self.row = row
-        self.column = column
-        self.price = price
-        self.booked = booked
+        self.__row = row
+        self.__column = column
+        self.__price = price
+        self.__booked = booked
+
+    @property
+    def row(self,):
+        return self.__row
+
+    @row.setter
+    def row(self, value):
+        self.__row = value
+
+    @property
+    def column(self,):
+        return self.__column
+
+    @column.setter
+    def column(self, value):
+        self.__column = value
+
+    @property
+    def price(self,):
+        return self.__price
+
+    @price.setter
+    def price(self, value):
+        self.__price = value
+
+    @property
+    def booked(self,):
+        return self.__booked
+
+    @booked.setter
+    def booked(self, value):
+        self.__booked = value
 
 class Booking:
     def __init__(self, bookingNum: str, customer: 'Customer', numberOfSeats: int, createdOn: date, status: int, 
@@ -254,16 +308,46 @@ class Payment(ABC):
         self.__paymentID = paymentID
         self.__amount = amount
         self.__createdOn = createdOn
-        
 
+    @property
+    def paymentID(self,):
+        return self.__paymentID
+
+    @paymentID.setter
+    def paymentID(self, value):
+        self.__paymentID = value
+
+    @property
+    def amount(self,):
+        return self.__amount
+
+    @amount.setter
+    def amount(self, value):
+        self.__amount = value
+
+    @property
+    def createdOn(self,):
+        return self.__createdOn
+
+    @createdOn.setter
+    def createdOn(self, value):
+        self.__createdOn = value
+        
     # Abstract method for all user class
     @abstractmethod
-    def calcDiscount(self) -> float:
-        pass
+    def calcDiscount(self, coupon:'Coupon') -> float:
+        today=datetime.date.today()
+        if coupon.expiryDate > today:
+            return coupon.discount
+        else:
+            return 0  # Coupon has no effect
 
     @abstractmethod
-    def calcFinalPayment(self) -> float:
-        pass
+    def calcFinalPayment(self, coupon: 'Coupon' = None) -> float:
+        if coupon:
+            discount = self.calcDiscount(coupon)
+            return self.amount - discount
+        return self.amount
     
 class CreditCard(Payment):
     def __init__(self, paymentID: int, amount: float, createdOn: datetime, creditCardNum: str, cardType: str, expiryDate: datetime, nameOnCard: str):
@@ -273,11 +357,50 @@ class CreditCard(Payment):
         self.__expiryDate = expiryDate
         self.__nameOnCard = nameOnCard
 
-    def calcDiscount(self) -> float:
-        pass
+    @property
+    def creditCardNum(self,):
+        return self.__creditCardNum
 
-    def calcFinalPayment(self) -> float:
-        pass
+    @creditCardNum.setter
+    def creditCardNum(self, value):
+        self.__creditCardNum = value
+
+    @property
+    def cardType(self,):
+        return self.__cardType
+
+    @cardType.setter
+    def cardType(self, value):
+        self.__cardType = value
+
+    @property
+    def expiryDate(self,):
+        return self.__expiryDate
+
+    @expiryDate.setter
+    def expiryDate(self, value):
+        self.__expiryDate = value
+
+    @property
+    def nameOnCard(self,):
+        return self.__nameOnCard
+
+    @nameOnCard.setter
+    def nameOnCard(self, value):
+        self.__nameOnCard = value
+
+    def calcDiscount(self, coupon:'Coupon') -> float:
+        today=datetime.date.today()
+        if coupon.expiryDate > today:
+            return coupon.discount
+        else:
+            return 0  # Coupon has no effect
+
+    def calcFinalPayment(self, coupon: 'Coupon' = None) -> float:
+        if coupon:
+            discount = self.calcDiscount(coupon)
+            return self.amount - discount
+        return self.amount
 
 class DebitCard(Payment):
     def __init__(self, paymentID: int, amount: float, createdOn: datetime, cardNum: str, bankName: str, nameOnCard: str):
@@ -286,14 +409,71 @@ class DebitCard(Payment):
         self.__bankName = bankName
         self.__nameOnCard = nameOnCard
 
-    def calcDiscount(self) -> float:
-        pass
+    @property
+    def cardNum(self,):
+        return self.__cardNum
 
-    def calcFinalPayment(self) -> float:
-        pass
+    @cardNum.setter
+    def cardNum(self, value):
+        self.__cardNum = value
+
+    @property
+    def bankName(self,):
+        return self.__bankName
+
+    @bankName.setter
+    def bankName(self, value):
+        self.__bankName = value
+
+    @property
+    def nameOnCard(self,):
+        return self.__nameOnCard
+
+    @nameOnCard.setter
+    def nameOnCard(self, value):
+        self.__nameOnCard = value
+
+    def calcDiscount(self, coupon:'Coupon') -> float:
+        today=datetime.date.today()
+        if coupon.expiryDate > today:
+            return coupon.discount
+        else:
+            return 0  # Coupon has no effect
+
+    def calcFinalPayment(self, coupon: 'Coupon' = None) -> float:
+        if coupon:
+            discount = self.calcDiscount(coupon)
+            return self.amount - discount
+        return self.amount
 
 class Coupon:
     def __init__(self, couponID: str, expiryDate: datetime, discount: float):
         self.__couponID = couponID
         self.__expiryDate = expiryDate
         self.__discount = discount
+
+    @property
+    def couponID(self,):
+        return self.__couponID
+
+    @couponID.setter
+    def couponID(self, value):
+        self.__couponID = value
+
+    @property
+    def expiryDate(self,):
+        return self.__expiryDate
+
+    @expiryDate.setter
+    def expiryDate(self, value):
+        self.__expiryDate = value
+
+    @property
+    def discount(self,):
+        return self.__discount
+
+    @discount.setter
+    def discount(self, value):
+        self.__discount = value
+
+    
