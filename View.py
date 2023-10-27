@@ -283,15 +283,37 @@ def screening_seat():
 @app.route('/booking_seat', methods=['POST'])
 def booking_seat():
   selected_seats = request.form.get('selected_seats')
-  total_price = request.form.get('total_price') 
+  total_price_str = request.form.get('total_price') 
   role = session.get('role')
   coupon_list = controller.get_coupon_list()  
   print(selected_seats)
-  print(total_price)
+  print(total_price_str)
   print(coupon_list)
+  total_price = float(total_price_str)
   for coupon in coupon_list:
       print(coupon.couponID)
   return render_template("payment.html",coupon_list=coupon_list, total_price=total_price , selected_seats=selected_seats, role=role, title="Payment")
+
+
+@app.route('/add_coupon', methods=['POST'])
+def add_coupon():
+  total_price_str = request.form.get('total_price')
+  couponID = request.form.get('couponID')
+  if couponID:      
+      coupon = controller.search_coupon(couponID)
+      discount = coupon.discount
+  else:
+      discount = 0
+  discount = float(discount)
+  total_price = float(total_price_str) - (float(total_price_str) * discount) / 100 
+   
+  print(type(discount))  
+  print(discount)
+  coupon_list = controller.get_coupon_list()
+  role = session.get('role')
+  
+  return render_template("payment.html",coupon_list=coupon_list, total_price=total_price , role=role, title="Payment")
+
 
 
 

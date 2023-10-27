@@ -37,7 +37,7 @@
 
   .coupon-box .item{
     display: flex;
-    justify-content:left;
+    justify-content:center;
     margin-top: 20px;
   }
 
@@ -50,25 +50,31 @@
     border-radius: 4px;
   }
 
+  .coupon-box .item .form-item:hover{
+    background-color: #407182;
+  }
+
   .coupon-box .item .form-item h3{
     font-size: 16px;
   }
 
-  .coupon-box .item .form-item button {
+  .coupon-box  button {
     background-color: #f2f2f2;
     font-size: 16px;
     font-weight: 600;
     padding:4px 15px;
     cursor: pointer;
-    margin-left: 21px;
-    margin-top: 10px;
     border-radius: 4px;
-    margin: 0 auto;
+    margin: 20px auto;
     display: block;
-    width: 100%;
+    width: 30%;
   }
 
-  .coupon-box .item .form-item button:hover {
+  .coupon-box input[type="radio"] + label {
+    cursor: pointer;
+  }
+
+  .coupon-box button:hover {
     background-color: #000000;
     color: #ccc;
   }
@@ -76,6 +82,15 @@
   .coupon-box input[type="radio"] {
     display: none; /* Hide the default radio button */
   }
+
+  .coupon-box input[type="radio"] + label:hover {
+    background-color: #e0e0e0;
+  }
+
+  .coupon-box input[type="radio"]:checked + label {
+    background-color: var(--nav-color);
+    color: #fff;
+}
 
 
   .payment-container .payment-type {

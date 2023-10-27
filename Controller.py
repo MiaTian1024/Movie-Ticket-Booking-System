@@ -174,6 +174,12 @@ class Controller:
 
     def get_coupon_list(self) -> List['Coupon']:
         return self.__coupons
+    
+    def search_coupon(self, couponID):
+        for coupon in self.__coupons:
+            if coupon.couponID == couponID:
+                return coupon      
+        return None
 
     def add_payment(self, amount: float, coupon: 'Coupon', payment_type: str) -> bool:
     

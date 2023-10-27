@@ -59,21 +59,22 @@
     <form method="POST" action="/add_coupon">   
       <div class="item"> 
        {% for coupon in coupon_list %}
-         <div class="form-item">          
-           <input type="radio" id="{{coupon.couponID}}" name="couponID" value="{{coupon.couponID}}" checked>
+         <div class="form-item">
+           <input type="text" name="total_price" value="{{ total_price }}" style="display: none;">          
+           <input type="radio" id="{{coupon.couponID}}" name="couponID" value="{{coupon.couponID}}">
            <label for="{{coupon.couponID}}">
              <h3>{{ coupon.couponID }}</h3>
              <h3>Discount: {{coupon.discount}} %</h3>
              <h3>Expiry Date: {{coupon.expiryDate}}</h3>
-           </label> 
-           <button type="submit">Add</button>         
+           </label>         
          </div>    
-         {% endfor %}            
+         {% endfor %}          
        </div>
+       <button type="submit">Add A Coupon</button>  
    </form>   
   </div>
 
-  <h2 class="choose-type-text">Choose you payment type: </h2>
+  <h2 class="choose-type-text">Choose your payment type: </h2>
 
   <div class="payment-type">
     <div class="form-item">
