@@ -25,9 +25,14 @@
     border-radius: 5px;
   }
 
-  .coupon-box label{
+  .coupon-box p{
     font-size: 20px;
     color: #ccc;
+  }
+
+  .coupon-box label{
+    font-weight: bold;
+    color:#303030;
   }
 
   .coupon-box .item{
@@ -40,23 +45,27 @@
     margin-right: 20px;
     background-color: #ccc;
     padding:5px 10px;
-    background-color: #858585;
+    background-color: #a6a4a5b9;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
 
   .coupon-box .item .form-item h3{
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .coupon-box .item .form-item button {
     background-color: #f2f2f2;
-    font-size: 18px;
-    padding:5px 15px;
+    font-size: 16px;
+    font-weight: 600;
+    padding:4px 15px;
     cursor: pointer;
     margin-left: 21px;
     margin-top: 10px;
     border-radius: 4px;
+    margin: 0 auto;
+    display: block;
+    width: 100%;
   }
 
   .coupon-box .item .form-item button:hover {
@@ -80,13 +89,26 @@
   }
 
   
-  /* Style each form item */
   .payment-type .form-item {
-    background-color: #f7f7f7; /* Change to your desired background color */
+    padding: 10px;
+    flex: 1;
+    margin:10px;
+  }
+
+  .payment-type .form-item form {
+    background-color: #a6a4a5b9; /* Change to your desired background color */
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    flex: 1; /* Distribute the width evenly among form items */
+    margin:10px;
+    height: 400px;
+  }
+
+  .payment-type .form-item p {
+    font-size: 20px;
+    color: #ccc;
+    display: flex;
+    justify-content: center;
   }
   
   /* Style the input fields */
@@ -99,6 +121,7 @@
   /* Style labels */
   .payment-type .form-item label {
     font-weight: bold;
+    color:#303030;
   }
   
   /* Style input fields */
@@ -110,17 +133,33 @@
   
   /* Style the submit button */
   .payment-type .form-item button {
-    padding: 10px;
-    background-color: #007bff; /* Change to your desired button color */
-    color: white;
+    padding: 10px 40px;
+    background-color: #000000; /* Change to your desired button color */
+    color: rgb(255, 255, 255);
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: 600;
+    margin: 0 auto;
+    display: block;
+    width: 100%;
+  }
+
+  .payment-type .form-item button:hover {
+    background-color: #407182; /* Change to your desired button color */
+    color: rgb(0, 0, 0);
   }
   
   /* Add spacing between form items */
   .payment-type .form-item:not(:last-child) {
     margin-right: 10px;
+  }
+
+  .choose-type-text {
+    font-size: 20px;
+    font-weight: 500;
+    color: #ccc;
+    margin: 20px 10px;
   }
   
   

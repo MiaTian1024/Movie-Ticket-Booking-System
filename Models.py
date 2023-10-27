@@ -347,15 +347,15 @@ class Payment(ABC):
         if coupon:
             discount = self.calcDiscount(coupon)
             return self.amount - discount
-        return self.amount
+        return self.amount 
     
 class CreditCard(Payment):
-    def __init__(self, paymentID: int, amount: float, createdOn: datetime, creditCardNum: str, cardType: str, expiryDate: datetime, nameOnCard: str):
+    def __init__(self, paymentID: int, amount: float, createdOn: datetime, creditCardNum: str, cardType: str, nameOnCard: str, expiryDate: datetime, cvv: str):
         super().__init__(paymentID, amount, createdOn)
-        self.__creditCardNum = creditCardNum
-        self.__cardType = cardType
-        self.__expiryDate = expiryDate
+        self.__creditCardNum = creditCardNum      
         self.__nameOnCard = nameOnCard
+        self.__expiryDate = expiryDate
+        self.__cvv = cvv
 
     @property
     def creditCardNum(self,):
@@ -366,12 +366,12 @@ class CreditCard(Payment):
         self.__creditCardNum = value
 
     @property
-    def cardType(self,):
-        return self.__cardType
+    def cvv(self,):
+        return self.__cvv
 
-    @cardType.setter
-    def cardType(self, value):
-        self.__cardType = value
+    @cvv.setter
+    def cvv(self, value):
+        self.__cvv = value
 
     @property
     def expiryDate(self,):
@@ -432,6 +432,32 @@ class DebitCard(Payment):
     @nameOnCard.setter
     def nameOnCard(self, value):
         self.__nameOnCard = value
+
+    def calcDiscount(self, coupon:'Coupon') -> float:
+        today=datetime.date.today()
+        if coupon.expiryDate > today:
+            return coupon.discount
+        else:
+            return 0  # Coupon has no effect
+
+    def calcFinalPayment(self, coupon: 'Coupon' = None) -> float:
+        if coupon:
+            discount = self.calcDiscount(coupon)
+            return self.amount - discount
+        return self.amount
+    
+class Cash(Payment):
+    def __init__(self, paymentID: int, amount: float, createdOn: datetime, currency: str):
+        super().__init__(paymentID, amount, createdOn)
+        self.__currency = currency
+
+    @property
+    def currency(self):
+        return self.__currency
+
+    @currency.setter
+    def currency(self, value):
+        self.__currency = value
 
     def calcDiscount(self, coupon:'Coupon') -> float:
         today=datetime.date.today()
