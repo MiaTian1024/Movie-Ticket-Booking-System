@@ -284,10 +284,14 @@ def screening_seat():
 def booking_seat():
   selected_seats = request.form.get('selected_seats')
   total_price = request.form.get('total_price') 
-  role = session.get('role')  
+  role = session.get('role')
+  coupon_list = controller.get_coupon_list()  
   print(selected_seats)
   print(total_price)
-  return render_template("payment.html",total_price=total_price , selected_seats=selected_seats, role=role, title="Payment")
+  print(coupon_list)
+  for coupon in coupon_list:
+      print(coupon.couponID)
+  return render_template("payment.html",coupon_list=coupon_list, total_price=total_price , selected_seats=selected_seats, role=role, title="Payment")
 
 
 

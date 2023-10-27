@@ -39,7 +39,7 @@
 
 {% block content %}
 
-<div class="seat-container">
+<div class="payment-container">
 
   {% if msg %}
   <div class="overlay_popup">
@@ -50,13 +50,89 @@
   </div>
   {% endif %}
 
-  <div class="payment-container">
-    <p class="seat-info">Total Seats: {{selected_seats}}</p>
-    <p class="seat-info">Amount: {{total_price}}</p>
+  <div class="payment-label">
+    <h3>Payment</h3>
+  </div>
+
+  <div class="coupon-box">
+    <label for="coupon">Add a coupon: </label>    
+    <form method="POST" action="/add_coupon">   
+      <div class="item"> 
+       {% for coupon in coupon_list %}
+         <div class="form-item">          
+           <input type="radio" id="{{coupon.couponID}}" name="couponID" value="{{coupon.couponID}}" checked>
+           <label for="{{coupon.couponID}}">
+             <h3>{{ coupon.couponID }}</h3>
+             <h3>Discount: {{coupon.discount}}</h3>
+             <h3>Expiry Date: {{coupon.expiryDate}}</h3>
+           </label> 
+           <button type="submit">Add</button>         
+         </div>    
+         {% endfor %}            
+       </div>
+   </form>   
   </div>
 
 
+  <p class="seat-info">Total Seats: {{selected_seats}}</p>
+  <p class="seat-info">Amount: {{total_price}}</p>
 
+  <div class="payment-type">
+    <div class="form-item">
+      <form method="POST" action="/add_payment">      
+        <div class="item">
+          <label for="num">creditCardNum:</label>
+          <input type="text" id="num" name="number" required> 
+        </div>
+        <div class="item">
+          <label for="name">Name on Card:</label>
+          <input type="text" id="name" name="name" required> 
+        </div>
+        <div class="item">
+          <label for="date">Expiry Date:</label>
+          <input type="date" id="date" name="date" required> 
+        </div>                     
+        <button type="submit">Add</button>           
+      </form>
+    </div> 
+      
+    <div class="form-item">
+      <form method="POST" action="/add_payment">           
+        <div class="item">
+          <label for="num">creditCardNum:</label>
+          <input type="text" id="num" name="number" required> 
+        </div>
+        <div class="item">
+          <label for="name">Name on Card:</label>
+          <input type="text" id="name" name="name" required> 
+        </div>
+        <div class="item">
+          <label for="date">Expiry Date:</label>
+          <input type="date" id="date" name="date" required> 
+        </div>                     
+        <button type="submit">Add</button>            
+      </form>
+    </div>
+    
+    <div class="form-item">
+      <form method="POST" action="/add_payment">  
+        <div class="item">
+          <label for="num">creditCardNum:</label>
+          <input type="text" id="num" name="number" required> 
+        </div>
+        <div class="item">
+          <label for="name">Name on Card:</label>
+          <input type="text" id="name" name="name" required> 
+        </div>
+        <div class="item">
+          <label for="date">Expiry Date:</label>
+          <input type="date" id="date" name="date" required> 
+        </div>                     
+        <button type="submit">Add</button>         
+      </form>  
+    </div> 
+
+  </div>
 
 </div>
-  {% endblock %}
+{% endblock %}

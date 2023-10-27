@@ -1,4 +1,4 @@
-from Models import Guest, Customer, Admin, FrontDeskStaff, Movie, CinemaHall, Screening, ScreeningSeat
+from Models import Guest, Customer, Admin, FrontDeskStaff, Movie, CinemaHall, Screening, ScreeningSeat, Coupon
 
 class ReadFile():
     def __init__(self) -> None:
@@ -8,6 +8,7 @@ class ReadFile():
         self.__staffList = []
         self.__hallList = []
         self.__screeningList = []
+        self.__couponList = []
 
     def getMovieObj(self, file_path):
         # Open and read the movie file
@@ -135,6 +136,20 @@ class ReadFile():
             screening = Screening(screeningDate, startTime, endTime, hall)
             screeningObj.append(screening)
         return screeningObj
+    
+    def getCouponObj(self, file_path):
+        with open(file_path, 'r') as file:
+            for line in file:
+                # Split the line into values using a comma as the delimiter
+                values = line.strip().split(', ')    
+                self.__couponList.append(values)
+        file.close()
+        couponObj = []
+        for record in self.__couponList:
+            couponID, expiryDate, discount = record
+            coupon = Coupon(couponID, expiryDate, discount)
+            couponObj.append(coupon)
+        return couponObj
     
     
 

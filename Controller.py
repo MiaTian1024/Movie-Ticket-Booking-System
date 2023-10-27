@@ -2,7 +2,7 @@
 # Import
 from typing import List
 from datetime import datetime, date
-from Models import Guest, Customer, Admin, FrontDeskStaff, Movie, Screening, CinemaHall
+from Models import Guest, Customer, Admin, FrontDeskStaff, Movie, Screening, CinemaHall, Coupon
 from ReadFile import ReadFile
 
 # Read files
@@ -13,6 +13,7 @@ admin_obj = file.getAdminObj("file/admin.txt")
 staff_obj = file.getStaffObj("file/staff.txt")
 hall_obj = file.getHallObj("file/hall.txt")
 screening_obj = file.getScreeningObj("file/screening.txt")
+coupon_obj = file.getCouponObj("file/coupon.txt")
 
 # Get Hall 
 
@@ -25,6 +26,7 @@ class Controller:
         self.__customers: List['Customer'] = customer_obj
         self.__admins: List['Admin'] = admin_obj
         self.__staffs: List['FrontDeskStaff'] = staff_obj
+        self.__coupons: List['Coupon'] = coupon_obj
 
     def halls(self):
         return self.__halls
@@ -169,6 +171,9 @@ class Controller:
  
         # Logic for canceling a screening
         pass
+
+    def get_coupon_list(self) -> List['Coupon']:
+        return self.__coupons
 
     def add_payment(self, amount: float, coupon: 'Coupon', payment_type: str) -> bool:
     

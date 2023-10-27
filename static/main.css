@@ -8,6 +8,7 @@
 @import url("css/login.css"); 
 @import url("css/movie.css");
 @import url("css/seat.css");
+@import url("css/payment.css");
 
 
 /* CSS variables for reusablity across all files (including above imported) */
