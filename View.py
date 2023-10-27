@@ -308,7 +308,6 @@ def add_credit_card():
       coupon = controller.search_coupon(couponID)
       discount = credit_card.calcDiscount(coupon)
       total_price = credit_card.calcFinalPayment(coupon)
-
   role = session.get('role')
   msg = f"Amount{amount}, {discount}% discount has been added to your payment. Fianl Payment ${total_price}. "
   return render_template("ticket.html",msg=msg, discount=discount,  credit_card=credit_card, total_price=total_price , role=role, title="Payment")
