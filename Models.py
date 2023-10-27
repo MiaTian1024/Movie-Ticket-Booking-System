@@ -395,12 +395,12 @@ class CreditCard(Payment):
         self.__nameOnCard = value
 
     def calcDiscount(self, coupon:'Coupon') -> float:
-        today = datetime.today().date()
-        expiry_date = datetime.strptime(coupon.expiryDate, '%Y-%m-%d').date()
-        if expiry_date > today:
-            return coupon.discount
-        else:
-            return 0  # Coupon has no effect
+        if coupon:
+            today = datetime.today().date()
+            expiry_date = datetime.strptime(coupon.expiryDate, '%Y-%m-%d').date()
+            if expiry_date > today:
+                return coupon.discount
+        return 0  # Coupon has no effect
 
     def calcFinalPayment(self, coupon: 'Coupon' = None) -> float:
         if coupon:
