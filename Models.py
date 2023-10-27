@@ -282,17 +282,18 @@ class ScreeningSeat():
         self.__booked = value
 
 class Booking:
-    def __init__(self, bookingNum: str, customer: 'Customer', numberOfSeats: int, createdOn: date, status: int, 
-                 screening: 'Screening', screeningSeats: List['ScreeningSeat'], orderTotal: float, payment: 'Payment'):
-        self.__bookingNum = bookingNum
+    nextID = 10000
+    def __init__(self, customer: 'Customer', numberOfSeats: int, status: int, 
+                 screening: 'Screening', screeningSeats: List['ScreeningSeat'], payment: 'Payment'):
+        self.__bookingNum = Booking.nextID
         self.__customer = customer
         self.__numberOfSeats = numberOfSeats
-        self.__createdOn = createdOn
+        self.__createdOn = datetime.now()
         self.__status = status
         self.__screening = screening
         self.__screeningSeats = screeningSeats
-        self.__orderTotal = orderTotal
         self.__payment = payment
+        Booking.nextID += 1
 
     def sendNotification(self) -> 'Notification':
         pass
@@ -304,10 +305,12 @@ class Notification:
         self.__content = content
 
 class Payment(ABC):
-    def __int__(self,  paymentID: int, amount: float, createdOn: datetime):
-        self.__paymentID = paymentID
-        self.__amount = amount
-        self.__createdOn = createdOn
+    nextID = 10000
+    def __init__(self, amount: float):
+        self.__paymentID = Screening.nextID
+        self.__amount = float(amount)
+        self.__createdOn = datetime.now()
+        Screening.nextID += 1
 
     @property
     def paymentID(self,):
@@ -336,8 +339,9 @@ class Payment(ABC):
     # Abstract method for all user class
     @abstractmethod
     def calcDiscount(self, coupon:'Coupon') -> float:
-        today=datetime.date.today()
-        if coupon.expiryDate > today:
+        today = datetime.today().date()
+        expiry_date = datetime.strptime(coupon.expiryDate, '%Y-%m-%d').date()
+        if expiry_date > today:
             return coupon.discount
         else:
             return 0  # Coupon has no effect
@@ -346,12 +350,13 @@ class Payment(ABC):
     def calcFinalPayment(self, coupon: 'Coupon' = None) -> float:
         if coupon:
             discount = self.calcDiscount(coupon)
-            return self.amount - discount
+            final_amount = float(self.amount) - (float(self.amount) * float(discount)) / 100 
+            return final_amount
         return self.amount 
     
 class CreditCard(Payment):
-    def __init__(self, paymentID: int, amount: float, createdOn: datetime, creditCardNum: str, cardType: str, nameOnCard: str, expiryDate: datetime, cvv: str):
-        super().__init__(paymentID, amount, createdOn)
+    def __init__(self, amount: float, creditCardNum: str, nameOnCard: str, expiryDate: datetime, cvv: str):
+        super().__init__(amount)
         self.__creditCardNum = creditCardNum      
         self.__nameOnCard = nameOnCard
         self.__expiryDate = expiryDate
@@ -390,8 +395,9 @@ class CreditCard(Payment):
         self.__nameOnCard = value
 
     def calcDiscount(self, coupon:'Coupon') -> float:
-        today=datetime.date.today()
-        if coupon.expiryDate > today:
+        today = datetime.today().date()
+        expiry_date = datetime.strptime(coupon.expiryDate, '%Y-%m-%d').date()
+        if expiry_date > today:
             return coupon.discount
         else:
             return 0  # Coupon has no effect
@@ -399,12 +405,13 @@ class CreditCard(Payment):
     def calcFinalPayment(self, coupon: 'Coupon' = None) -> float:
         if coupon:
             discount = self.calcDiscount(coupon)
-            return self.amount - discount
-        return self.amount
+            final_amount = float(self.amount) - (float(self.amount) * float(discount)) / 100 
+            return final_amount
+        return self.amount 
 
 class DebitCard(Payment):
-    def __init__(self, paymentID: int, amount: float, createdOn: datetime, cardNum: str, bankName: str, nameOnCard: str):
-        super().__init__(paymentID, amount, createdOn)
+    def __init__(self, amount: float, cardNum: str, bankName: str, nameOnCard: str):
+        super().__init__(amount)
         self.__cardNum = cardNum
         self.__bankName = bankName
         self.__nameOnCard = nameOnCard
@@ -434,8 +441,9 @@ class DebitCard(Payment):
         self.__nameOnCard = value
 
     def calcDiscount(self, coupon:'Coupon') -> float:
-        today=datetime.date.today()
-        if coupon.expiryDate > today:
+        today = datetime.today().date()
+        expiry_date = datetime.strptime(coupon.expiryDate, '%Y-%m-%d').date()
+        if expiry_date > today:
             return coupon.discount
         else:
             return 0  # Coupon has no effect
@@ -447,21 +455,13 @@ class DebitCard(Payment):
         return self.amount
     
 class Cash(Payment):
-    def __init__(self, paymentID: int, amount: float, createdOn: datetime, currency: str):
-        super().__init__(paymentID, amount, createdOn)
-        self.__currency = currency
-
-    @property
-    def currency(self):
-        return self.__currency
-
-    @currency.setter
-    def currency(self, value):
-        self.__currency = value
+    def __init__(self, amount: float):
+        super().__init__(amount)
 
     def calcDiscount(self, coupon:'Coupon') -> float:
-        today=datetime.date.today()
-        if coupon.expiryDate > today:
+        today = datetime.today().date()
+        expiry_date = datetime.strptime(coupon.expiryDate, '%Y-%m-%d').date()
+        if expiry_date > today:
             return coupon.discount
         else:
             return 0  # Coupon has no effect

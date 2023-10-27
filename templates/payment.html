@@ -54,26 +54,6 @@
     <h3>Payment</h3>
   </div>
 
-  <div class="coupon-box">
-    <p>Add a coupon: </p>    
-    <form method="POST" action="/add_coupon">   
-      <div class="item"> 
-       {% for coupon in coupon_list %}
-         <div class="form-item">
-           <input type="text" name="total_price" value="{{ total_price }}" style="display: none;">          
-           <input type="radio" id="{{coupon.couponID}}" name="couponID" value="{{coupon.couponID}}">
-           <label for="{{coupon.couponID}}">
-             <h3>{{ coupon.couponID }}</h3>
-             <h3>Discount: {{coupon.discount}} %</h3>
-             <h3>Expiry Date: {{coupon.expiryDate}}</h3>
-           </label>         
-         </div>    
-         {% endfor %}          
-       </div>
-       <button type="submit">Add A Coupon</button>  
-   </form>   
-  </div>
-
   <h2 class="choose-type-text">Choose your payment type: </h2>
 
   <div class="payment-type">
@@ -83,7 +63,16 @@
         <div class="item">
           <label for="amount">Amount:</label>
           <input type="text" id="amount" name="amount" value="{{total_price}}" required readonly> 
-        </div>     
+        </div> 
+        <div class="item">
+          <label for="coupon">Coupon:</label>
+          <select type="text" id="coupon" name="couponID" class="coupon-select">
+            <option value="" selected>NA</option> 
+            {% for coupon in coupon_list %}
+            <option value="{{ coupon.couponID }}">Discount: {{ coupon.discount }}% - Expiry Date {{ coupon.expiryDate }}</option>
+            {% endfor %}
+          </select>
+        </div>    
         <div class="item">
           <label for="num">Credit Card Number:</label>
           <input type="text" id="num" name="num" required> 
@@ -110,6 +99,15 @@
         <div class="item">
           <label for="amount">Amount:</label>
           <input type="text" id="amount" name="amount" value="{{total_price}}" required readonly> 
+        </div>
+        <div class="item">
+          <label for="coupon">Coupon:</label>
+          <select type="text" id="coupon" name="couponID" class="coupon-select">
+            <option value="" selected>NA</option> 
+            {% for coupon in coupon_list %}
+            <option value="{{ coupon.couponID }}">Discount: {{ coupon.discount }}% - Expiry Date {{ coupon.expiryDate }}</option>
+            {% endfor %}
+          </select>
         </div> 
         <div class="item">
           <label for="bname">Bank Name:</label>
@@ -133,7 +131,16 @@
         <div class="item">
           <label for="amount">Amount:</label>
           <input type="text" id="amount" name="amount" value="{{total_price}}" required readonly> 
-        </div>                     
+        </div>
+        <div class="item">
+          <label for="coupon">Coupon:</label>
+          <select type="text" id="coupon" name="couponID" class="coupon-select">
+            <option value="" selected>NA</option> 
+            {% for coupon in coupon_list %}
+            <option value="{{ coupon.couponID }}">Discount: {{ coupon.discount }}% - Expiry Date {{ coupon.expiryDate }}</option>
+            {% endfor %}
+          </select>
+        </div>                      
         <button type="submit">Confirm Payment</button>         
       </form>  
     </div> 
@@ -141,4 +148,10 @@
   </div>
 
 </div>
+
+<script>
+  function closePopup() {
+    document.querySelector('.overlay_popup').style.display = 'none';
+}
+</script>
 {% endblock %}

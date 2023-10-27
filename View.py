@@ -295,24 +295,23 @@ def booking_seat():
   return render_template("payment.html",coupon_list=coupon_list, total_price=total_price , selected_seats=selected_seats, role=role, title="Payment")
 
 
-@app.route('/add_coupon', methods=['POST'])
-def add_coupon():
-  total_price_str = request.form.get('total_price')
+@app.route('/add_credit_card', methods=['POST'])
+def add_credit_card():
+  amount = request.form.get('amount')
+  creditCardNum = request.form.get('num')
+  nameOnCard = request.form.get('name')
+  expiryDate = request.form.get('date')
+  cvv = request.form.get('cvv')
+  credit_card = controller.add_credit_card_payment(amount, creditCardNum, nameOnCard, expiryDate, cvv)
   couponID = request.form.get('couponID')
   if couponID:      
       coupon = controller.search_coupon(couponID)
-      discount = coupon.discount
-  else:
-      discount = 0
-  discount = float(discount)
-  total_price = float(total_price_str) - (float(total_price_str) * discount) / 100 
-   
-  print(type(discount))  
-  print(discount)
-  coupon_list = controller.get_coupon_list()
+      discount = credit_card.calcDiscount(coupon)
+      total_price = credit_card.calcFinalPayment(coupon)
+
   role = session.get('role')
-  
-  return render_template("payment.html",coupon_list=coupon_list, total_price=total_price , role=role, title="Payment")
+  msg = f"Amount{amount}, {discount}% discount has been added to your payment. Fianl Payment ${total_price}. "
+  return render_template("ticket.html",msg=msg, discount=discount,  credit_card=credit_card, total_price=total_price , role=role, title="Payment")
 
 
 

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block header %}
+<header class="header">
+  <nav class="nav">
+    <a href="#" class="nav_logo">Lincoln Cinema <span>{{ role }}</span></a>
+    {% if role == "Customer" %}
+    <ul class="nav_items">
+      <li class="nav_item">
+        <a href="/customer_home" class="nav_link">Home</a>
+        <a href="#" class="nav_link">Product</a>
+        <a href="#" class="nav_link">Services</a>
+        <a href="#" class="nav_link">Contact</a>
+      </li>
+    </ul>
+    {% elif role == "Admin" %}
+    <ul class="nav_items">
+        <li class="nav_item">
+          <a href="/admin_home" class="nav_link">Home</a>
+          <a href="#" class="nav_link">Product</a>
+          <a href="#" class="nav_link">Services</a>
+          <a href="#" class="nav_link">Contact</a>
+        </li>
+    </ul>
+    {% else %}
+    <ul class="nav_items">
+        <li class="nav_item">
+        <a href="/staff_home" class="nav_link">Home</a>
+        <a href="#" class="nav_link">Product</a>
+        <a href="#" class="nav_link">Services</a>
+        <a href="#" class="nav_link">Contact</a>
+        </li>
+    </ul>
+    {% endif %}
+    <a class="button" href="/logout">Logout</a>
+  </nav>
+</header>
+{% endblock %}
+
+{% block content %}
+
+<div class="ticket-container">
+    <div class="ticket-label">
+        <h3>E-Ticket</h3>
+    </div>
+
+    <div class="ticket-card">
+        <div class="ticket-movie">
+            <h3>Movie</h3>
+            <h3>Screening</h3>
+            <h3>Seat</h3>
+        </div>
+
+        <div class="ticket-amount">
+            <h3>Amount: {{credit_card.amount}}</h3>
+            <h3>Discount: {{discount}} %</h3>
+            <h3>Final Amount{{total_price}}</h3>
+        </div>
+    </div>
+
+    <button>Browse to Home Page</button>
+
+</div>
+
+
+{% endblock %}

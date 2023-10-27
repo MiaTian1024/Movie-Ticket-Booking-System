@@ -2,7 +2,7 @@
 # Import
 from typing import List
 from datetime import datetime, date
-from Models import Guest, Customer, Admin, FrontDeskStaff, Movie, Screening, CinemaHall, Coupon
+from Models import Guest, Customer, Admin, FrontDeskStaff, Movie, Screening, CinemaHall, Coupon, CreditCard, Payment
 from ReadFile import ReadFile
 
 # Read files
@@ -27,6 +27,7 @@ class Controller:
         self.__admins: List['Admin'] = admin_obj
         self.__staffs: List['FrontDeskStaff'] = staff_obj
         self.__coupons: List['Coupon'] = coupon_obj
+        self.__payments: List['Payment'] = []
 
     def halls(self):
         return self.__halls
@@ -34,7 +35,6 @@ class Controller:
     def screenings(self):
         return self.__screenings
               
-
     def register(self, username: str, email: str, password: str) -> bool:
         # Check if the email is already in use
         if any(cust._email == email for cust in self.__customers):
@@ -181,9 +181,10 @@ class Controller:
                 return coupon      
         return None
 
-    def add_payment(self, amount: float, coupon: 'Coupon', payment_type: str) -> bool:
-    
-        pass
+    def add_credit_card_payment(self, amount: float, creditCardNum: str, nameOnCard: str, expiryDate: datetime, cvv: str):
+        credit_card_payment = CreditCard(amount, creditCardNum, nameOnCard, expiryDate, cvv)
+        self.__payments.append(credit_card_payment)
+        return credit_card_payment
 
     def issue_refund(self, amount: float, refund_type: str) -> bool:
         #Method to issue a refund.

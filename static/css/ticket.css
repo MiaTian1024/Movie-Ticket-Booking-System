@@ -1,0 +1,40 @@
+.ticket-container {
+    height: 100vh;
+    padding: 100px;
+    margin: 20px auto;
+  }
+
+  .ticket-label{
+    margin:20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .ticket-label h3{
+    color:#ccc;
+    font-size: 34px;
+    font-weight: 600;
+  }
+  
+  .ticket-container .ticket-card {
+    margin: 10px auto;
+    padding: 30px;
+    border: 1px solid #ccc;
+    width: 600px;
+    height: 400px;
+    border-radius: 5px; 
+    display: flex;
+    flex-direction: column;
+    background-color: #a6a4a5b9;
+  }
+
+  .ticket-card .ticket-movie{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+
+  .ticket-card .ticket-amount{
+    display: flex;
+    justify-content: space-between;
+  }

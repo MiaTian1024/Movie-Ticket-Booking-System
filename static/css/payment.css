@@ -17,81 +17,6 @@
     font-weight: 600;
   }
   
-  /* Style the input box */
-  .coupon-box {
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-
-  .coupon-box p{
-    font-size: 20px;
-    color: #ccc;
-  }
-
-  .coupon-box label{
-    font-weight: bold;
-    color:#303030;
-  }
-
-  .coupon-box .item{
-    display: flex;
-    justify-content:center;
-    margin-top: 20px;
-  }
-
-  .coupon-box .item .form-item{
-    margin-right: 20px;
-    background-color: #ccc;
-    padding:5px 10px;
-    background-color: #a6a4a5b9;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-
-  .coupon-box .item .form-item:hover{
-    background-color: #407182;
-  }
-
-  .coupon-box .item .form-item h3{
-    font-size: 16px;
-  }
-
-  .coupon-box  button {
-    background-color: #f2f2f2;
-    font-size: 16px;
-    font-weight: 600;
-    padding:4px 15px;
-    cursor: pointer;
-    border-radius: 4px;
-    margin: 20px auto;
-    display: block;
-    width: 30%;
-  }
-
-  .coupon-box input[type="radio"] + label {
-    cursor: pointer;
-  }
-
-  .coupon-box button:hover {
-    background-color: #000000;
-    color: #ccc;
-  }
-
-  .coupon-box input[type="radio"] {
-    display: none; /* Hide the default radio button */
-  }
-
-  .coupon-box input[type="radio"] + label:hover {
-    background-color: #e0e0e0;
-  }
-
-  .coupon-box input[type="radio"]:checked + label {
-    background-color: var(--nav-color);
-    color: #fff;
-}
-
 
   .payment-container .payment-type {
     margin: 10px;
@@ -116,7 +41,7 @@
     border: 1px solid #ddd;
     border-radius: 5px;
     margin:10px;
-    height: 400px;
+    height: 470px;
   }
 
   .payment-type .form-item p {
@@ -145,6 +70,12 @@
     border: 1px solid #ccc;
     border-radius: 5px;
   }
+
+  .payment-type .coupon-select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
   
   /* Style the submit button */
   .payment-type .form-item button {
@@ -162,7 +93,6 @@
 
   .payment-type .form-item button:hover {
     background-color: #407182; /* Change to your desired button color */
-    color: rgb(0, 0, 0);
   }
   
   /* Add spacing between form items */
