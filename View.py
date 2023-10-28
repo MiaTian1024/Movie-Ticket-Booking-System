@@ -284,7 +284,6 @@ def add_screening():
 def cancel_screening():   
     screeningID = request.args.get('screeningID')
     movieID = request.args.get('movieID')
-    print(movieID)
     movie = controller.search_movie_by_id(int(movieID))
     screening = controller.search_screening_by_id(movie, int(screeningID))
     role = session.get('role')

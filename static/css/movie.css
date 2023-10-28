@@ -137,17 +137,14 @@
     display: flex;
     justify-content:center;
     margin-top: 30px;
+    flex-wrap: wrap;
   }
 
   .schedules .item .form-item{
-    margin-right: 30px;
+    margin: 20px;
     padding:10px 30px;
     border: 1px solid #ccc;
     border-radius: 4px;
-  }
-
-  .schedules .item .form-item:hover{
-    background-color: #407182;
   }
 
   .schedules  button {
@@ -176,6 +173,7 @@
 
   .schedules input[type="radio"] + label:hover {
     background-color: #407182;
+    color:#fff;
   }
 
   .schedules input[type="radio"]:checked + label {
@@ -188,26 +186,26 @@
     margin: 30px auto;
   }
 
-  .add-screening-button{
-    background-color: black;;
-    color: #999;
+  .add-screening .add-screening-button{
+    background-color: #407182;
+    color: #ffffff;
     padding: 10px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
-    width: 300px;
-    height:70px;
     align-items: center;
     font-size: 20px;
     margin: 10px auto;
   }
 
-  .add-screening-button:hover {
-    background-color: #0056b3;
+  .add-screening .add-screening-button:hover {
+    background-color: #000000;
+    color: #fff;
   }
 
-  .add-screening-button:active {
-    background-color: #003a6e;
+  .add-screening .add-screening-button:active {
+    background-color: #000000;
+    color: #fff;
   }
 
   .add-screening-form .form-group {
@@ -262,5 +260,24 @@
 /* Style the select when focused */
 .add-screening-form .form-group select:focus {
   border-color: #007bff;
+}
+
+
+.schedules .cancel-button {
+  margin-top: 15px;
+}
+
+.schedules .cancel-button a{
+  background-color: #ff0000; /* Change to your desired button color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+  margin-top: 15px;
+}
+
+.schedules .cancel-button a:hover {
+  background-color: #920404; /* Change to your desired button hover color */
 }
 

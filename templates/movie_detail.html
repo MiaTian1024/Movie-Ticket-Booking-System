@@ -75,7 +75,7 @@
                   <h3>End Time: {{screening.endTime}}</h3>
                 </label> 
                 <div class="cancel-button">
-                  <a href="/cancel_screening?screeningID={{ screening.screeningID }}&movieID={{ movie.movieID }}">Cancel Screening</a>
+                  <a href="/cancel_screening?movieID={{ movie.movieID }}&screeningID={{ screening.screeningID }}">Cancel Screening</a>
                 </div>        
               </div>    
               {% endfor %}            
@@ -84,7 +84,7 @@
         
         {% if role == "Admin" %}
         <div class="add-screening">
-          <button id="openModalButton" class="add-screening-button">Add A Screening</button>
+          <button id="openModalButton" class="add-screening-button">Add A New Screening</button>
           <div id="myModal" class="modal">
               <div class="modal-content">
                   <span class="close" id="closeModalButton">&times;</span>

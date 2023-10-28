@@ -149,6 +149,10 @@ class Movie:
     @property
     def movieID(self,):
         return self.__movieID
+    
+    @movieID.setter
+    def movieID(self, value):
+        self.__movieID = value
 
     @property
     def title(self,):
