@@ -7,7 +7,7 @@
     <ul class="nav_items">
       <li class="nav_item">
         <a href="/customer_home" class="nav_link">Home</a>
-        <a href="/booking_detail" class="nav_link">Booking</a>
+        <a href="/booking_detail" class="nav_link">My Booking</a>
       </li>
     </ul>
     <a class="button" href="/logout">Logout</a>
@@ -36,14 +36,15 @@
         <ul>
             {% for booking in booking_list %}
               <li>
-                <form method="POST" action="{{ url_for('cancel_booking') }}">
-                  <input type="hidden" name="bookingID" value="{{ booking.bookingID }}">
                   <p>Booking ID: {{ booking.bookingID }}</p>
                   <p>Movie Title: {{ booking.movie.title }}</p>
                   <p>Screening Date: {{ booking.screening.screeningDate }}</p>
                   <p>Status: {{ booking.status }}</p>
-                  <button type="submit" class="cancel-button">Cancel Booking</button>
-                </form>
+                  {% if booking.status != "Canceled" %}
+                  <div class="cancel-button">
+                    <a href="/cancel_booking?bookingID={{ booking.bookingID }}">Cancel Booking</a>
+                  </div>
+                  {% endif %}
               </li>
             {% endfor %}
         </ul>

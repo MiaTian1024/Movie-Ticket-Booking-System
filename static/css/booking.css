@@ -22,31 +22,37 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px; 
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
   }
-  
-  /* Style the list items */
-  .booking-list ul li {
-    margin-bottom: 10px;
+
+  .booking-list ul {
+    display: flex;
+    
+  }
+
+  .booking-list li {
+    margin:10px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     list-style: none;
+    background-color: #ccc;
+    
   }
-  
-  /* Style the cancel button */
+
   .booking-list .cancel-button {
+    margin-top: 15px;
+  }
+
+  .booking-list .cancel-button a{
     background-color: #ff0000; /* Change to your desired button color */
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     padding: 5px 10px;
-    margin-top: 5px;
+    margin-top: 15px;
   }
   
-  .booking-list .cancel-button:hover {
+  .booking-list .cancel-button a:hover {
     background-color: #cc0000; /* Change to your desired button hover color */
   }

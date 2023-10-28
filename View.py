@@ -343,7 +343,7 @@ def add_credit_card():
         customer = pickle.loads(customer_serialized)
         booking = controller.make_booking(customer, movie, screening, selected_seat_objects, credit_card)
         booking.status = "Complete"
-  msg = f"Amount{amount}, {discount}% discount has been added to your payment. Fianl Payment ${total_price}. "
+  msg = booking.sendAddBookingNotification().content
   return render_template("ticket.html",msg=msg, booking=booking, selected_seat_objects=selected_seat_objects, discount=discount,  credit_card=credit_card, total_price=total_price , screening=screening, movie=movie, role=role, title="Payment")
 
 
@@ -357,14 +357,16 @@ def booking_detail():
     return render_template("booking_detail.html", booking_list=booking_list, role=role, title="booking_detail")
 
 
-@app.route('/cancel_booking', methods=['POST'])
+@app.route('/cancel_booking', methods=['GET'])
 def cancel_booking(): 
     customer_serialized = session.get('customer')
     customer = pickle.loads(customer_serialized)
-    bookingID = request.form.get('bookingID')
+    bookingID = request.args.get('bookingID')
+    print(bookingID)
     booking = controller.search_booking(int(bookingID))
+    print(booking)
     if controller.cancel_booking(booking):
-        msg = "Booking canceled successfully"
+        msg = booking.sendCancelBookingNotification().content
     else:
         msg = "Booking not found or already canceled"
     booking_list = controller.get_booking_list(customer) 

@@ -385,16 +385,38 @@ class Booking:
     @property
     def createdOn(self,):
         return self.__createdOn
-
  
-    def sendNotification(self) -> 'Notification':
-        pass
+    def sendAddBookingNotification(self) -> 'Notification':
+        content = f"Booking for Movie: {self.movie.title} at {self.screening.screeningDate} has been successfully added to your booking list"
+        return Notification(content)
+    
+    def sendCancelBookingNotification(self) -> 'Notification':
+        content = f"Booking for Movie: {self.movie.title} at {self.screening.screeningDate} has been canceled"
+        return Notification(content)
 
 class Notification:
-    def __init__(self, notificationID: int, createdOn: date, content: str):
-        self.__notificationID = notificationID
-        self.__createdOn = createdOn
+    nextID = 1000
+    def __init__(self, content: str):
+        self.__notificationID = Notification.nextID
+        self.__createdOn = datetime.now()
         self.__content = content
+        Notification.nextID += 1
+
+    @property
+    def notificationID(self,):
+        return self.__notificationID
+
+    @property
+    def content(self,):
+        return self.__content
+
+    @content.setter
+    def content(self, value):
+        self.__content = value
+
+    @property
+    def createdOn(self,):
+        return self.__createdOn
 
 class Payment(ABC):
     nextID = 10000

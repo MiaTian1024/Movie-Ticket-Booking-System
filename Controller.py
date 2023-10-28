@@ -116,7 +116,9 @@ class Controller:
 
     def cancel_booking(self, booking: 'Booking') -> bool:
         if booking in self.__bookings:
-            self.__bookings.remove(booking)
+            booking.status = "Canceled"
+            for seat in booking.bookingSeats:
+                seat.booked = False
             return True  # Booking canceled successfully
         else:
             return False  # Booking not found or already canceled
@@ -132,7 +134,7 @@ class Controller:
         for booking in self.__bookings:
             if booking.bookingID == bookingID:
                 return booking
-            return None
+        return None
 
     def add_movie(self, admin: 'Admin', title: str, language: str, genre: str, releaseDate: datetime) -> bool:  
         new_movie = admin.addMovie(title, language, genre, releaseDate)

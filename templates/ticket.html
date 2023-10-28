@@ -8,7 +8,7 @@
     <ul class="nav_items">
       <li class="nav_item">
         <a href="/customer_home" class="nav_link">Home</a>
-        <a href="/booking_detail" class="nav_link">Booking</a>
+        <a href="/booking_detail" class="nav_link">My Booking</a>
       </li>
     </ul>
     {% elif role == "Admin" %}
@@ -38,6 +38,16 @@
 {% block content %}
 
 <div class="ticket-container">
+
+    {% if msg %}
+    <div class="overlay_popup">
+        <div class="popup">
+            <p>{{ msg }}</p>
+            <button onclick="closePopup()">Close</button>
+        </div>
+    </div>
+    {% endif %}
+
     <div class="ticket-label">
         <h3>E-Ticket</h3>
     </div>
@@ -61,5 +71,10 @@
 
 </div>
 
+<script>
+  function closePopup() {
+    document.querySelector('.overlay_popup').style.display = 'none';
+}
+</script>
 
 {% endblock %}
