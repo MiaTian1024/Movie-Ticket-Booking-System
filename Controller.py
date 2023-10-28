@@ -98,6 +98,15 @@ class Controller:
     def get_movie_list(self):
         return self.__movies
     
+    def get_customer_list(self):
+        return self.__customers
+    
+    def search_customer(self, customerEmail):
+        for customer in self.__customers:
+            if customer.email == customerEmail:
+                return customer      
+        return None
+    
     def search_hall(self, hallName):
         for hall in self.__halls:
             if hall.name == hallName:

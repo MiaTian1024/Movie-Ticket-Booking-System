@@ -302,9 +302,11 @@ def booking_seat():
                 break 
   selected_seat_id_list = [seat.seatID for seat in selected_seat_objects]
   role = session.get('role')
-  coupon_list = controller.get_coupon_list()  
-  total_price = float(total_price_str)
-  return render_template("payment.html",coupon_list=coupon_list, selected_seat_id_list=selected_seat_id_list, total_price=total_price , screening=screening,  movie=movie, role=role, title="Payment")
+  coupon_list = controller.get_coupon_list() 
+  total_price = float(total_price_str) 
+  if role == 'Staff':
+      customer_list = controller.get_customer_list() 
+  return render_template("payment.html", customer_list=customer_list, coupon_list=coupon_list, selected_seat_id_list=selected_seat_id_list, total_price=total_price , screening=screening,  movie=movie, role=role, title="Payment")
 
 
 @app.route('/add_credit_card', methods=['POST'])
@@ -343,6 +345,11 @@ def add_credit_card():
         customer = pickle.loads(customer_serialized)
         booking = controller.make_booking(customer, movie, screening, selected_seat_objects, credit_card)
         booking.status = "Complete"
+  if role == 'Staff':
+        customer_email = request.form.get('customer_email') 
+        customer = controller.search_customer(customer_email)
+        booking = controller.make_booking(customer, movie, screening, selected_seat_objects, credit_card)
+        booking.status = "Complete"   
   msg = booking.sendAddBookingNotification().content
   return render_template("ticket.html",msg=msg, booking=booking, selected_seat_objects=selected_seat_objects, discount=discount,  credit_card=credit_card, total_price=total_price , screening=screening, movie=movie, role=role, title="Payment")
 

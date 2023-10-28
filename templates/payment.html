@@ -52,12 +52,26 @@
     <h3>Payment</h3>
   </div>
 
-  <h2 class="choose-type-text">Choose your payment type: </h2>
+  
+
+  <h2 class="choose-type-text">Choose payment type: </h2>
 
   <div class="payment-type">
     <div class="form-item">
       <p>Credit Card </p> 
       <form method="POST" action="/add_credit_card"> 
+        {% if role == "Staff" %}
+        <div class="item">
+          <label for="customer">Customer:</label>
+          <select type="text" id="customer" name="customer_email" class="coupon-select">
+            <option value="" selected>Select a customer</option> 
+            {% for customer in customer_list %}
+            <option value="{{ customer.email }}">Username: {{ customer.username }} - Email: {{ customer.email }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        {% endif %}
+
         <div class="item">
           <label for="amount">Amount:</label>
           <input type="text" id="amount" name="amount" value="{{total_price}}" required readonly> 
