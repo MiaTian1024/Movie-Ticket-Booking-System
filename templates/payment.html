@@ -15,9 +15,7 @@
     <ul class="nav_items">
         <li class="nav_item">
           <a href="/admin_home" class="nav_link">Home</a>
-          <a href="#" class="nav_link">Product</a>
-          <a href="#" class="nav_link">Services</a>
-          <a href="#" class="nav_link">Contact</a>
+          <a href="/booking_detail" class="nav_link">Booking Management</a>
         </li>
     </ul>
     {% else %}
@@ -58,7 +56,7 @@
     <div class="form-item">
       <p>Credit Card </p> 
       <form method="POST" action="/add_credit_card"> 
-        {% if role == "Staff" %}
+        {% if customer_list %}
         <div class="item">
           <label for="customer">Customer:</label>
           <select type="text" id="customer" name="customer_email" class="coupon-select">
@@ -108,7 +106,7 @@
     <div class="form-item">
       <p>Debit Card</p>
       <form method="POST" action="/add_debit_card">
-        {% if role == "Staff" %}
+        {% if customer_list %}
         <div class="item">
           <label for="customer">Customer:</label>
           <select type="text" id="customer" name="customer_email" class="coupon-select">
@@ -151,7 +149,7 @@
     <div class="form-item">
       <p>Cash </p> 
       <form method="POST" action="/add_cash">
-        {% if role == "Staff" %}
+        {% if customer_list %}
         <div class="item">
           <label for="customer">Customer:</label>
           <select type="text" id="customer" name="customer_email" class="coupon-select">

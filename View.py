@@ -304,10 +304,11 @@ def booking_seat():
   role = session.get('role')
   coupon_list = controller.get_coupon_list() 
   total_price = float(total_price_str) 
-  if role == 'Staff':
+  if role == 'Customer':
+      return render_template("payment.html", coupon_list=coupon_list, selected_seat_id_list=selected_seat_id_list, total_price=total_price , screening=screening,  movie=movie, role=role, title="Payment")
+  else:
       customer_list = controller.get_customer_list() 
-  return render_template("payment.html", customer_list=customer_list, coupon_list=coupon_list, selected_seat_id_list=selected_seat_id_list, total_price=total_price , screening=screening,  movie=movie, role=role, title="Payment")
-
+      return render_template("payment.html", customer_list=customer_list, coupon_list=coupon_list, selected_seat_id_list=selected_seat_id_list, total_price=total_price , screening=screening,  movie=movie, role=role, title="Payment")
 
 @app.route('/add_credit_card', methods=['POST'])
 def add_credit_card():
@@ -342,7 +343,7 @@ def add_credit_card():
         customer = pickle.loads(customer_serialized)
         booking = controller.make_booking(customer, movie, screening, selected_seat_objects, credit_card)
         booking.status = "Complete"
-  if role == 'Staff':
+  else:
         customer_email = request.form.get('customer_email') 
         customer = controller.search_customer(customer_email)
         booking = controller.make_booking(customer, movie, screening, selected_seat_objects, credit_card)
@@ -375,7 +376,7 @@ def cancel_booking():
     if role == 'Customer':
         customer_serialized = session.get('customer')
         customer = pickle.loads(customer_serialized)
-        booking_list = controller.get_booking_list(customer) 
+        booking_list = controller.get_booking_list_for_customer(customer) 
     else:
         booking_list = controller.get_booking_list()    
     return render_template("booking_detail.html", msg=msg, booking_list=booking_list, role=role, title="booking_detail")
