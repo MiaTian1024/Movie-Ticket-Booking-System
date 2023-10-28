@@ -90,10 +90,11 @@
 
         {% for seat in seats %}
           <div class="seat {% if seat.booked %}occupied{% endif %}"
+            data-seat-id="{{ seat.seatID }}"
             data-row="{{ seat.row }}" 
             data-column="{{ seat.column }}"
-            data-price={{seat.price|int}}
-            onclick="selectSeat(event)">
+            data-price="{{seat.price|int}}"
+            {% if not seat.booked %} onclick="selectSeat(event)" {% endif %}>
             {{seat.row}}-{{seat.column}}
           </div>
         {% endfor %}
@@ -114,8 +115,10 @@
 
 
 <form id="seats-form" method="POST" action="{{ url_for('booking_seat') }}">
-  <input type="hidden" name="selected_seats" value="{{ selected_seats }}">
+  <input type="hidden" name="selected_seats" id="selected-seats-input" value="">
   <input type="hidden" name="total_price" value="{{ total_price }}">  
+  <input type="hidden" name="screeningID" value="{{ screening.screeningID }}"> 
+  <input type="hidden" name="movieID" value="{{ movie.movieID }}"> 
 </form>
 
 <script>
@@ -126,23 +129,33 @@
   function selectSeat(event) {
 
     const seat = event.target;
+    const seatId = seat.dataset.seatId;
   
     // Toggle selected class
     seat.classList.toggle('selected');
   
     // Update totals
     if(seat.classList.contains('selected')) {
-      selectedSeats.push(seat.dataset.seatNumber); 
+      selectedSeats.push({
+        seatId: seatId,
+        row: seat.dataset.row,
+        column: seat.dataset.column,
+        price: seat.dataset.price
+      }); 
       totalPrice += Number(seat.dataset.price);
     } else {
       // Remove seat from selection
-      selectedSeats = selectedSeats.filter(num => num !== seat.dataset.seatNumber)
+      selectedSeats = selectedSeats.filter((selectedSeat) => selectedSeat.seatId !== seatId);
       totalPrice -= seat.dataset.price;
     }
   
     // Update DOM
     document.getElementById('count').innerText = selectedSeats.length;
     document.getElementById('total').innerText = totalPrice;  
+
+    // Update the hidden input field with selected seats JSON data
+    const selectedSeatsInput = document.getElementById('selected-seats-input');
+    selectedSeatsInput.value = JSON.stringify(selectedSeats);
   }
 
 
@@ -152,7 +165,7 @@
   submitBtn.addEventListener('click', () => {
 
     // Update hidden inputs with current values
-    seatsForm.querySelector('[name="selected_seats"]').value = selectedSeats.length;  
+    seatsForm.querySelector('[name="selected_seats"]').value = JSON.stringify(selectedSeats);  
     seatsForm.querySelector('[name="total_price"]').value = totalPrice;
     
     seatsForm.submit();

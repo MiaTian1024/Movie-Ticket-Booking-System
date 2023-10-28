@@ -10,6 +10,7 @@
 @import url("css/seat.css");
 @import url("css/payment.css");
 @import url("css/ticket.css");
+@import url("css/booking.css");
 
 
 /* CSS variables for reusablity across all files (including above imported) */

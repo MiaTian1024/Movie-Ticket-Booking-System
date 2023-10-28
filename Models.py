@@ -192,9 +192,7 @@ class Movie:
             if screening.screeningID == screeningID:
                 return screening
         return None
-       
-    def get_info(self) -> str:
-        return f"Title: {self.__title}, Language: {self.__language}, Genre: {self.__genre}, Release Date: {self.__releaseDate}"
+    
 
 class Screening:
     nextID = 100
@@ -214,16 +212,33 @@ class Screening:
     def screeningDate(self):
         return self.__screeningDate
     
+    @screeningDate.setter
+    def screeningDate(self, value):
+        self.__screeningDate = value
+    
     @property
     def startTime(self):
         return self.__startTime
+    
+    @startTime.setter
+    def startTime(self, value):
+        self.__startTime = value
     
     @property
     def endTime(self):
         return self.__endTime
     
+    @endTime.setter
+    def endTime(self, value):
+        self.__endTime = value
+    
+    @property
     def hall(self):
         return self.__hall
+    
+    @hall.setter
+    def hall(self, value):
+        self.__hall = value
 
 class CinemaHall:
     def __init__(self, name: str, totalSeats: int):
@@ -235,19 +250,40 @@ class CinemaHall:
     def name(self):
         return self.__name
     
+    @name.setter
+    def name(self, value):
+        self.__name = value
+    
     @property
     def totalSeats(self):
         return self.__totalSeats
     
-    def listOfSeats(self):
-        return self.__listOfSeats
+    @totalSeats.setter
+    def totalSeats(self, value):
+        self.__totalSeats = value
     
-class ScreeningSeat():  
+    @property
+    def listOfSeats(self,):
+        return self.__listOfSeats
+
+    @listOfSeats.setter
+    def listOfSeats(self, value):
+        self.__listOfSeats = value
+
+    
+class ScreeningSeat():
+    nextID = 100 
     def __init__(self, row: int, column: int, price: float, booked: bool = False) -> None:
+        self.__seatID = ScreeningSeat.nextID
         self.__row = row
         self.__column = column
         self.__price = price
         self.__booked = booked
+        ScreeningSeat.nextID += 1
+
+    @property
+    def seatID(self,):
+        return self.__seatID
 
     @property
     def row(self,):
@@ -283,18 +319,74 @@ class ScreeningSeat():
 
 class Booking:
     nextID = 10000
-    def __init__(self, customer: 'Customer', numberOfSeats: int, status: int, 
-                 screening: 'Screening', screeningSeats: List['ScreeningSeat'], payment: 'Payment'):
-        self.__bookingNum = Booking.nextID
-        self.__customer = customer
-        self.__numberOfSeats = numberOfSeats
+    def __init__(self, customer: 'Customer', movie: 'Movie', screening: 'Screening', bookingSeats: List['ScreeningSeat'], payment: 'Payment', status: str = "Pending"):
+        self.__bookingID = Booking.nextID
+        self.__movie = movie
+        self.__customer = customer  
+        self.__screening = screening
+        self.__bookingSeats = bookingSeats
+        self.__payment = payment
         self.__createdOn = datetime.now()
         self.__status = status
-        self.__screening = screening
-        self.__screeningSeats = screeningSeats
-        self.__payment = payment
         Booking.nextID += 1
 
+    @property
+    def bookingID(self,):
+        return self.__bookingID
+
+    @property
+    def movie(self,):
+        return self.__movie
+
+    @movie.setter
+    def movie(self, value):
+        self.__movie = value
+
+    @property
+    def screening(self,):
+        return self.__screening
+
+    @screening.setter
+    def screening(self, value):
+        self.__screening = value
+
+    @property
+    def customer(self,):
+        return self.__customer
+
+    @customer.setter
+    def customer(self, value):
+        self.__customer = value
+
+    @property
+    def bookingSeats(self,):
+        return self.__bookingSeats
+
+    @bookingSeats.setter
+    def bookingSeats(self, value):
+        self.__bookingSeats = value
+
+    @property
+    def payment(self,):
+        return self.__payment
+
+    @payment.setter
+    def payment(self, value):
+        self.__payment = value
+
+    @property
+    def status(self,):
+        return self.__status
+
+    @status.setter
+    def status(self, value):
+        self.__status = value
+
+    @property
+    def createdOn(self,):
+        return self.__createdOn
+
+ 
     def sendNotification(self) -> 'Notification':
         pass
 
@@ -316,10 +408,6 @@ class Payment(ABC):
     def paymentID(self,):
         return self.__paymentID
 
-    @paymentID.setter
-    def paymentID(self, value):
-        self.__paymentID = value
-
     @property
     def amount(self,):
         return self.__amount
@@ -331,10 +419,6 @@ class Payment(ABC):
     @property
     def createdOn(self,):
         return self.__createdOn
-
-    @createdOn.setter
-    def createdOn(self, value):
-        self.__createdOn = value
         
     # Abstract method for all user class
     @abstractmethod

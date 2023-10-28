@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, jsonify, redirect, url_for
+from flask import Flask, render_template, request, session, jsonify, redirect, url_for, json
 from datetime import datetime
 import pickle
 
@@ -270,7 +270,7 @@ def screening_seat():
     movieID = request.form.get('movieID')
     movie = controller.search_movie_by_id(int(movieID)) 
     screening = controller.search_screening_by_id(movie, int(screeningID))
-    hall = screening.hall()
+    hall = screening.hall
     seats = hall.listOfSeats
     # Get max row and column values
     max_row = max(seat.row for seat in seats)  
@@ -278,21 +278,33 @@ def screening_seat():
     selected_seats = [] 
     total_price = 0   
     role = session.get('role')
-    return render_template("seat.html",hall=hall, screening=screening, total_price=total_price , selected_seats=selected_seats, max_row=max_row, max_column=max_column, seats=seats, movie=movie,  role=role, title="Seat")
+    return render_template("seat.html", hall=hall, screening=screening, total_price=total_price , selected_seats=selected_seats, max_row=max_row, max_column=max_column, seats=seats, movie=movie,  role=role, title="Seat")
 
 @app.route('/booking_seat', methods=['POST'])
 def booking_seat():
+  screeningID = request.form.get('screeningID')
+  movieID = request.form.get('movieID')
+  movie = controller.search_movie_by_id(int(movieID)) 
+  screening = controller.search_screening_by_id(movie, int(screeningID))
+  hall = screening.hall
+  seats = hall.listOfSeats
   selected_seats = request.form.get('selected_seats')
-  total_price_str = request.form.get('total_price') 
+  total_price_str = request.form.get('total_price')
+  selected_seats = json.loads(selected_seats)
+  # Initialize a list to store the selected seat objects
+  selected_seat_objects = []
+  for selected_seat in selected_seats:
+        seat_id = selected_seat["seatId"]
+        for seat in seats:
+            if seat.seatID == int(seat_id):
+                seat.booked = True
+                selected_seat_objects.append(seat)
+                break 
+  selected_seat_id_list = [seat.seatID for seat in selected_seat_objects]
   role = session.get('role')
   coupon_list = controller.get_coupon_list()  
-  print(selected_seats)
-  print(total_price_str)
-  print(coupon_list)
   total_price = float(total_price_str)
-  for coupon in coupon_list:
-      print(coupon.couponID)
-  return render_template("payment.html",coupon_list=coupon_list, total_price=total_price , selected_seats=selected_seats, role=role, title="Payment")
+  return render_template("payment.html",coupon_list=coupon_list, selected_seat_id_list=selected_seat_id_list, total_price=total_price , screening=screening,  movie=movie, role=role, title="Payment")
 
 
 @app.route('/add_credit_card', methods=['POST'])
@@ -307,9 +319,57 @@ def add_credit_card():
   coupon = controller.search_coupon(couponID)
   discount = credit_card.calcDiscount(coupon)
   total_price = credit_card.calcFinalPayment(coupon)
+  screeningID = request.form.get('screeningID')
+  movieID = request.form.get('movieID')
+  movie = controller.search_movie_by_id(int(movieID)) 
+  screening = controller.search_screening_by_id(movie, int(screeningID))
+  selected_seat_id_list = request.form.get('selected_seat_id_list')
+  selected_seat_id_list = json.loads(selected_seat_id_list)
+  selected_seat_objects = []
+  for selected_seat_id in selected_seat_id_list:
+        # Search for the seat object using the seat_id
+        seat = controller.search_seat(screening, int(selected_seat_id))  # Implement your function to retrieve the seat
+        if seat:
+            selected_seat_objects.append(seat)
+        else:
+            print("seat not found")
+ 
+  for seat in selected_seat_objects:
+      print(seat.seatID)
+  
   role = session.get('role')
+  if role == 'Customer':
+        customer_serialized = session.get('customer')
+        customer = pickle.loads(customer_serialized)
+        booking = controller.make_booking(customer, movie, screening, selected_seat_objects, credit_card)
+        booking.status = "Complete"
   msg = f"Amount{amount}, {discount}% discount has been added to your payment. Fianl Payment ${total_price}. "
-  return render_template("ticket.html",msg=msg, discount=discount,  credit_card=credit_card, total_price=total_price , role=role, title="Payment")
+  return render_template("ticket.html",msg=msg, booking=booking, selected_seat_objects=selected_seat_objects, discount=discount,  credit_card=credit_card, total_price=total_price , screening=screening, movie=movie, role=role, title="Payment")
+
+
+@app.route("/booking_detail")
+def booking_detail():  
+    customer_serialized = session.get('customer')
+    customer = pickle.loads(customer_serialized)
+    booking_list = controller.get_booking_list(customer)
+    print(booking_list)
+    role = session.get('role')
+    return render_template("booking_detail.html", booking_list=booking_list, role=role, title="booking_detail")
+
+
+@app.route('/cancel_booking', methods=['POST'])
+def cancel_booking(): 
+    customer_serialized = session.get('customer')
+    customer = pickle.loads(customer_serialized)
+    bookingID = request.form.get('bookingID')
+    booking = controller.search_booking(int(bookingID))
+    if controller.cancel_booking(booking):
+        msg = "Booking canceled successfully"
+    else:
+        msg = "Booking not found or already canceled"
+    booking_list = controller.get_booking_list(customer) 
+    role = session.get('role')
+    return render_template("booking_detail.html", msg=msg, booking_list=booking_list, role=role, title="booking_detail")
 
 
 @app.route("/test")

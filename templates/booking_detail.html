@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block header %}
+<header class="header">
+  <nav class="nav">
+    <a href="#" class="nav_logo">Lincoln Cinema <span>{{ role }}</span></a>
+    <ul class="nav_items">
+      <li class="nav_item">
+        <a href="/customer_home" class="nav_link">Home</a>
+        <a href="/booking_detail" class="nav_link">Booking</a>
+      </li>
+    </ul>
+    <a class="button" href="/logout">Logout</a>
+  </nav>
+</header>
+{% endblock %}
+
+{% block content %}
+
+<div class="booking-container">
+
+    {% if msg %}
+    <div class="overlay_popup">
+        <div class="popup">
+            <p>{{ msg }}</p>
+            <button onclick="closePopup()">Close</button>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="booking-label">
+        <h3>Booking</h3>
+    </div>
+
+    <div class="booking-list"> 
+        <ul>
+            {% for booking in booking_list %}
+              <li>
+                <form method="POST" action="{{ url_for('cancel_booking') }}">
+                  <input type="hidden" name="bookingID" value="{{ booking.bookingID }}">
+                  <p>Booking ID: {{ booking.bookingID }}</p>
+                  <p>Movie Title: {{ booking.movie.title }}</p>
+                  <p>Screening Date: {{ booking.screening.screeningDate }}</p>
+                  <p>Status: {{ booking.status }}</p>
+                  <button type="submit" class="cancel-button">Cancel Booking</button>
+                </form>
+              </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+<script>
+    function closePopup() {
+        document.querySelector('.overlay_popup').style.display = 'none';
+    }
+</script>    
+
+
+{% endblock %}

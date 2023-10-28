@@ -1,0 +1,52 @@
+.booking-container {
+    height: 100vh;
+    padding: 100px;
+    margin: 20px auto;
+  }
+
+  .booking-label{
+    margin:20px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .booking-label h3{
+    color:#ccc;
+    font-size: 34px;
+    font-weight: 600;
+  }
+  
+
+  .booking-container .booking-list {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px; 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  /* Style the list items */
+  .booking-list ul li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    list-style: none;
+  }
+  
+  /* Style the cancel button */
+  .booking-list .cancel-button {
+    background-color: #ff0000; /* Change to your desired button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin-top: 5px;
+  }
+  
+  .booking-list .cancel-button:hover {
+    background-color: #cc0000; /* Change to your desired button hover color */
+  }

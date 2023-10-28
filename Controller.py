@@ -2,7 +2,7 @@
 # Import
 from typing import List
 from datetime import datetime, date
-from Models import Guest, Customer, Admin, FrontDeskStaff, Movie, Screening, CinemaHall, Coupon, CreditCard, Payment
+from Models import Guest, Customer, Admin, FrontDeskStaff, Movie, Screening, CinemaHall, Coupon, CreditCard, Payment, Booking, ScreeningSeat
 from ReadFile import ReadFile
 
 # Read files
@@ -28,16 +28,11 @@ class Controller:
         self.__staffs: List['FrontDeskStaff'] = staff_obj
         self.__coupons: List['Coupon'] = coupon_obj
         self.__payments: List['Payment'] = []
-
-    def halls(self):
-        return self.__halls
-    
-    def screenings(self):
-        return self.__screenings
+        self.__bookings: List['Booking'] = []
               
     def register(self, username: str, email: str, password: str) -> bool:
         # Check if the email is already in use
-        if any(cust._email == email for cust in self.__customers):
+        if any(cust.__email == email for cust in self.__customers):
             return False  # Email is already registered
         # If the email is not in use, create a new customer and add it to the list of customers
         guest = Guest()
@@ -72,7 +67,6 @@ class Controller:
                 return movie       
         return None
         
-
     def search_movie_by_title(self, title):
         results = []
         for movie in self.__movies:
@@ -101,7 +95,7 @@ class Controller:
                 results.append(movie)
         return results
     
-    def get_movie_list(self) -> str:
+    def get_movie_list(self):
         return self.__movies
     
     def search_hall(self, hallName):
@@ -115,37 +109,30 @@ class Controller:
             return movie.search_screening(screeningID)        
         return None
 
-    def view_movie_details(self, movie: 'Movie') -> str:
-      
-        # Logic for viewing movie details
-        pass
+    def make_booking(self, customer: 'Customer', movie: 'Movie', screening: 'Screening', bookingSeats: List['ScreeningSeat'], payment: 'Payment', status: str = "Pending"):
+        new_booking = Booking(customer, movie, screening, bookingSeats, payment)
+        self.__bookings.append(new_booking)
+        return new_booking
 
-    def view_available_screenings(self, movie: 'Movie') -> List['Screening']:
-   
-        # Logic for viewing available screenings
-        pass
+    def cancel_booking(self, booking: 'Booking') -> bool:
+        if booking in self.__bookings:
+            self.__bookings.remove(booking)
+            return True  # Booking canceled successfully
+        else:
+            return False  # Booking not found or already canceled
 
-    def view_screening_seats(self, screening: 'Screening') -> List['ScreeningSeat']:
+    def get_booking_list(self, customer: 'Customer'):
+        booking_list = []
+        for booking in self.__bookings:
+            if booking.customer.email == customer.email:
+                booking_list.append(booking)
+        return booking_list
     
-        pass
-
-    def view_booked_seats(self, screening: 'Screening') -> List['ScreeningSeat']:
-  
-        pass
-
-    def view_available_seats(self, screening: 'Screening') -> List['ScreeningSeat']:
-
-        pass
-
-    def make_booking(self, customer: 'Customer', booking: 'Booking') -> bool:
-   
-        # Logic for making a booking
-        pass
-
-    def cancel_booking(self, customer: 'Customer', booking: 'Booking') -> bool:
-  
-        # Logic for canceling a booking
-        pass
+    def search_booking(self, bookingID: int):
+        for booking in self.__bookings:
+            if booking.bookingID == bookingID:
+                return booking
+            return None
 
     def add_movie(self, admin: 'Admin', title: str, language: str, genre: str, releaseDate: datetime) -> bool:  
         new_movie = admin.addMovie(title, language, genre, releaseDate)
@@ -171,6 +158,14 @@ class Controller:
  
         # Logic for canceling a screening
         pass
+
+    def search_seat(self, screening:'Screening', seatID):
+        screening_hall = screening.hall
+        list_of_seats = screening_hall.listOfSeats
+        for seat in list_of_seats:
+            if seat.seatID == seatID:
+                return seat      
+        return None
 
     def get_coupon_list(self) -> List['Coupon']:
         return self.__coupons
