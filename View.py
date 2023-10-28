@@ -335,9 +335,6 @@ def add_credit_card():
             selected_seat_objects.append(seat)
         else:
             print("seat not found")
- 
-  for seat in selected_seat_objects:
-      print(seat.seatID)
   
   role = session.get('role')
   if role == 'Customer':
@@ -356,28 +353,31 @@ def add_credit_card():
 
 @app.route("/booking_detail")
 def booking_detail():  
-    customer_serialized = session.get('customer')
-    customer = pickle.loads(customer_serialized)
-    booking_list = controller.get_booking_list(customer)
-    print(booking_list)
     role = session.get('role')
+    if role == 'Customer':
+        customer_serialized = session.get('customer')
+        customer = pickle.loads(customer_serialized)
+        booking_list = controller.get_booking_list_for_customer(customer)
+    else:
+        booking_list = controller.get_booking_list()   
     return render_template("booking_detail.html", booking_list=booking_list, role=role, title="booking_detail")
 
 
 @app.route('/cancel_booking', methods=['GET'])
-def cancel_booking(): 
-    customer_serialized = session.get('customer')
-    customer = pickle.loads(customer_serialized)
+def cancel_booking():   
     bookingID = request.args.get('bookingID')
-    print(bookingID)
     booking = controller.search_booking(int(bookingID))
-    print(booking)
     if controller.cancel_booking(booking):
         msg = booking.sendCancelBookingNotification().content
     else:
         msg = "Booking not found or already canceled"
-    booking_list = controller.get_booking_list(customer) 
     role = session.get('role')
+    if role == 'Customer':
+        customer_serialized = session.get('customer')
+        customer = pickle.loads(customer_serialized)
+        booking_list = controller.get_booking_list(customer) 
+    else:
+        booking_list = controller.get_booking_list()    
     return render_template("booking_detail.html", msg=msg, booking_list=booking_list, role=role, title="booking_detail")
 
 

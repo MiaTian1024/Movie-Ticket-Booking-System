@@ -23,10 +23,8 @@
     {% else %}
     <ul class="nav_items">
         <li class="nav_item">
-        <a href="/staff_home" class="nav_link">Home</a>
-        <a href="#" class="nav_link">Product</a>
-        <a href="#" class="nav_link">Services</a>
-        <a href="#" class="nav_link">Contact</a>
+          <a href="/staff_home" class="nav_link">Home</a>
+          <a href="/booking_detail" class="nav_link">Booking Management</a>
         </li>
     </ul>
     {% endif %}
@@ -163,7 +161,7 @@
           </select>
         </div>
         {% endif %}
-          
+
         <div class="item">
           <label for="amount">Amount:</label>
           <input type="text" id="amount" name="amount" value="{{total_price}}" required readonly> 

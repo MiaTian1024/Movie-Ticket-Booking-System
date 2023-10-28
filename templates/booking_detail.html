@@ -4,12 +4,30 @@
 <header class="header">
   <nav class="nav">
     <a href="#" class="nav_logo">Lincoln Cinema <span>{{ role }}</span></a>
+    {% if role == "Customer" %}
     <ul class="nav_items">
       <li class="nav_item">
         <a href="/customer_home" class="nav_link">Home</a>
         <a href="/booking_detail" class="nav_link">My Booking</a>
       </li>
     </ul>
+    {% elif role == "Admin" %}
+    <ul class="nav_items">
+        <li class="nav_item">
+          <a href="/admin_home" class="nav_link">Home</a>
+          <a href="#" class="nav_link">Product</a>
+          <a href="#" class="nav_link">Services</a>
+          <a href="#" class="nav_link">Contact</a>
+        </li>
+    </ul>
+    {% else %}
+    <ul class="nav_items">
+        <li class="nav_item">
+          <a href="/staff_home" class="nav_link">Home</a>
+          <a href="/booking_detail" class="nav_link">Booking Management</a>
+        </li>
+    </ul>
+    {% endif %}
     <a class="button" href="/logout">Logout</a>
   </nav>
 </header>
@@ -36,6 +54,7 @@
         <ul>
             {% for booking in booking_list %}
               <li>
+                  <p>Customer Email: {{ booking.customer.email }}</p>
                   <p>Booking ID: {{ booking.bookingID }}</p>
                   <p>Movie Title: {{ booking.movie.title }}</p>
                   <p>Screening Date: {{ booking.screening.screeningDate }}</p>

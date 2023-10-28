@@ -101,6 +101,9 @@ class Controller:
     def get_customer_list(self):
         return self.__customers
     
+    def get_booking_list(self):
+        return self.__bookings
+    
     def search_customer(self, customerEmail):
         for customer in self.__customers:
             if customer.email == customerEmail:
@@ -132,7 +135,7 @@ class Controller:
         else:
             return False  # Booking not found or already canceled
 
-    def get_booking_list(self, customer: 'Customer'):
+    def get_booking_list_for_customer(self, customer: 'Customer'):
         booking_list = []
         for booking in self.__bookings:
             if booking.customer.email == customer.email:
