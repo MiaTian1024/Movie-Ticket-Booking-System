@@ -64,7 +64,6 @@
         <div class="item">
           <label for="customer">Customer:</label>
           <select type="text" id="customer" name="customer_email" class="coupon-select">
-            <option value="" selected>Select a customer</option> 
             {% for customer in customer_list %}
             <option value="{{ customer.email }}">Username: {{ customer.username }} - Email: {{ customer.email }}</option>
             {% endfor %}
@@ -111,6 +110,17 @@
     <div class="form-item">
       <p>Debit Card</p>
       <form method="POST" action="/add_debit_card">
+        {% if role == "Staff" %}
+        <div class="item">
+          <label for="customer">Customer:</label>
+          <select type="text" id="customer" name="customer_email" class="coupon-select">
+            {% for customer in customer_list %}
+            <option value="{{ customer.email }}">Username: {{ customer.username }} - Email: {{ customer.email }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        {% endif %}
+
         <div class="item">
           <label for="amount">Amount:</label>
           <input type="text" id="amount" name="amount" value="{{total_price}}" required readonly> 
@@ -142,7 +152,18 @@
     
     <div class="form-item">
       <p>Cash </p> 
-      <form method="POST" action="/add_cash">  
+      <form method="POST" action="/add_cash">
+        {% if role == "Staff" %}
+        <div class="item">
+          <label for="customer">Customer:</label>
+          <select type="text" id="customer" name="customer_email" class="coupon-select">
+            {% for customer in customer_list %}
+            <option value="{{ customer.email }}">Username: {{ customer.username }} - Email: {{ customer.email }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        {% endif %}
+          
         <div class="item">
           <label for="amount">Amount:</label>
           <input type="text" id="amount" name="amount" value="{{total_price}}" required readonly> 

@@ -387,11 +387,11 @@ class Booking:
         return self.__createdOn
  
     def sendAddBookingNotification(self) -> 'Notification':
-        content = f"Booking for Movie: {self.movie.title} at {self.screening.screeningDate} has been successfully added to your booking list"
+        content = f"Booking details:\nMovie: {self.movie.title}\nScreening Date: {self.screening.screeningDate}\nCustomer: {self.customer.username}"
         return Notification(content)
     
     def sendCancelBookingNotification(self) -> 'Notification':
-        content = f"Booking for Movie: {self.movie.title} at {self.screening.screeningDate} has been canceled"
+        content = f"Canceling details:\nMovie: {self.movie.title}\nScreening Date: {self.screening.screeningDate}\nCustomer: {self.customer.username}"
         return Notification(content)
 
 class Notification:
