@@ -200,23 +200,7 @@ class Controller:
      
         pass
 
-    def send_new_movie_notification(self, new_movie_notification: 'NewMovieNotification') -> bool:
-        # Method to send a new movie notification.
-     
-        pass
-
-    def send_new_booking_notification(self, new_booking_notification: 'NewBookingNotification') -> bool:
-        # Method to send a new booking notification.
-        
-        pass
-
-    def send_cancel_booking_notification(self, cancel_booking_notification: 'CancelBookingNotification') -> bool:
-        # Method to send a cancel booking notification.
-      
-        pass
-
-    
-
+   
 
 if __name__ == '__main__':
     controller = Controller()
