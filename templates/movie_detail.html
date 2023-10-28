@@ -73,7 +73,10 @@
                   <h3>{{ screening.screeningDate }}</h3>
                   <h3>Start Time: {{screening.startTime}}</h3>
                   <h3>End Time: {{screening.endTime}}</h3>
-                </label>         
+                </label> 
+                <div class="cancel-button">
+                  <a href="/cancel_screening?screeningID={{ screening.screeningID }}&movieID={{ movie.movieID }}">Cancel Screening</a>
+                </div>        
               </div>    
               {% endfor %}            
             </div>

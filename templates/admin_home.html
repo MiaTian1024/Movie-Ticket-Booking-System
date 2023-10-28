@@ -108,27 +108,19 @@
                 </div>
             </div>
 
-            <button id="openModalButton" class="add-movie-button">Cancel A Movie</button>
-            <div id="myModal" class="modal">
+            <button id="openCancelButton" class="add-movie-button">Cancel A Movie</button>
+            <div id="myCancel" class="modal">
               <div class="modal-content">
-                  <span class="close" id="closeModalButton">&times;</span>
-                  <h2>Add a New Movie</h2>
+                  <span class="close" id="closeCancelButton">&times;</span>
+                  <h2>Select a movie to cancel</h2>
                     <form action="/cancel_movie" method="post" class="add-movie">
                       <div class="form-group">
-                          <label for="title">Title:</label>
-                          <input type="text" id="title" name="title" required>
-                      </div>
-                      <div class="form-group">
-                          <label for="language">Language:</label>
-                          <input type="text" id="language" name="language" required>
-                      </div>
-                      <div class="form-group">
-                          <label for="genre">Genre:</label>
-                          <input type="text" id="genre" name="genre" required>
-                      </div>
-                      <div class="form-group">
-                          <label for="releaseDate">Release Date:</label>
-                          <input type="date" id="releaseDate" name="releaseDate" required>
+                          <label for="movie">Movie:</label>
+                          <select id="movie" name="movieID" required>
+                            {% for movie in movie_list %}
+                            <option value="{{movie.movieID}}">{{movie.movieID}} - {{movie.title}}</option>
+                            {% endfor %}
+                          </select>
                       </div>
                       <div class="form-group">
                           <button type="submit">Cancel Movie</button>

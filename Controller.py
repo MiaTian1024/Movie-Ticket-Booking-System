@@ -163,15 +163,20 @@ class Controller:
             return True
         return False # Screening already exists
 
-    def cancel_movie(self, movie: 'Movie') -> bool:
+    def cancel_movie(self, admin: 'Admin', movie: 'Movie') -> bool:
+        canceled_movie = admin.cancelMovie(movie)
+        if canceled_movie in self.__movies:
+            self.__movies.remove(canceled_movie)
+            return True
+        return False
 
-        # Logic for canceling a movie
-        pass
-
-    def cancel_screening(self, screening: 'Screening') -> bool:
- 
-        # Logic for canceling a screening
-        pass
+    def cancel_screening(self, admin: 'Admin', movie: 'Movie', screening: 'Screening') -> bool:
+        canceled_screening = admin.cancelScreening(screening)
+        screeningList = movie.getScreeningList()
+        if canceled_screening in screeningList:
+            screeningList.remove(canceled_screening)
+            return True
+        return False
 
     def search_seat(self, screening:'Screening', seatID):
         screening_hall = screening.hall

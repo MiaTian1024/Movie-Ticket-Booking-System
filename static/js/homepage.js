@@ -44,6 +44,29 @@ window.addEventListener('click', function(event) {
     }
 });
 
+
+// Open the Cancel
+const openCancelButton = document.getElementById('openCancelButton');
+const Cancel = document.getElementById('myCancel');
+const closeCancelButton = document.getElementById('closeCancelButton');
+
+openCancelButton.addEventListener('click', function() {
+    Cancel.style.display = 'block';
+});
+
+// Close the cancel
+closeCancelButton.addEventListener('click', function() {
+    Cancel.style.display = 'none';
+});
+
+// Click outside the cancel to close it
+window.addEventListener('click', function(event) {
+    if (event.target == Cancel) {
+        Cancel.style.display = 'none';
+    }
+});
+
+// close popup
 function closePopup() {
     document.querySelector('.overlay_popup').style.display = 'none';
 }

@@ -99,11 +99,13 @@ class Admin(User):
     def addScreening(self, screeningDate: date, startTime: datetime, endTime: datetime, hall: 'CinemaHall') -> bool:    
         return Screening(screeningDate, startTime, endTime, hall)
 
-    def cancelMovie(self, movie: 'Movie') -> bool:        
-        pass
+    def cancelMovie(self, movie: 'Movie'): 
+        # cancleMovie logic on controller class       
+        return movie
 
-    def cancelScreening(self, screening: 'Screening') -> bool:    
-        pass
+    def cancelScreening(self, screening: 'Screening'):    
+        # cancelScreening logic on controller class
+        return screening
 
 
 # FrontDeskStaff class inherit from User class

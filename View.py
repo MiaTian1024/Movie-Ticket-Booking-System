@@ -242,6 +242,22 @@ def add_movie():
         movie_list = controller.get_movie_list()
         return render_template("admin_home.html", msg=msg, movie_list=movie_list, role=role, admin=admin, title="admin_homepage")
 
+@app.route('/cancel_movie', methods=['POST'])
+def cancel_movie():
+    movieID = request.form.get('movieID')
+    movie = controller.search_movie_by_id(int(movieID))
+    role = session.get('role')  
+    if role == 'Admin':
+        admin_serialized = session.get('admin')
+        admin = pickle.loads(admin_serialized)
+        if controller.cancel_movie(admin, movie):
+            msg="movie cancled"
+        else:
+            msg="Cancel movie failed"
+        movie_list = controller.get_movie_list()
+        return render_template("admin_home.html", msg=msg, movie_list=movie_list, role=role, admin=admin, title="admin_homepage")
+
+
 @app.route('/add_screening', methods=['POST'])
 def add_screening(): 
     screeningDate = request.form.get('date')
@@ -262,6 +278,26 @@ def add_screening():
         movie_list = controller.get_movie_list()
         screenglist = movie.getScreeningList()
         return render_template("movie_detail.html", movie=movie, screenglist=screenglist, msg=msg, movie_list=movie_list, role=role, admin=admin, title="admin_homepage")
+
+
+@app.route('/cancel_screening', methods=['GET'])
+def cancel_screening():   
+    screeningID = request.args.get('screeningID')
+    movieID = request.args.get('movieID')
+    print(movieID)
+    movie = controller.search_movie_by_id(int(movieID))
+    screening = controller.search_screening_by_id(movie, int(screeningID))
+    role = session.get('role')
+    if role == 'Admin':
+        admin_serialized = session.get('admin')
+        admin = pickle.loads(admin_serialized)
+        if controller.cancel_screening(admin, movie, screening):
+            msg="screening cancled"
+        else:
+            msg="cancel screening failed"
+    movie_list = controller.get_movie_list()
+    screenglist = movie.getScreeningList()
+    return render_template("movie_detail.html", movie=movie, screenglist=screenglist, msg=msg, movie_list=movie_list, role=role, admin=admin, title="admin_homepage")
 
 
 @app.route('/screening_seat', methods=['POST'])
