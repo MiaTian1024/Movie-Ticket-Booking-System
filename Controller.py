@@ -124,6 +124,7 @@ class Controller:
     def make_booking(self, customer: 'Customer', movie: 'Movie', screening: 'Screening', bookingSeats: List['ScreeningSeat'], payment: 'Payment', status: str = "Pending"):
         new_booking = Booking(customer, movie, screening, bookingSeats, payment)
         self.__bookings.append(new_booking)
+        customer.bookingList.append(new_booking)
         return new_booking
 
     def cancel_booking(self, booking: 'Booking') -> bool:
@@ -204,6 +205,25 @@ class Controller:
         #Method to issue a refund.
      
         pass
+
+    def send_add_booking_notification(self, booking: 'Booking'):
+        notification = booking.sendAddBookingNotification()
+        notification_list = booking.customer.notificationList
+        if notification not in notification_list:
+            notification_list.append(notification)
+            return notification
+        else:
+            return None
+    
+    def send_cancel_booking_notification(self, booking: 'Booking'):
+        notification = booking.sendCancelBookingNotification()
+        notification_list = booking.customer.notificationList
+        if notification not in notification_list:
+            notification_list.append(notification)
+            return notification
+        else:
+            return None
+     
 
    
 

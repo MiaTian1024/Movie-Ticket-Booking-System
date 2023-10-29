@@ -55,6 +55,22 @@ class Customer(User):
         self.__bookingList: List['Booking'] = []
         self.__notificationList: List['Notification'] =[]
 
+    @property
+    def bookingList(self,):
+        return self.__bookingList
+
+    @bookingList.setter
+    def bookingList(self, value):
+        self.__bookingList = value
+
+    @property
+    def notificationList(self,):
+        return self.__notificationList
+
+    @notificationList.setter
+    def notificationList(self, value):
+        self.__notificationList = value
+
     def login(self, email: str, password:str) -> bool:  
         return self.email == email and self.password == password
 
@@ -78,8 +94,6 @@ class Customer(User):
     def getBookingList(self) -> List['Booking']:
         return self.__bookingList
     
-    def getNotificationList(self) -> List['Booking']:
-        return self.__notificationList
 
 # Admin class inherit from User class  
 class Admin(User): 

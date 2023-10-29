@@ -381,8 +381,9 @@ def add_credit_card():
         customer_email = request.form.get('customer_email') 
         customer = controller.search_customer(customer_email)
         booking = controller.make_booking(customer, movie, screening, selected_seat_objects, credit_card)
-        booking.status = "Complete"   
-  msg = booking.sendAddBookingNotification().content
+        booking.status = "Paid" 
+  notification = controller.send_add_booking_notification(booking)
+  msg = notification.content
   return render_template("ticket.html",msg=msg, booking=booking, selected_seat_objects=selected_seat_objects, discount=discount,  credit_card=credit_card, total_price=total_price , screening=screening, movie=movie, role=role, title="Ticket")
 
 
@@ -403,7 +404,8 @@ def cancel_booking():
     bookingID = request.args.get('bookingID')
     booking = controller.search_booking(int(bookingID))
     if controller.cancel_booking(booking):
-        msg = booking.sendCancelBookingNotification().content
+        notification = controller.send_cancel_booking_notification(booking)
+        msg = notification.content
     else:
         msg = "Booking not found or already canceled"
     role = session.get('role')
@@ -415,42 +417,6 @@ def cancel_booking():
         booking_list = controller.get_booking_list()    
     return render_template("booking_detail.html", msg=msg, booking_list=booking_list, role=role, title="booking_detail")
 
-
-@app.route("/test")
-def test():
-    return render_template("test.html", title="Test")
-
-# Define a route to handle the form submission and display the file content
-@app.route('/read_file', methods=['POST'])
-def read_file():
-    try:
-        # file_path = project/file/movies.txt
-        # Get the file name and location from the form
-        file_path = request.form['file_path']
-        
-        # Open and read the specified file
-        with open(file_path, 'r') as file:
-            file_content = file.read()
-        return render_template('test.html', content=file_content)
-    except FileNotFoundError:
-        return "File not found."
-    
-@app.route('/write_file', methods=['POST'])
-def write_file():
-    try:
-        # file_path = project/file/movies.txt
-        # Get the file name and location from the form
-        movie_name = request.form['movie_name']
-        file_path = "project/file/movies.txt"
-        
-        # Open and read the specified file
-        with open(file_path, 'a') as file:
-            movie_info = f"\n {movie_name}"
-            file.write(movie_info)
-        return render_template('test.html')
-    except FileNotFoundError:
-        return "File not found."
-    
 
 
 if __name__ == '__main__':
