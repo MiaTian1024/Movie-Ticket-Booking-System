@@ -77,6 +77,9 @@ class Customer(User):
 
     def getBookingList(self) -> List['Booking']:
         return self.__bookingList
+    
+    def getNotificationList(self) -> List['Booking']:
+        return self.__notificationList
 
 # Admin class inherit from User class  
 class Admin(User): 
