@@ -570,36 +570,38 @@ class DebitCard(Payment):
         self.__nameOnCard = value
 
     def calcDiscount(self, coupon:'Coupon') -> float:
-        today = datetime.today().date()
-        expiry_date = datetime.strptime(coupon.expiryDate, '%Y-%m-%d').date()
-        if expiry_date > today:
-            return coupon.discount
-        else:
-            return 0  # Coupon has no effect
+        if coupon:
+            today = datetime.today().date()
+            expiry_date = datetime.strptime(coupon.expiryDate, '%Y-%m-%d').date()
+            if expiry_date > today:
+                return coupon.discount
+        return 0  # Coupon has no effect
 
     def calcFinalPayment(self, coupon: 'Coupon' = None) -> float:
         if coupon:
             discount = self.calcDiscount(coupon)
-            return self.amount - discount
-        return self.amount
+            final_amount = float(self.amount) - (float(self.amount) * float(discount)) / 100 
+            return final_amount
+        return self.amount 
     
 class Cash(Payment):
     def __init__(self, amount: float):
         super().__init__(amount)
 
     def calcDiscount(self, coupon:'Coupon') -> float:
-        today = datetime.today().date()
-        expiry_date = datetime.strptime(coupon.expiryDate, '%Y-%m-%d').date()
-        if expiry_date > today:
-            return coupon.discount
-        else:
-            return 0  # Coupon has no effect
+        if coupon:
+            today = datetime.today().date()
+            expiry_date = datetime.strptime(coupon.expiryDate, '%Y-%m-%d').date()
+            if expiry_date > today:
+                return coupon.discount
+        return 0  # Coupon has no effect
 
     def calcFinalPayment(self, coupon: 'Coupon' = None) -> float:
         if coupon:
             discount = self.calcDiscount(coupon)
-            return self.amount - discount
-        return self.amount
+            final_amount = float(self.amount) - (float(self.amount) * float(discount)) / 100 
+            return final_amount
+        return self.amount 
 
 class Coupon:
     def __init__(self, couponID: str, expiryDate: datetime, discount: float):

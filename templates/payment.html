@@ -141,7 +141,10 @@
         <div class="item">
           <label for="name">Name on Card:</label>
           <input type="text" id="name" name="name" required> 
-        </div>                     
+        </div> 
+        <input type="hidden" name="selected_seat_id_list" value="{{selected_seat_id_list}}">  
+        <input type="hidden" name="screeningID" value="{{ screening.screeningID }}"> 
+        <input type="hidden" name="movieID" value="{{ movie.movieID }}">                    
         <button type="submit">Confirm Payment</button>            
       </form>
     </div>
@@ -172,7 +175,10 @@
             <option value="{{ coupon.couponID }}">Discount: {{ coupon.discount }}% - Expiry Date {{ coupon.expiryDate }}</option>
             {% endfor %}
           </select>
-        </div>                      
+        </div> 
+        <input type="hidden" name="selected_seat_id_list" value="{{selected_seat_id_list}}">  
+        <input type="hidden" name="screeningID" value="{{ screening.screeningID }}"> 
+        <input type="hidden" name="movieID" value="{{ movie.movieID }}">                     
         <button type="submit">Confirm Payment</button>         
       </form>  
     </div> 

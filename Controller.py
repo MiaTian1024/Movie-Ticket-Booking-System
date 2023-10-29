@@ -2,7 +2,7 @@
 # Import
 from typing import List
 from datetime import datetime, date
-from Models import Guest, Customer, Admin, FrontDeskStaff, Movie, Screening, CinemaHall, Coupon, CreditCard, Payment, Booking, ScreeningSeat
+from Models import Guest, Customer, Admin, FrontDeskStaff, Movie, Screening, CinemaHall, Coupon, CreditCard, Payment, Booking, ScreeningSeat, DebitCard, Cash
 from ReadFile import ReadFile
 
 # Read files
@@ -199,14 +199,23 @@ class Controller:
         credit_card_payment = CreditCard(amount, creditCardNum, nameOnCard, expiryDate, cvv)
         self.__payments.append(credit_card_payment)
         return credit_card_payment
+    
+    def add_debit_card_payment(self, amount: float, cardNum: str, bankName: str, nameOnCard: str):
+        debit_card_payment = DebitCard(amount, cardNum, bankName, nameOnCard)
+        self.__payments.append(debit_card_payment)
+        return debit_card_payment
+    
+    def add_cash_payment(self, amount: float):
+        cash_payment = Cash(amount)
+        self.__payments.append(cash_payment)
+        return cash_payment
 
-    def issue_refund(self, booking: ['Booking']):
+    def issue_refund(self, booking: ['Booking']) -> bool:
         if booking.status == 'Canceled' and not booking.status == 'Refunded':
-            refund_amount = booking.payment.amount
             booking.status = 'Refunded'
-            return refund_amount
+            return True
         else:
-            return 0
+            return False
 
 
     def send_add_booking_notification(self, booking: 'Booking'):
