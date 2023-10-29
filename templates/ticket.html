@@ -39,7 +39,7 @@
     <div class="overlay_popup">
         <div class="popup">
             <p>{{ msg }}</p>
-            <button onclick="closePopup()">Close</button>
+            <button onclick="closePopup()">Confirm</button>
         </div>
     </div>
     {% endif %}
@@ -74,8 +74,11 @@
               <h3>Final Amount: ${{total_price}}</h3>
               <h3>Booking Status: {{booking.status}}</h3>
           </div>
-
         </div>
+    </div>
+
+    <div class="ticket-button">
+      <a href="/booking_detail">Browse to Booking List</a>
     </div>
 
 </div>

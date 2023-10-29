@@ -76,3 +76,25 @@
     border: 1px solid #ccc;
     border-radius: 4px;
   }
+
+  .ticket-button{
+    background-color: black;
+    color: #ccc;
+    padding: 10px 20px;
+    font-size: 22px;
+    width: 700px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+  }
+
+  .ticket-button a{
+    cursor: pointer;
+    color:#ccc   
+  }
+
+  .ticket-button:hover{
+    background-color: #407182;
+  }

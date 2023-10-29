@@ -26,6 +26,7 @@
 
   .booking-list ul {
     display: flex;
+    flex-wrap: wrap;
     
   }
 
@@ -54,5 +55,7 @@
   }
   
   .booking-list .cancel-button a:hover {
-    background-color: #cc0000; /* Change to your desired button hover color */
+    background-color: #970808; /* Change to your desired button hover color */
   }
+
+  
