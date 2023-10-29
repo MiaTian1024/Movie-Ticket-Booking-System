@@ -370,8 +370,7 @@ def add_credit_card():
         if seat:
             selected_seat_objects.append(seat)
         else:
-            print("seat not found")
-  
+            print("seat not found")  
   role = session.get('role')
   if role == 'Customer':
         customer_serialized = session.get('customer')
@@ -384,7 +383,7 @@ def add_credit_card():
         booking = controller.make_booking(customer, movie, screening, selected_seat_objects, credit_card)
         booking.status = "Complete"   
   msg = booking.sendAddBookingNotification().content
-  return render_template("ticket.html",msg=msg, booking=booking, selected_seat_objects=selected_seat_objects, discount=discount,  credit_card=credit_card, total_price=total_price , screening=screening, movie=movie, role=role, title="Payment")
+  return render_template("ticket.html",msg=msg, booking=booking, selected_seat_objects=selected_seat_objects, discount=discount,  credit_card=credit_card, total_price=total_price , screening=screening, movie=movie, role=role, title="Ticket")
 
 
 @app.route("/booking_detail")

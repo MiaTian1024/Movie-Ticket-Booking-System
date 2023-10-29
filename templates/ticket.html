@@ -50,20 +50,33 @@
 
     <div class="ticket-card">
         <div class="ticket-movie">
-            <h3>Movie</h3>
-            <h3>Screening</h3>
-            <h3>Seat</h3>
+            <h3>{{movie.title}}</h3>
         </div>
 
-        <div class="ticket-amount">
-            <h3>Amount: {{credit_card.amount}}</h3>
-            <h3>Discount: {{discount}} %</h3>
-            <h3>Final Amount{{total_price}}</h3>
-            <h3>Booking Status{{booking.status}}</h3>
+        <div class="ticket-screening">
+          <h3>Date: {{screening.screeningDate}}</h3>
+          <h3>Start Time: {{screening.startTime}}</h3>
+          <h3>End Time: {{screening.endTime}}</h3>
+        </div>
+
+        <div class="amount-container">
+          <div class="ticket-seat">
+            <h3>Number of seats: {{selected_seat_objects|length}}</h3>
+            <h3>Seat Number: </h3>
+            {% for seat in selected_seat_objects%}
+            <p>{{seat.row}} - {{seat.column}}</p>
+            {% endfor %}
+          </div>
+
+          <div class="ticket-amount">
+              <h3>Total Price: ${{credit_card.amount}}</h3>
+              <h3>Discount: {{discount}} %</h3>
+              <h3>Final Amount: ${{total_price}}</h3>
+              <h3>Booking Status: {{booking.status}}</h3>
+          </div>
+
         </div>
     </div>
-
-    <button>Browse to Home Page</button>
 
 </div>
 

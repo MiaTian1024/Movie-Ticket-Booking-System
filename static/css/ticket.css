@@ -5,7 +5,7 @@
   }
 
   .ticket-label{
-    margin:20px;
+    margin:30px;
     display: flex;
     justify-content: center;
   }
@@ -20,8 +20,8 @@
     margin: 10px auto;
     padding: 30px;
     border: 1px solid #ccc;
-    width: 600px;
-    height: 400px;
+    width: 700px;
+    height: auto;
     border-radius: 5px; 
     display: flex;
     flex-direction: column;
@@ -30,11 +30,49 @@
 
   .ticket-card .ticket-movie{
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 40px;
+    justify-content: center;
+    margin-bottom: 10px;
   }
 
-  .ticket-card .ticket-amount{
+  .ticket-card .ticket-movie h3{
+    font-size: 30px;
+  }
+
+  .ticket-card .ticket-screening{
     display: flex;
+    justify-content: center;
+    margin-bottom:10px;
+  }
+
+  .ticket-card .ticket-screening h3{
+    margin:20px;
+    font-size: 20px;
+  }
+
+  .ticket-card .amount-container{
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
+  }
+
+  .ticket-card .amount-container .ticket-seat{
+    font-size: 18px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+
+  .ticket-card .amount-container .ticket-seat p{
+    font-size: 18px;
+    margin-left: 150px;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .ticket-card .amount-container .ticket-amount{
+    font-size: 18px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
   }

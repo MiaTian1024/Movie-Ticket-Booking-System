@@ -74,9 +74,11 @@
                   <h3>Start Time: {{screening.startTime}}</h3>
                   <h3>End Time: {{screening.endTime}}</h3>
                 </label> 
+                {% if role == "Admin" %}
                 <div class="cancel-button">
                   <a href="/cancel_screening?movieID={{ movie.movieID }}&screeningID={{ screening.screeningID }}">Cancel Screening</a>
-                </div>        
+                </div> 
+                {% endif %}       
               </div>    
               {% endfor %}            
             </div>
