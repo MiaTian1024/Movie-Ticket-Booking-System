@@ -58,9 +58,15 @@
                   <p>Movie Title: {{ booking.movie.title }}</p>
                   <p>Screening Date: {{ booking.screening.screeningDate }}</p>
                   <p>Status: {{ booking.status }}</p>
-                  {% if booking.status != "Canceled" %}
+                  {% if booking.status != "Canceled" and booking.status != "Refunded" %}
                   <div class="cancel-button">
                     <a href="/cancel_booking?bookingID={{ booking.bookingID }}">Cancel Booking</a>
+                  </div>
+                  {% endif %}
+
+                  {% if booking.status != "Refunded" and booking.status == "Canceled" and role != "Customer"%}
+                  <div class="refund-button">
+                    <a href="/refund_booking?bookingID={{ booking.bookingID }}">Refund Booking</a>
                   </div>
                   {% endif %}
               </li>

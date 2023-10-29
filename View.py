@@ -376,7 +376,7 @@ def add_credit_card():
         customer_serialized = session.get('customer')
         customer = pickle.loads(customer_serialized)
         booking = controller.make_booking(customer, movie, screening, selected_seat_objects, credit_card)
-        booking.status = "Complete"
+        booking.status = "Paid"
   else:
         customer_email = request.form.get('customer_email') 
         customer = controller.search_customer(customer_email)
@@ -416,6 +416,22 @@ def cancel_booking():
     else:
         booking_list = controller.get_booking_list()    
     return render_template("booking_detail.html", msg=msg, booking_list=booking_list, role=role, title="booking_detail")
+
+@app.route('/refund_booking', methods=['GET'])
+def refund_booking():   
+    bookingID = request.args.get('bookingID')
+    booking = controller.search_booking(int(bookingID))
+    refund_amount = controller.issue_refund(booking)
+    msg = f"${refund_amount} has been refunded to you"
+    role = session.get('role')
+    if role == 'Customer':
+        customer_serialized = session.get('customer')
+        customer = pickle.loads(customer_serialized)
+        booking_list = controller.get_booking_list_for_customer(customer) 
+    else:
+        booking_list = controller.get_booking_list()    
+    return render_template("booking_detail.html", msg=msg, booking_list=booking_list, role=role, title="booking_detail")
+
 
 
 

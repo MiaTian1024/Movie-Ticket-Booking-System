@@ -15,7 +15,6 @@ hall_obj = file.getHallObj("file/hall.txt")
 screening_obj = file.getScreeningObj("file/screening.txt")
 coupon_obj = file.getCouponObj("file/coupon.txt")
 
-# Get Hall 
 
 # MovieTicketSystemController class handles user interactions and system operations.
 class Controller:
@@ -32,7 +31,7 @@ class Controller:
               
     def register(self, username: str, email: str, password: str) -> bool:
         # Check if the email is already in use
-        if any(cust.__email == email for cust in self.__customers):
+        if any(cust.email == email for cust in self.__customers):
             return False  # Email is already registered
         # If the email is not in use, create a new customer and add it to the list of customers
         guest = Guest()
@@ -201,10 +200,14 @@ class Controller:
         self.__payments.append(credit_card_payment)
         return credit_card_payment
 
-    def issue_refund(self, amount: float, refund_type: str) -> bool:
-        #Method to issue a refund.
-     
-        pass
+    def issue_refund(self, booking: ['Booking']):
+        if booking.status == 'Canceled' and not booking.status == 'Refunded':
+            refund_amount = booking.payment.amount
+            booking.status = 'Refunded'
+            return refund_amount
+        else:
+            return 0
+
 
     def send_add_booking_notification(self, booking: 'Booking'):
         notification = booking.sendAddBookingNotification()

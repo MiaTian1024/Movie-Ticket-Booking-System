@@ -58,4 +58,22 @@
     background-color: #970808; /* Change to your desired button hover color */
   }
 
+  .booking-list .refund-button {
+    margin-top: 15px;
+  }
+
+  .booking-list .refund-button a{
+    background-color: #028597; /* Change to your desired button color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin-top: 15px;
+  }
+  
+  .booking-list .refund-button a:hover {
+    background-color: #124257; /* Change to your desired button hover color */
+  }
+
   
