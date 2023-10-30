@@ -3,8 +3,8 @@
 {% block header %}
 <header class="header">
   <nav class="nav">
-    <a href="#" class="nav_logo">Lincoln Cinema <span>{{ role }}</span></a>
     {% if role == "Customer" %}
+    <a href="/customer_home" class="nav_logo">Lincoln Cinema <span>{{ role }}</span></a>
     <ul class="nav_items">
       <li class="nav_item">
         <a href="/customer_home" class="nav_link">Home</a>
@@ -12,6 +12,7 @@
       </li>
     </ul>
     {% elif role == "Admin" %}
+    <a href="/admin_home" class="nav_logo">Lincoln Cinema <span>{{ role }}</span></a>
     <ul class="nav_items">
         <li class="nav_item">
           <a href="/admin_home" class="nav_link">Home</a>
@@ -19,6 +20,7 @@
         </li>
     </ul>
     {% else %}
+    <a href="/staff_home" class="nav_logo">Lincoln Cinema <span>{{ role }}</span></a>
     <ul class="nav_items">
         <li class="nav_item">
           <a href="/staff_home" class="nav_link">Home</a>

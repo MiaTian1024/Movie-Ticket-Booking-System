@@ -127,6 +127,12 @@
     margin: 10px 0;
     position: relative;
   }
+  .login-forms .login-form-content .input-box select{
+    height: 60%;
+    width: 60%;
+    margin-left: 5px;
+    font-size: 18px;
+  }
   .login-form-content .input-box input{
     height: 100%;
     width: 100%;
@@ -184,6 +190,7 @@
   .login-forms .login-form-content .sign-up-text{
     text-align: center;
     margin-top: 25px;
+    font-size: 16px;
   }
   .login-container #flip{
     display: none;
