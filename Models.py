@@ -6,9 +6,9 @@ from datetime import datetime, date
 class User(ABC):
     # The abstract user class
     def __init__(self, username: str, email: str, password: str) -> None:   
-        self.__username = username
-        self.__email = email
-        self.__password = password
+        self.__username = username  # Private username
+        self.__email = email  # Private email
+        self.__password = password  # Private password
 
     @property
     def username(self,):
@@ -34,7 +34,7 @@ class User(ABC):
     def password(self, value):
         self.__password = value
 
-    # Abstract method for all user class
+    # Abstract method for all user classes
     @abstractmethod
     def login(self, email: str, password:str) -> bool:
         return self.__email == email and self.__password == password
@@ -47,6 +47,7 @@ class User(ABC):
     def resetPassword(self, newPassword:str) -> bool:
         self.__password = newPassword
         return True
+
 
 # Customer class inherit from User class
 class Customer(User):
@@ -117,11 +118,11 @@ class Admin(User):
         return Screening(screeningDate, startTime, endTime, hall)
 
     def cancelMovie(self, movie: 'Movie'): 
-        # cancleMovie logic on controller class       
+        # cancleMovie logic implemented in controller class       
         return movie
 
     def cancelScreening(self, screening: 'Screening'):    
-        # cancelScreening logic on controller class
+        # cancelScreening logic implemented in controller class
         return screening
 
 
@@ -140,10 +141,12 @@ class FrontDeskStaff(User):
         self.password = newPassword
         return True
 
-    def makeBooking(self, booking: 'Booking') -> bool:    
+    def makeBooking(self, booking: 'Booking') -> bool:   
+        # makeBooking logic implemented in controller class 
         pass
 
-    def cancelBooking(self, booking: 'Booking') -> bool:     
+    def cancelBooking(self, booking: 'Booking') -> bool:  
+        # cancleBooking logic implemented in controller class   
         pass
 
 
@@ -152,6 +155,8 @@ class Guest():
     def register(self, username: str, email: str, password: str):
         return Customer(username, email, password)   
 
+
+# Movie class represents a movie
 class Movie:
     nextID = 1000
     def __init__(self, title: str, language: str, genre: str, releaseDate: datetime) -> None:
@@ -217,6 +222,7 @@ class Movie:
         return None
     
 
+# Screening class represents a movie screening
 class Screening:
     nextID = 100
     def __init__(self, screeningDate: date, startTime: datetime, endTime: datetime, hall: 'CinemaHall') -> None:
@@ -263,6 +269,8 @@ class Screening:
     def hall(self, value):
         self.__hall = value
 
+
+# CinemaHall class represents a cinema hall
 class CinemaHall:
     def __init__(self, name: str, totalSeats: int):
         self.__name = name
@@ -293,7 +301,8 @@ class CinemaHall:
     def listOfSeats(self, value):
         self.__listOfSeats = value
 
-    
+
+# ScreeningSeat class represents a seat in a cinema hall  
 class ScreeningSeat():
     nextID = 100 
     def __init__(self, row: int, column: int, price: float, booked: bool = False) -> None:
@@ -340,6 +349,8 @@ class ScreeningSeat():
     def booked(self, value):
         self.__booked = value
 
+
+# Booking class represents a booking made by a customer
 class Booking:
     nextID = 10000
     def __init__(self, customer: 'Customer', movie: 'Movie', screening: 'Screening', bookingSeats: List['ScreeningSeat'], payment: 'Payment', status: str = "Pending"):
@@ -417,6 +428,8 @@ class Booking:
         content = f"Canceling details:\n Movie: {self.movie.title}\nScreening Date: {self.screening.screeningDate}\nCustomer: {self.customer.username}"
         return Notification(content)
 
+
+# Notification class represents a notification sent to users
 class Notification:
     nextID = 1000
     def __init__(self, content: str):
@@ -441,6 +454,8 @@ class Notification:
     def createdOn(self,):
         return self.__createdOn
 
+
+# Payment is an abstract base class for various payment methods
 class Payment(ABC):
     nextID = 10000
     def __init__(self, amount: float):
@@ -465,7 +480,7 @@ class Payment(ABC):
     def createdOn(self,):
         return self.__createdOn
         
-    # Abstract method for all user class
+    # Abstract methods for calculating discounts and final payment
     @abstractmethod
     def calcDiscount(self, coupon:'Coupon') -> float:
         today = datetime.today().date()
@@ -482,7 +497,9 @@ class Payment(ABC):
             final_amount = float(self.amount) - (float(self.amount) * float(discount)) / 100 
             return final_amount
         return self.amount 
-    
+
+
+# CreditCard is a type of Payment
 class CreditCard(Payment):
     def __init__(self, amount: float, creditCardNum: str, nameOnCard: str, expiryDate: datetime, cvv: str):
         super().__init__(amount)
@@ -538,6 +555,8 @@ class CreditCard(Payment):
             return final_amount
         return self.amount 
 
+
+# DebitCard is a type of Payment
 class DebitCard(Payment):
     def __init__(self, amount: float, cardNum: str, bankName: str, nameOnCard: str):
         super().__init__(amount)
@@ -583,7 +602,9 @@ class DebitCard(Payment):
             final_amount = float(self.amount) - (float(self.amount) * float(discount)) / 100 
             return final_amount
         return self.amount 
-    
+
+
+# Cash is a type of Payment
 class Cash(Payment):
     def __init__(self, amount: float):
         super().__init__(amount)
@@ -603,6 +624,8 @@ class Cash(Payment):
             return final_amount
         return self.amount 
 
+
+# Coupon class represents a coupon added to a payment.
 class Coupon:
     def __init__(self, couponID: str, expiryDate: datetime, discount: float):
         self.__couponID = couponID
