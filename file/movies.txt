@@ -1,5 +1,8 @@
-SPIDERMAN, English, Action, 2020-02-10
-JOKER, English, Drama, 2021-05-06
-IRONMAN, English, Action, 2022-04-09
-FADING MEMORIES, Spanish, Drama, 2023-05-15
-COMEDY CENTRAL, Chinese, Comedy, 2022-03-10
+Spiderman, English, Action, 2020-02-10
+Joker, English, Drama, 2021-05-06
+Ironman, English, Action, 2022-04-09
+Fading Memories, Spanish, Drama, 2023-05-15
+Comedy Central, Chinese, Comedy, 2022-03-10
+Holiday, Chinese, Drama, 2020-06-07
+Passenger, Spanish, Comedy, 2023-03-08
+Universe, English, Drama, 2021-10-05

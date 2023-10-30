@@ -12,7 +12,7 @@
       </li>
     </ul>
     {% elif role == "Admin" %}
-    <a href="/admin_hom" class="nav_logo">Lincoln Cinema <span>{{ role }}</span></a>
+    <a href="/admin_home" class="nav_logo">Lincoln Cinema <span>{{ role }}</span></a>
     <ul class="nav_items">
         <li class="nav_item">
           <a href="/admin_home" class="nav_link">Home</a>
@@ -59,6 +59,8 @@
                   <p>Booking ID: {{ booking.bookingID }}</p>
                   <p>Movie Title: {{ booking.movie.title }}</p>
                   <p>Screening Date: {{ booking.screening.screeningDate }}</p>
+                  <p>Start Time: {{booking.screening.startTime}}</p>
+                  <p>End Time: {{booking.screening.endTime}}</p>
                   <p>Status: {{ booking.status }}</p>
                   {% if booking.status != "Canceled" and booking.status != "Refunded" %}
                   <div class="cancel-button">

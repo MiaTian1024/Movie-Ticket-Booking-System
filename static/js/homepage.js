@@ -1,17 +1,18 @@
 const search = document.querySelector(".search-box input"),
       images = document.querySelectorAll(".cards");
 
-search.addEventListener("keyup", e =>{
-    if(e.key == "Enter"){
-        let searcValue = search.value,
-            value = searcValue.toUpperCase();
-            images.forEach(image =>{
-                if(value === image.dataset.name){ //matching value with getting attribute of images
-                    return image.style.display = "flex";
-                }
-                image.style.display = "none";
-            });
-    }
+search.addEventListener("keyup", (e) => {
+if (e.key === "Enter") {
+    let searchValue = search.value.toLowerCase(); // Convert search value to lowercase
+    images.forEach(image => {
+        const name = image.dataset.name.toLowerCase(); // Convert attribute value to lowercase
+        if (searchValue === name) {
+            image.style.display = "flex";
+        } else {
+            image.style.display = "none";
+        }
+    });
+}
 });
 
 search.addEventListener("keyup", () =>{
