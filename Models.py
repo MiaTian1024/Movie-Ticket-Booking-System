@@ -118,11 +118,11 @@ class Admin(User):
         return Screening(screeningDate, startTime, endTime, hall)
 
     def cancelMovie(self, movie: 'Movie'): 
-        # cancleMovie logic implemented in controller class       
+        # cancleMovie logic in controller class       
         return movie
 
     def cancelScreening(self, screening: 'Screening'):    
-        # cancelScreening logic implemented in controller class
+        # cancelScreening logic in controller class
         return screening
 
 
@@ -142,11 +142,11 @@ class FrontDeskStaff(User):
         return True
 
     def makeBooking(self, booking: 'Booking') -> bool:   
-        # makeBooking logic implemented in controller class 
+        # makeBooking logic in controller class 
         pass
 
     def cancelBooking(self, booking: 'Booking') -> bool:  
-        # cancleBooking logic implemented in controller class   
+        # cancleBooking logic in controller class   
         pass
 
 

@@ -1,12 +1,14 @@
 
-# Import
+# Import necessary modules
 from typing import List
 from datetime import datetime, date
 from Models import Guest, Customer, Admin, FrontDeskStaff, Movie, Screening, CinemaHall, Coupon, CreditCard, Payment, Booking, ScreeningSeat, DebitCard, Cash
 from ReadFile import ReadFile
 
-# Read files
+# Create an instance of ReadFile to read data from files
 file = ReadFile()
+
+# Read data from files and store it in respective objects
 customer_obj = file.getCustomerObj("file/customer.txt")
 movie_obj = file.getMovieObj("file/movies.txt")
 admin_obj = file.getAdminObj("file/admin.txt")
@@ -16,9 +18,10 @@ screening_obj = file.getScreeningObj("file/screening.txt")
 coupon_obj = file.getCouponObj("file/coupon.txt")
 
 
-# MovieTicketSystemController class handles user interactions and system operations.
+# Controller class handles user interactions and system operations.
 class Controller:
     def __init__(self) -> None:
+        # Initialize the system with data read from files
         self.__halls: List['CinemaHall'] = hall_obj
         self.__screenings: List['Screening'] = screening_obj
         self.__movies: List['Movie'] = movie_obj
@@ -54,12 +57,13 @@ class Controller:
         return False
     
     def staff_login(self, email: str, password:str) -> bool: 
-        # Logic for customer login
+        # Logic for staff login
         for staff in self.__staffs:
             if staff.login(email, password):
                 return staff
         return False
     
+    # Methods for searching movies and users
     def search_movie_by_id(self, id):
         for movie in self.__movies:
             if movie.movieID == id:
@@ -120,6 +124,7 @@ class Controller:
             return movie.search_screening(screeningID)        
         return None
 
+    # Methods for creating bookings, canceling bookings, and handling notifications
     def make_booking(self, customer: 'Customer', movie: 'Movie', screening: 'Screening', bookingSeats: List['ScreeningSeat'], payment: 'Payment', status: str = "Pending"):
         new_booking = Booking(customer, movie, screening, bookingSeats, payment)
         self.__bookings.append(new_booking)
@@ -217,7 +222,6 @@ class Controller:
         else:
             return False
 
-
     def send_add_booking_notification(self, booking: 'Booking'):
         notification = booking.sendAddBookingNotification()
         notification_list = booking.customer.notificationList
@@ -237,18 +241,7 @@ class Controller:
             return None
      
 
-   
-
 if __name__ == '__main__':
     controller = Controller()
-    result = controller.register("hi","hi@gmail.com", "111")
-    halls = controller.halls()
-    screenings = controller.screenings()
-    print(screenings)
-    movie = controller.search_movie_by_id(1000)
-    print(movie)
-    screenings=movie.getScreeningList
-    print(screenings)
-    screening = controller.search_screening_by_id(100)
-    print(screening)
+  
  
