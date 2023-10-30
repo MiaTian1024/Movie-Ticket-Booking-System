@@ -111,10 +111,12 @@ class Admin(User):
         self.password = newPassword
         return True
 
-    def addMovie(self, title: str, language: str, genre: str, releaseDate: datetime):      
+    def addMovie(self, title: str, language: str, genre: str, releaseDate: datetime): 
+        # addMovie logic in controller class     
         return Movie(title, language, genre, releaseDate)
 
-    def addScreening(self, screeningDate: date, startTime: datetime, endTime: datetime, hall: 'CinemaHall') -> bool:    
+    def addScreening(self, screeningDate: date, startTime: datetime, endTime: datetime, hall: 'CinemaHall') -> bool: 
+        # addScreening logic in controller class   
         return Screening(screeningDate, startTime, endTime, hall)
 
     def cancelMovie(self, movie: 'Movie'): 
@@ -441,6 +443,10 @@ class Notification:
     @property
     def notificationID(self,):
         return self.__notificationID
+    
+    @notificationID.setter
+    def notificationID(self, value):
+        self.__notificationID = value
 
     @property
     def content(self,):
@@ -453,6 +459,10 @@ class Notification:
     @property
     def createdOn(self,):
         return self.__createdOn
+    
+    @createdOn.setter
+    def createdOn(self, value):
+        self.__createdOn = value
 
 
 # Payment is an abstract base class for various payment methods
