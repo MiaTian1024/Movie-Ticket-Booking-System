@@ -509,7 +509,5 @@ def refund_booking():
     return render_template("booking_detail.html", msg=msg, booking_list=booking_list, role=role, title="booking_detail")
 
 
-
-
 if __name__ == '__main__':
     app.run(debug=True)
