@@ -241,7 +241,4 @@ class Controller:
             return None
      
 
-if __name__ == '__main__':
-    controller = Controller()
-  
  
