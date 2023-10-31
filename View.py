@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, session, jsonify, redirect, u
 from datetime import datetime
 import pickle
 
-
 from Controller import Controller
 
 app = Flask(__name__)
@@ -257,7 +256,6 @@ def cancel_movie():
         movie_list = controller.get_movie_list()
         return render_template("admin_home.html", msg=msg, movie_list=movie_list, role=role, admin=admin, title="admin_homepage")
 
-
 @app.route('/add_screening', methods=['POST'])
 def add_screening(): 
     screeningDate = request.form.get('date')
@@ -279,7 +277,6 @@ def add_screening():
         screenglist = movie.getScreeningList()
         return render_template("movie_detail.html", movie=movie, screenglist=screenglist, msg=msg, movie_list=movie_list, role=role, admin=admin, title="admin_homepage")
 
-
 @app.route('/cancel_screening', methods=['GET'])
 def cancel_screening():   
     screeningID = request.args.get('screeningID')
@@ -297,7 +294,6 @@ def cancel_screening():
     movie_list = controller.get_movie_list()
     screenglist = movie.getScreeningList()
     return render_template("movie_detail.html", movie=movie, screenglist=screenglist, msg=msg, movie_list=movie_list, role=role, admin=admin, title="admin_homepage")
-
 
 @app.route('/screening_seat', methods=['POST'])
 def screening_seat(): 
@@ -385,7 +381,6 @@ def add_credit_card():
   msg = notification.content
   return render_template("ticket.html",msg=msg, booking=booking, selected_seat_objects=selected_seat_objects, discount=discount,  payment=credit_card, total_price=total_price , screening=screening, movie=movie, role=role, title="Ticket")
 
-
 @app.route('/add_debit_card', methods=['POST'])
 def add_debit_card():
   amount = request.form.get('amount')
@@ -425,7 +420,6 @@ def add_debit_card():
   msg = notification.content
   return render_template("ticket.html",msg=msg, booking=booking, selected_seat_objects=selected_seat_objects, discount=discount,  payment=debit_card, total_price=total_price , screening=screening, movie=movie, role=role, title="Ticket")
 
-
 @app.route('/add_cash', methods=['POST'])
 def add_cash():
   amount = request.form.get('amount')
@@ -462,7 +456,6 @@ def add_cash():
   msg = notification.content
   return render_template("ticket.html",msg=msg, booking=booking, selected_seat_objects=selected_seat_objects, discount=discount,  payment=cash, total_price=total_price , screening=screening, movie=movie, role=role, title="Ticket")
 
-
 @app.route("/booking_detail")
 def booking_detail():  
     role = session.get('role')
@@ -473,7 +466,6 @@ def booking_detail():
     else:
         booking_list = controller.get_booking_list()   
     return render_template("booking_detail.html", booking_list=booking_list, role=role, title="booking_detail")
-
 
 @app.route('/cancel_booking', methods=['GET'])
 def cancel_booking():   
