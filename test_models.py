@@ -39,6 +39,7 @@ class TestCustomer:
         customer.makeBooking(booking)
         customer.cancelBooking(booking)
         assert booking not in customer.getBookingList()
+        
 
 # Sample test cases for the Admin class
 class TestAdmin:
@@ -157,7 +158,7 @@ class TestMovie:
         # Check if the screening was added to the movie's screening list
         assert screening in movie.getScreeningList()
 
-    def test_search_screening():
+    def test_search_screening(self):
         movie = Movie("The Shawshank Redemption", "English", "Drama", "2023-10-18")
 
         # Create a Screening object
@@ -175,7 +176,7 @@ class TestMovie:
 # Sample test cases for the Screening class
 class TestScreening:
     def test_screening_creation(self):
-        hall = CinemaHall("Test Hall")
+        hall = CinemaHall("Test Hall", 100)
         screening_date = date(2023, 11, 1)
         start_time = datetime(2023, 11, 1, 12, 0)
         end_time = datetime(2023, 11, 1, 14, 0)
@@ -252,56 +253,19 @@ class TestBooking:
 
 # Sample test cases for the Notification class
 class TestNotification:
-    def test_notification_initialization():
+    def test_notification_initialization(self):
         content = "This is a test notification."     
         notification = Notification(content)
         assert notification.notificationID is not None
         assert notification.content == content
 
-    def test_notification_content_update():
+    def test_notification_content_update(self):
         initial_content = "Initial content of the notification."
         notification = Notification(initial_content)
         new_content = "Updated content of the notification."
         notification.content = new_content
         assert notification.content == new_content
 
-
-# Sample test cases for the Payment class
-class TestPayment:
-    def test_payment_creation(self):
-        payment = Payment(50.0)
-        assert payment is not None
-        assert payment.amount == 50.0
-
-    def test_calc_discount_no_coupon(self):
-        payment = Payment(50.0)
-        coupon = None
-        assert payment.calcDiscount(coupon) == 0.0
-
-    def test_calc_final_payment_no_coupon(self):
-        payment = Payment(50.0)
-        coupon = None
-        assert payment.calcFinalPayment(coupon) == 50.0
-
-    def test_calc_discount_with_valid_coupon(self):
-        payment = Payment(50.0)
-        coupon = Coupon("TestCoupon", datetime(2023, 12, 31), 10.0)
-        assert payment.calcDiscount(coupon) == 10.0
-
-    def test_calc_discount_with_expired_coupon(self):
-        payment = Payment(50.0)
-        coupon = Coupon("TestCoupon", datetime(2022, 12, 31), 10.0)
-        assert payment.calcDiscount(coupon) == 0.0
-
-    def test_calc_final_payment_with_valid_coupon(self):
-        payment = Payment(50.0)
-        coupon = Coupon("TestCoupon", datetime(2023, 12, 31), 10.0)
-        assert payment.calcFinalPayment(coupon) == 45.0
-
-    def test_calc_final_payment_with_expired_coupon(self):
-        payment = Payment(50.0)
-        coupon = Coupon("TestCoupon", datetime(2022, 12, 31), 10.0)
-        assert payment.calcFinalPayment(coupon) == 50.0
 
 # Sample test cases for the CreditCard class
 class TestCreditCard:
@@ -314,7 +278,37 @@ class TestCreditCard:
         assert credit_card.expiryDate == datetime(2023, 12, 31)
         assert credit_card.cvv == "123"
 
-# Sample test cases for the DebitCard class
+    def test_calc_discount_no_coupon(self):
+        credit_card = CreditCard(50.0, "1234567890123456", "John Doe", datetime(2023, 12, 31), "123")
+        coupon = None
+        assert credit_card.calcDiscount(coupon) == 0.0
+
+    def test_calc_final_payment_no_coupon(self):
+        credit_card = CreditCard(50.0, "1234567890123456", "John Doe", datetime(2023, 12, 31), "123")
+        coupon = None
+        assert credit_card.calcFinalPayment(coupon) == 50.0
+
+    def test_calc_discount_with_valid_coupon(self):
+        credit_card = CreditCard(50.0, "1234567890123456", "John Doe", datetime(2022, 12, 30), "123")
+        coupon = Coupon("TestCoupon", "2023-12-31", 10.0)
+        assert credit_card.calcDiscount(coupon) == 10.0
+
+    def test_calc_discount_with_expired_coupon(self):
+        credit_card = CreditCard(50.0, "1234567890123456", "John Doe", datetime(2023, 12, 31), "123")
+        coupon = Coupon("TestCoupon", "2022-12-30", 10.0)
+        assert credit_card.calcDiscount(coupon) == 0.0
+
+    def test_calc_final_payment_with_valid_coupon(self):
+        credit_card = CreditCard(50.0, "1234567890123456", "John Doe", datetime(2023, 12, 30), "123")
+        coupon = Coupon("TestCoupon", "2023-12-31", 10.0)
+        assert credit_card.calcFinalPayment(coupon) == 45.0
+
+    def test_calc_final_payment_with_expired_coupon(self):
+        credit_card = CreditCard(50.0, "1234567890123456", "John Doe", datetime(2023, 12, 31), "123")
+        coupon = Coupon("TestCoupon", "2022-12-30", 10.0)
+        assert credit_card.calcFinalPayment(coupon) == 50.0
+
+# Sample test cases for the DebitCard class 
 class TestDebitCard:
     def test_debit_card_creation(self):
         debit_card = DebitCard(50.0, "1234567890", "Test Bank", "John Doe")
