@@ -1,3 +1,10 @@
+# Author: Mia Tian (ID: 1154238)
+# Login information for demonstration purposes only:
+# - Admin: Email: amy@gmail.com, Password: 111
+# - Front Desk Staff: Email: joe@gmail.com, Password: 111
+# - Customer: Email: brain@gmail.com, Password: 111
+
+
 from abc import ABC, abstractmethod
 from typing import List
 from datetime import datetime, date

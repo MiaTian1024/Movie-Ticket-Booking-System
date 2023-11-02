@@ -1,3 +1,10 @@
+# Author: Mia Tian (ID: 1154238)
+# Login information for demonstration purposes only:
+# - Admin: Email: amy@gmail.com, Password: 111
+# - Front Desk Staff: Email: joe@gmail.com, Password: 111
+# - Customer: Email: brain@gmail.com, Password: 111
+
+
 from datetime import datetime, date
 from Models import User, Guest, Customer, Admin, FrontDeskStaff, Movie, Screening, CinemaHall, Coupon, CreditCard, Payment, Booking, ScreeningSeat, DebitCard, Cash, Notification
 
