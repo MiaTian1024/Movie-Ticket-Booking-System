@@ -53,8 +53,8 @@ class User(ABC):
 class Customer(User):
     def __init__(self, username: str, email: str, password: str) -> None: 
         super().__init__(username, email, password)
-        self.__bookingList: List['Booking'] = []
-        self.__notificationList: List['Notification'] =[]
+        self.__bookingList: List['Booking'] = []    # Initialize an empty list to store bookings
+        self.__notificationList: List['Notification'] =[]    # Initialize an empty list to store notifications
 
     @property
     def bookingList(self,):
@@ -83,14 +83,16 @@ class Customer(User):
         return True
 
     def makeBooking(self, booking: 'Booking') -> bool:
-        self.__bookingList.append(booking)
-        return True
+        if booking not in self.__bookingList:    # Check if the booking is in the list
+            self.__bookingList.append(booking)    # Append the booking to the list
+            return True    # Return True to indicate a successful booking
+        return False    # Return False if the booking was already in the list
 
     def cancelBooking(self, booking: 'Booking') -> bool:    
-        if booking in self.__bookingList:
-            self.__bookingList.remove(booking)
-            return True
-        return False
+        if booking in self.__bookingList:    # Check if the booking is in the list
+            self.__bookingList.remove(booking)    # Remove the booking from the list
+            return True    # Return True to indicate a successful cancellation
+        return False    # Return False if the booking was not found in the list
 
     def getBookingList(self) -> List['Booking']:
         return self.__bookingList
@@ -115,7 +117,7 @@ class Admin(User):
         # addMovie logic in controller class     
         return Movie(title, language, genre, releaseDate)
 
-    def addScreening(self, screeningDate: date, startTime: datetime, endTime: datetime, hall: 'CinemaHall') -> bool: 
+    def addScreening(self, screeningDate: date, startTime: datetime, endTime: datetime, hall: 'CinemaHall'): 
         # addScreening logic in controller class   
         return Screening(screeningDate, startTime, endTime, hall)
 
@@ -160,15 +162,15 @@ class Guest():
 
 # Movie class represents a movie
 class Movie:
-    nextID = 1000
+    nextID = 1000  # Class variable to track the next available ID
     def __init__(self, title: str, language: str, genre: str, releaseDate: datetime) -> None:
-        self.__movieID = Movie.nextID
-        self.__title = title
-        self.__language = language
-        self.__genre = genre
-        self.__releaseDate = releaseDate
-        self.__screeningList: List['Screening'] = []
-        Movie.nextID += 1
+        self.__movieID = Movie.nextID  # Assign a unique movie ID
+        self.__title = title  # set the movie title
+        self.__language = language # set the movie language
+        self.__genre = genre  # set the movie genre
+        self.__releaseDate = releaseDate  # set the movie release date
+        self.__screeningList: List['Screening'] = []  # Initialize an empty list to store screenings
+        Movie.nextID += 1  # Increment the next available ID for the next movie
 
     @property
     def movieID(self,):
@@ -211,29 +213,35 @@ class Movie:
         self.__releaseDate = value
 
     def getScreeningList(self) -> List['Screening']:
+        # method of getting screening list for this movie
         return self.__screeningList
     
     def add_screening(self, screening: 'Screening') -> bool:
-        self.__screeningList.append(screening)
-        return True
+        # Check if the screening already exists in the list
+        if screening in self.__screeningList:
+            return False  # Return False to indicate that it's a duplicate and not added
+        else:
+            self.__screeningList.append(screening)  # Append the screening to the list
+            return True  # Return True to indicate a successful addition
     
     def search_screening(self, screeningID):
+        # method of searching screening by Id
         for screening in self.__screeningList:
-            if screening.screeningID == screeningID:
-                return screening
-        return None
+            if screening.screeningID == screeningID:  # Check if the screening's ID matches the specified ID
+                return screening  # Return the found screening
+        return None  # Return None if the screening with the specified ID was not found
     
 
 # Screening class represents a movie screening
 class Screening:
-    nextID = 100
+    nextID = 100  # Class variable to track the next available ID
     def __init__(self, screeningDate: date, startTime: datetime, endTime: datetime, hall: 'CinemaHall') -> None:
-        self.__screeningID = Screening.nextID
-        self.__screeningDate = screeningDate
-        self.__startTime = startTime
-        self.__endTime = endTime
-        self.__hall = hall
-        Screening.nextID += 1
+        self.__screeningID = Screening.nextID  # Assign a unique screening ID
+        self.__screeningDate = screeningDate  # Set the screening date
+        self.__startTime = startTime   # Set the start time
+        self.__endTime = endTime  # Set the end time
+        self.__hall = hall  # Set the cinema hall for the screening
+        Screening.nextID += 1  # Increment the next available ID for the next screening
 
     @property
     def screeningID(self):
@@ -275,9 +283,9 @@ class Screening:
 # CinemaHall class represents a cinema hall
 class CinemaHall:
     def __init__(self, name: str, totalSeats: int):
-        self.__name = name
-        self.__totalSeats = totalSeats
-        self.__listOfSeats: List['ScreeningSeat'] = []
+        self.__name = name  # Set the name of the cinema hall
+        self.__totalSeats = totalSeats   # Set the total number of seats
+        self.__listOfSeats: List['ScreeningSeat'] = []  # Initialize a list to store screening seats in this hall
 
     @property
     def name(self):
@@ -306,14 +314,14 @@ class CinemaHall:
 
 # ScreeningSeat class represents a seat in a cinema hall  
 class ScreeningSeat():
-    nextID = 100 
+    nextID = 100  # Class variable to track the next available seat ID
     def __init__(self, row: int, column: int, price: float, booked: bool = False) -> None:
-        self.__seatID = ScreeningSeat.nextID
-        self.__row = row
-        self.__column = column
-        self.__price = price
-        self.__booked = booked
-        ScreeningSeat.nextID += 1
+        self.__seatID = ScreeningSeat.nextID  # Assign a unique seat ID
+        self.__row = row  # Set the row number of the seat
+        self.__column = column  # Set the column number of the seat
+        self.__price = price   # Set the price of the seat
+        self.__booked = booked  # Set the booking status of the seat
+        ScreeningSeat.nextID += 1   # Increment the next available seat ID for the next seat
 
     @property
     def seatID(self,):
@@ -354,17 +362,17 @@ class ScreeningSeat():
 
 # Booking class represents a booking made by a customer
 class Booking:
-    nextID = 10000
+    nextID = 10000   # Class variable to track the next available booking ID
     def __init__(self, customer: 'Customer', movie: 'Movie', screening: 'Screening', bookingSeats: List['ScreeningSeat'], payment: 'Payment', status: str = "Pending"):
-        self.__bookingID = Booking.nextID
-        self.__movie = movie
-        self.__customer = customer  
-        self.__screening = screening
-        self.__bookingSeats = bookingSeats
-        self.__payment = payment
-        self.__createdOn = datetime.now()
-        self.__status = status
-        Booking.nextID += 1
+        self.__bookingID = Booking.nextID  # Assign a unique booking ID
+        self.__movie = movie  # Set the movie for the booking
+        self.__customer = customer   # Set the customer making the booking
+        self.__screening = screening  # Set the screening for the movie
+        self.__bookingSeats = bookingSeats  # Set the booked seats
+        self.__payment = payment  # Set the payment information
+        self.__createdOn = datetime.now()   # Record the booking creation timestamp
+        self.__status = status  # Set the status of the booking
+        Booking.nextID += 1  # Increment the next available booking ID for the next booking
 
     @property
     def bookingID(self,):
@@ -423,22 +431,24 @@ class Booking:
         return self.__createdOn
  
     def sendAddBookingNotification(self) -> 'Notification':
+        # Compose the content of the notification
         content = f"Booking details:\n Movie: {self.movie.title}\nScreening Date: {self.screening.screeningDate}\nCustomer: {self.customer.username}"
-        return Notification(content)
+        return Notification(content)   # Create a new Notification instance with the content
     
     def sendCancelBookingNotification(self) -> 'Notification':
+        # Compose the content of the notification
         content = f"Canceling details:\n Movie: {self.movie.title}\nScreening Date: {self.screening.screeningDate}\nCustomer: {self.customer.username}"
-        return Notification(content)
+        return Notification(content)  # Create a new Notification instance with the content
 
 
 # Notification class represents a notification sent to users
 class Notification:
-    nextID = 1000
+    nextID = 1000  # Class variable to track the next available notification ID
     def __init__(self, content: str):
-        self.__notificationID = Notification.nextID
-        self.__createdOn = datetime.now()
-        self.__content = content
-        Notification.nextID += 1
+        self.__notificationID = Notification.nextID  # Assign a unique notification ID
+        self.__createdOn = datetime.now()  # Record the notification creation timestamp
+        self.__content = content  # Set the content of the notification
+        Notification.nextID += 1  # Increment the next available notification ID for the next notification
 
     @property
     def notificationID(self,):
@@ -467,12 +477,12 @@ class Notification:
 
 # Payment is an abstract base class for various payment methods
 class Payment(ABC):
-    nextID = 10000
-    def __init__(self, amount: float):
-        self.__paymentID = Screening.nextID
-        self.__amount = float(amount)
-        self.__createdOn = datetime.now()
-        Screening.nextID += 1
+    nextID = 10000  # Class variable to track the next available payment ID
+    def __init__(self, amount: float):   
+        self.__paymentID = Screening.nextID  # Assign a unique payment ID
+        self.__amount = float(amount)  # Set the payment amount
+        self.__createdOn = datetime.now()  # Record the payment creation timestamp
+        Screening.nextID += 1  # Increment the next available payment ID for the next payment
 
     @property
     def paymentID(self,):
@@ -496,27 +506,27 @@ class Payment(ABC):
         today = datetime.today().date()
         expiry_date = datetime.strptime(coupon.expiryDate, '%Y-%m-%d').date()
         if expiry_date > today:
-            return coupon.discount
+            return coupon.discount  # Return the coupon's discount percentage
         else:
             return 0  # Coupon has no effect
 
     @abstractmethod
     def calcFinalPayment(self, coupon: 'Coupon' = None) -> float:
         if coupon:
-            discount = self.calcDiscount(coupon)
-            final_amount = float(self.amount) - (float(self.amount) * float(discount)) / 100 
-            return final_amount
-        return self.amount 
+            discount = self.calcDiscount(coupon)   # Calculate the discount using the calcDiscount method
+            final_amount = float(self.amount) - (float(self.amount) * float(discount)) / 100   # Apply the discount
+            return final_amount  # Return the final payment amount with the discount applied
+        return self.amount   # If no coupon is provided, return the original payment amount
 
 
 # CreditCard is a type of Payment
 class CreditCard(Payment):
     def __init__(self, amount: float, creditCardNum: str, nameOnCard: str, expiryDate: datetime, cvv: str):
-        super().__init__(amount)
-        self.__creditCardNum = creditCardNum      
-        self.__nameOnCard = nameOnCard
-        self.__expiryDate = expiryDate
-        self.__cvv = cvv
+        super().__init__(amount)  # Call the constructor of the base class (Payment)
+        self.__creditCardNum = creditCardNum     # Call the constructor of the base class (Payment)  
+        self.__nameOnCard = nameOnCard  # Set the name on the credit card
+        self.__expiryDate = expiryDate  # Set the credit card's expiry date
+        self.__cvv = cvv  # Set the Card Verification Value (CVV) of the credit card
 
     @property
     def creditCardNum(self,):
@@ -555,24 +565,24 @@ class CreditCard(Payment):
             today = datetime.today().date()
             expiry_date = datetime.strptime(coupon.expiryDate, '%Y-%m-%d').date()
             if expiry_date > today:
-                return coupon.discount
+                return coupon.discount  # Return the coupon's discount percentage
         return 0  # Coupon has no effect
 
     def calcFinalPayment(self, coupon: 'Coupon' = None) -> float:
         if coupon:
             discount = self.calcDiscount(coupon)
             final_amount = float(self.amount) - (float(self.amount) * float(discount)) / 100 
-            return final_amount
-        return self.amount 
+            return final_amount  # Return the final payment amount with the discount applied
+        return self.amount # If no coupon is provided, return the original payment amount
 
 
 # DebitCard is a type of Payment
 class DebitCard(Payment):
     def __init__(self, amount: float, cardNum: str, bankName: str, nameOnCard: str):
-        super().__init__(amount)
-        self.__cardNum = cardNum
-        self.__bankName = bankName
-        self.__nameOnCard = nameOnCard
+        super().__init__(amount)  # Call the constructor of the base class (Payment)
+        self.__cardNum = cardNum  # Set the debit card number
+        self.__bankName = bankName  # Set the name of the bank associated with the debit card
+        self.__nameOnCard = nameOnCard  # Set the name on the debit card
 
     @property
     def cardNum(self,):
@@ -617,7 +627,7 @@ class DebitCard(Payment):
 # Cash is a type of Payment
 class Cash(Payment):
     def __init__(self, amount: float):
-        super().__init__(amount)
+        super().__init__(amount)  # Call the constructor of the base class (Payment)
 
     def calcDiscount(self, coupon:'Coupon') -> float:
         if coupon:
@@ -638,9 +648,9 @@ class Cash(Payment):
 # Coupon class represents a coupon added to a payment.
 class Coupon:
     def __init__(self, couponID: str, expiryDate: datetime, discount: float):
-        self.__couponID = couponID
-        self.__expiryDate = expiryDate
-        self.__discount = discount
+        self.__couponID = couponID  # Set the unique identifier of the coupon
+        self.__expiryDate = expiryDate  # Set the coupon's expiry date
+        self.__discount = discount  # Set the discount percentage offered by the coupon
 
     @property
     def couponID(self,):
