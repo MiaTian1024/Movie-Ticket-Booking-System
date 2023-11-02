@@ -1,7 +1,14 @@
+# Author: Mia Tian (ID: 1154238)
+# Login information for demonstration purposes only:
+# - Admin: Email: amy@gmail.com, Password: 111
+# - Front Desk Staff: Email: joe@gmail.com, Password: 111
+# - Customer: Email: brain@gmail.com, Password: 111
+
+
+# Import necessary modules
 from flask import Flask, render_template, request, session, jsonify, redirect, url_for, json
 from datetime import datetime
 import pickle
-
 from Controller import Controller
 
 app = Flask(__name__)
@@ -9,6 +16,7 @@ app = Flask(__name__)
 # Set a secret key for session management
 app.config['SECRET_KEY'] = 'your_secret_key_here'
 
+# Create an instance of the Controller class to handle the application's logic
 controller = Controller()
 
 @app.route("/")
@@ -18,15 +26,20 @@ def home():
 
 @app.route("/customer_home")
 def customer_home():
+    # Retrieve the list of available movies from the controller
     movie_list = controller.get_movie_list()
+    # Get the user's role and customer information from the session
     role = session.get('role')
     customer_serialized = session.get('customer')
     customer = pickle.loads(customer_serialized)
+    # Render the customer home template with relevant data
     return render_template("customer_home.html", movie_list=movie_list, role=role, customer=customer, title="customer_homepage")
 
 @app.route("/admin_home")
 def admin_home():
+    # Retrieve the list of available movies from the controller
     movie_list = controller.get_movie_list()
+    # Get the user's role and admin information from the session
     role = session.get('role')
     admin_serialized = session.get('admin')
     admin = pickle.loads(admin_serialized)
@@ -35,6 +48,7 @@ def admin_home():
 @app.route("/staff_home")
 def staff_home():
     movie_list = controller.get_movie_list()
+    # Get the user's role and staff information from the session
     role = session.get('role')
     staff_serialized = session.get('staff')
     staff = pickle.loads(staff_serialized)
@@ -43,49 +57,60 @@ def staff_home():
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if request.method == "POST":
+        # If the request method is POST, process the registration form data
         username = request.form.get('username')
         email = request.form.get('email')
         password = request.form.get('password')
         if controller.register(username, email, password):
-            msg = "Register successed, Please Login to the system"
+            # Attempt to register the user with provided data
+            msg = "Registration successful. Please log in to the system."
         else:
-            msg = "Email is already registered, please try again"
+            msg = "Email is already registered. Please try again."
+        # Render the login template with a success or error message
         return render_template("login.html", msg = msg, title="Login")
+    # If the request method is GET, display the registration form
     return render_template("login.html", title="Login")
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == "POST":
+        # If the request method is POST, process the login form data
         email = request.form.get('email')
         password = request.form.get('password')
         role = request.form.get('role')
         movie_list = controller.get_movie_list()
         if role == "customer":
+            # Handle customer login
             if controller.customer_login(email, password):
                 customer = controller.customer_login(email, password)               
                 customer_serialized = pickle.dumps(customer)
                 session['customer'] = customer_serialized
                 session['role'] = 'Customer'
+                # Redirect to the customer home page with relevant data
                 return render_template("customer_home.html", movie_list=movie_list, role=session['role'], customer=customer)
-            msg = "Login failed, Please try again"
+            msg = "Login failed. Please try again"
             return render_template("login.html", msg = msg, title="Login")
         if role == "admin":
+            # Handle admin login
             if controller.admin_login(email, password):
                 admin = controller.admin_login(email, password)
                 admin_serialized = pickle.dumps(admin)
                 session['admin'] = admin_serialized
                 session['role'] = 'Admin'
+                # Redirect to the admin home page with relevant data
                 return render_template("admin_home.html", movie_list=movie_list, role=session['role'], admin=admin)
-            msg = "Login failed, Please try again"
+            msg = "Login failed. Please try again"
             return render_template("login.html", msg = msg, title="Login")
         if role == "staff":
+            # Handle staff login
             if controller.staff_login(email, password):
                 staff = controller.staff_login(email, password)
                 staff_serialized = pickle.dumps(staff)
                 session['staff'] = staff_serialized
                 session['role'] = 'Staff'
+                # Redirect to the staff home page with relevant data
                 return render_template("staff_home.html", movie_list=movie_list, role=session['role'], staff=staff)
-            msg = "Login failed, Please try again"
+            msg = "Login failed. Please try again"
             return render_template("login.html", msg = msg, title="Login")
     return render_template("login.html", title="Login")
 
@@ -151,6 +176,7 @@ def search_date():
     if date == 'All':
         filtered_movies = movies
     else:
+        # Filter movies by the selected release year
         filtered_movies = []
         for movie in movies:
             releaseDate = datetime.strptime(movie.releaseDate, '%Y-%m-%d')
@@ -235,9 +261,9 @@ def add_movie():
         admin_serialized = session.get('admin')
         admin = pickle.loads(admin_serialized)
         if controller.add_movie(admin, title, language, genre, releaseDate):
-            msg="New movie added"
+            msg="New movie added successfully"
         else:
-            msg="Add movie failed"
+            msg="Add movie failed. Movie already exists in the system"
         movie_list = controller.get_movie_list()
         return render_template("admin_home.html", msg=msg, movie_list=movie_list, role=role, admin=admin, title="admin_homepage")
 
@@ -250,9 +276,9 @@ def cancel_movie():
         admin_serialized = session.get('admin')
         admin = pickle.loads(admin_serialized)
         if controller.cancel_movie(admin, movie):
-            msg="movie cancled"
+            msg="Movie cancelled successfully"
         else:
-            msg="Cancel movie failed"
+            msg="Cancel movie failed. Movie not found in the system"
         movie_list = controller.get_movie_list()
         return render_template("admin_home.html", msg=msg, movie_list=movie_list, role=role, admin=admin, title="admin_homepage")
 
@@ -270,9 +296,9 @@ def add_screening():
         admin_serialized = session.get('admin')
         admin = pickle.loads(admin_serialized)
         if controller.add_screening(admin, movie, screeningDate, startTime, endTime, hall):
-            msg="New screening added"
+            msg="New screening added successfully"
         else:
-            msg="Add screening failed"
+            msg="Add screening failed. Screening already exists"
         movie_list = controller.get_movie_list()
         screenglist = movie.getScreeningList()
         return render_template("movie_detail.html", movie=movie, screenglist=screenglist, msg=msg, movie_list=movie_list, role=role, admin=admin, title="admin_homepage")
@@ -288,9 +314,9 @@ def cancel_screening():
         admin_serialized = session.get('admin')
         admin = pickle.loads(admin_serialized)
         if controller.cancel_screening(admin, movie, screening):
-            msg="screening cancled"
+            msg="Screening cancelled successfully"
         else:
-            msg="cancel screening failed"
+            msg="Cancel screening failed. Screening not found for the movie"
     movie_list = controller.get_movie_list()
     screenglist = movie.getScreeningList()
     return render_template("movie_detail.html", movie=movie, screenglist=screenglist, msg=msg, movie_list=movie_list, role=role, admin=admin, title="admin_homepage")
@@ -490,7 +516,7 @@ def refund_booking():
     bookingID = request.args.get('bookingID')
     booking = controller.search_booking(int(bookingID))
     if controller.issue_refund(booking):
-        msg = "Refund completed"
+        msg = "Refund issued successfully"
     role = session.get('role')
     if role == 'Customer':
         customer_serialized = session.get('customer')
